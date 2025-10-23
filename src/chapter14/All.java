@@ -37,7 +37,7 @@ public class All extends HttpServlet {
 			Connection con=ds.getConnection();
 
 			PreparedStatement st=con.prepareStatement(
-			"select * from product");
+			"select * from book");
 			ResultSet rs=st.executeQuery();
 
 			while (rs.next()) {
