@@ -4,11 +4,11 @@
 
 <Context reloadable="true">
 	<Resource
-		name="jdbc/fukusyu"
+		name="jdbc/book"
 		auth="Container"
 		type="javax.sql.DataSource"
 		driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql:tcp://localhost:5432/book"
+		url="jdbc:postgresql://localhost:5432/book"
 		username="postgres"
 		password="bubuka3150"
 	/>
