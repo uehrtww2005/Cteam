@@ -5,45 +5,45 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import bean.User;
+import bean.Group;
 
-public class UserDAO extends DAO{
+public class GroupDAO extends DAO{
 
-	public User get(String address) throws Exception {
-	    User user = null; // 初期値は null にしておく
+	public Group get(String leaderAddress) throws Exception {
+	    Group group = null; // 初期値は null にしておく
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement("SELECT * FROM users WHERE address=?");
-	        statement.setString(1, address);
+	        statement = connection.prepareStatement("SELECT * FROM groups WHERE leaderAddress=?");
+	        statement.setString(1, leaderAddress);
 	        ResultSet resultSet = statement.executeQuery();
 
 	        if (resultSet.next()) {
-	            user = new User();
-	            user.setUserId(resultSet.getInt("user_id"));
-	            user.setPassword(resultSet.getString("password"));
-	            user.setUserName(resultSet.getString("user_name"));
+	            group = new Group();
+	            group.setGroupId(resultSet.getInt("group_id"));
+	            group.setPassword(resultSet.getString("password"));
+	            group.setLeaderName(resultSet.getString("leader_name"));
 	        }
 	    } finally {
 	        if (statement != null) statement.close();
 	        if (connection != null) connection.close();
 	    }
 
-	    return user;
+	    return group;
 	}
 
-	public User login(String address, String password) throws Exception {
-	    User user = get(address);
+	public Group login(String leaderAddress, String password) throws Exception {
+	    Group group = get(leaderAddress);
 
-	    if (user == null || !user.getPassword().equals(password)) {
+	    if (group == null || !group.getPassword().equals(password)) {
 	        return null;
 	    }
 
-	    return user;
+	    return group;
 	}
 
-	public boolean save(User user) throws Exception {
+	public boolean save(Group group) throws Exception {
         // コネクションを確立
         Connection connection = getConnection();
         // プリペアードステートメント
@@ -52,16 +52,14 @@ public class UserDAO extends DAO{
         int count = 0;
         	try {
               // プリペアードステートメントにINSERT文をセット
-              statement = connection.prepareStatement("insert into users(address, password, user_name, gender, user_tel) values(?,?,?,?,?)");
+              statement = connection.prepareStatement("insert into groups(leader_address, password, leader_name, leader_tel) values(?,?,?,?)");
               // プリペアードステートメントに値をバインド
-              statement.setString(1, user.getAddress());
-              statement.setString(2, user.getPassword());
-              statement.setString(3, user.getUserName());
-              statement.setInt(4, user.getGender());
-              statement.setString(5, user.getUserTel());
+              statement.setString(1, group.getLeaderAddress());
+              statement.setString(2, group.getPassword());
+              statement.setString(3, group.getLeaderName());
+              statement.setString(4, group.getLeaderTel());
 
               count = statement.executeUpdate();
-
 
 	        } catch (Exception e) {
 	            throw e;
