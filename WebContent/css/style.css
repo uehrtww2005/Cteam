@@ -1,0 +1,94 @@
+/* ======== 全体設定 ======== */
+body {
+    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* ======== タイトル（AdPay） ======== */
+h1 {
+    text-align: center;
+    font-size: 64px;
+    font-weight: bold;
+    margin-top: 100px;
+    margin-bottom: 80px;
+    color: #222;
+    font-family: 'Comic Sans MS', 'Rounded Mplus 1c', cursive;
+}
+
+/* ======== 管理者ボタン ======== */
+form[action$="admin/login_in.jsp"] {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+}
+
+form[action$="admin/login_in.jsp"] button {
+    background-color: #ffecb3;
+    border: 2px solid #fbc02d;
+    color: #444;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+form[action$="admin/login_in.jsp"] button:hover {
+    background-color: #ffe082;
+    transform: scale(1.05);
+}
+
+/* ======== ログインボタン（店舗・利用者） ======== */
+form[action$="shop/login_in.jsp"],
+form[action$="user/login_in.jsp"] {
+    display: block; /* スマホでも縦に並ぶ */
+    text-align: center; /* ボタンを中央寄せ */
+    margin: 20px auto;
+}
+
+form[action$="shop/login_in.jsp"] button,
+form[action$="user/login_in.jsp"] button {
+    background-color: #b3e5fc;
+    border: none;
+    color: #333;
+    padding: 20px 40px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    margin: 15px auto; /* 自動マージンで中央寄せ */
+    display: block; /* ブロックにして横幅調整しやすく */
+    max-width: 80%; /* スマホでも画面幅に収まる */
+}
+
+/* ホバー効果 */
+form[action$="shop/login_in.jsp"] button:hover,
+form[action$="user/login_in.jsp"] button:hover {
+    background-color: #81d4fa;
+    transform: translateY(-3px);
+}
+
+/* ======== レスポンシブ（スマホ対応） ======== */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 48px;
+        margin-top: 60px;
+        margin-bottom: 50px;
+    }
+
+    form[action$="admin/login_in.jsp"] {
+        position: static;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    form[action$="shop/login_in.jsp"] button,
+    form[action$="user/login_in.jsp"] button {
+        padding: 15px 30px;
+        font-size: 16px;
+        max-width: 90%;
+    }
+}
