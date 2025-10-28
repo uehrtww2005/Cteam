@@ -2,27 +2,28 @@ package Adpay;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bean.Customer;
 import tool.Action;
 
 public class LoginAction extends Action {
+	public String execute(
+		HttpServletRequest request, HttpServletResponse response
+	) throws Exception {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res)
-			throws Exception {
-		//ローカル変数の宣言 1
-		//なし
-		//リクエストパラメータ―の取得 2
-		//なし
-		//DBからデータ取得 3
-		//なし
-		//ビジネスロジック 4
-		//なし
-		//DBへデータ保存 5
-		//なし
-		//レスポンス値をセット 6
-		//なし
-		//JSPへフォワード 7
-		req.getRequestDispatcher("login.jsp").forward(req, res);
+		HttpSession session=request.getSession();
+
+		String login=request.getParameter("login");
+		String password=request.getParameter("password");
+		AdminDAO dao=new AdminDAO();
+		Customer customer=dao.search(admin_name, password);
+
+		if (customer!=null) {
+			session.setAttribute("customer", customer);
+			return "login-out.jsp";
+		}
+
+		return "login-error.jsp";
 	}
 }

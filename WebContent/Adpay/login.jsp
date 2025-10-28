@@ -12,11 +12,10 @@
 
     <!-- 専用・一般ログイン -->
     <form action="<%=request.getContextPath()%>/shop/login_in.jsp" method="get">
-        <button type="submit">専用</button>
+        <button type="submit">店舗ログインの方はこちら</button>
     </form>
-
     <form action="<%=request.getContextPath()%>/user/login_in.jsp" method="get">
-        <button type="submit">一般</button>
+        <button type="submit">利用者の方はこちら</button>
     </form>
 
 
