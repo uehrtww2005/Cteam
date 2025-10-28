@@ -3,4 +3,4 @@
 <%
 response.sendRedirect(request.getContextPath() + "/Adpay/login.jsp");
 %>
-
+<!-- gg -->
