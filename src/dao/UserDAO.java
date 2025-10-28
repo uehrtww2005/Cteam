@@ -52,7 +52,7 @@ public class UserDAO extends DAO{
         int count = 0;
         	try {
               // プリペアードステートメントにINSERT文をセット
-              statement = connection.prepareStatement("insert into users(address, password, user_name, gender, user_tel) values(?,?,?,?,?");
+              statement = connection.prepareStatement("insert into users(address, password, user_name, gender, user_tel) values(?,?,?,?,?)");
               // プリペアードステートメントに値をバインド
               statement.setString(1, user.getAddress());
               statement.setString(2, user.getPassword());
