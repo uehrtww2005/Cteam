@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import bean.User;
 
@@ -22,7 +23,7 @@ public class UserDAO extends DAO{
 	            user = new User();
 	            user.setUserId(resultSet.getInt("user_id"));
 	            user.setPassword(resultSet.getString("password"));
-	            user.setUserName(resultSet.getString("admin_name"));
+	            user.setUserName(resultSet.getString("user_name"));
 	        }
 	    } finally {
 	        if (statement != null) statement.close();
@@ -42,60 +43,50 @@ public class UserDAO extends DAO{
 	    return user;
 	}
 
-	/*public boolean save(User user) throws Exception {
+	public boolean save(User user) throws Exception {
         // コネクションを確立
         Connection connection = getConnection();
         // プリペアードステートメント
         PreparedStatement statement = null;
         // 実行件数
         int count = 0;
+        	try {
+              // プリペアードステートメントにINSERT文をセット
+              statement = connection.prepareStatement("insert into users(address, password, user_name, gender, user_tel) values(?,?,?,?,?");
+              // プリペアードステートメントに値をバインド
+              statement.setString(1, user.getAddress());
+              statement.setString(2, user.getPassword());
+              statement.setString(3, user.getUserName());
+              statement.setInt(4, user.getGender());
+              statement.setString(5, user.getUserTel());
 
-        try {
-            // データベースから学生を取得
-            User old = get(user.getNo());
-            if (old == null) {
-                // 学生が存在しなかった場合
-                // プリペアードステートメントにINSERT文をセット
-                statement = connection.prepareStatement("insert into student(no, name, ent_year, class_num, is_attend, school_cd) values(?, ?, ?, ?, ?, ?)");
-                // プリペアードステートメントに値をバインド
-                statement.setString(1, student.getNo());
-                statement.setString(2, student.getName());
-                statement.setInt(3, student.getEntYear());
-                statement.setString(4, student.getClassNum());
-                statement.setBoolean(5, student.isAttend());
-                statement.setString(6, student.getSchool().getCd());
-            }
+	        } catch (Exception e) {
+	            throw e;
+	        } finally {
+	            // プリペアードステートメントを閉じる
+	            if (statement != null) {
+	                try {
+	                    statement.close();
+	                } catch (SQLException sqle) {
+	                    throw sqle;
+	                }
+	            }
+	            // コネクションを閉じる
+	            if (connection != null) {
+	                try {
+	                    connection.close();
+	                } catch (SQLException sqle) {
+	                    throw sqle;
+	                }
+	            }
+	        }
 
-            // プリペアードステートメントを実行
-            count = statement.executeUpdate();
-
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            // プリペアードステートメントを閉じる
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            // コネクションを閉じる
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-        }
-
-        if (count > 0) {
-            // 実行件数が1件以上ある場合
-            return true;
-        } else {
-            // 実行件数が0件の場合
-            return false;
-        }
-    }*/
+	        if (count > 0) {
+	            // 実行件数が1件以上ある場合
+	            return true;
+	        } else {
+	            // 実行件数が0件の場合
+	            return false;
+	        }
+	    }
 }
