@@ -63,6 +63,9 @@ public class GroupDAO extends DAO{
               statement.setString(4, group.getLeaderTel());
 
               count = statement.executeUpdate(); //大事
+
+
+
 	        } catch (Exception e) {
 	            throw e;
 	        } finally {
