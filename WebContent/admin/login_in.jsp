@@ -14,7 +14,7 @@
   request.getContextPath() により、アプリ名（例: /Cteam）を動的に取得しておくことで、
   デプロイ先の環境が変わっても正しく動作する。
 --%>
-<form action="<%=request.getContextPath()%>/Adpay/Login.action" method="get">
+<form action="<%=request.getContextPath()%>/Adpay/Login.action" method="post">
 
     <%-- 管理者名の入力欄。Action側では getParameter("adminName") で受け取る。 --%>
     <p>名前 <input type="text" name="adminName"></p>

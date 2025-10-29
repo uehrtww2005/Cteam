@@ -3,7 +3,7 @@
 
 <h1>ユーザー新規登録</h1>
 
-<form action="<%=request.getContextPath()%>/Adpay/Register.action" method="get">
+<form action="<%=request.getContextPath()%>/Adpay/Register.action" method="post">
 
     <p>ユーザー名：<input type="text" name="user_name" maxlength="10" required></p>
 

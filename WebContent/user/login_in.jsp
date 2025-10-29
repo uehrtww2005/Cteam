@@ -11,7 +11,7 @@
     <p style="color:red;"><%= msg %></p>
 <% } %>
 
-<form action="<%=request.getContextPath()%>/Adpay/UserLogin.action" method="get">
+<form action="<%=request.getContextPath()%>/Adpay/UserLogin.action" method="post">
     <p>メールアドレス：<input type="text" name="address" required></p>
     <p>パスワード：<input type="password" name="password" required></p>
     <p><input type="submit" value="ログイン"></p>
