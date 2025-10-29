@@ -15,13 +15,13 @@ public class StoreDAO extends DAO{
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement("SELECT * FROM stores WHERE storeTel=?");
+	        statement = connection.prepareStatement("SELECT * FROM stores WHERE store_tel=?");
 	        statement.setString(1, storeTel);
 	        ResultSet resultSet = statement.executeQuery();
 
 	        if (resultSet.next()) {
 	            store = new Store();
-	            store.setStoreId(resultSet.getInt("group_id"));
+	            store.setStoreId(resultSet.getInt("store_id"));
 	            store.setStoreAddress(resultSet.getString("store_address"));
 	            store.setPassword(resultSet.getString("password"));
 	            store.setStoreName(resultSet.getString("store_name"));
