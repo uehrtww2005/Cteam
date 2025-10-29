@@ -22,9 +22,11 @@ public class GroupDAO extends DAO{
 	        if (resultSet.next()) {
 	            group = new Group();
 	            group.setGroupId(resultSet.getInt("group_id"));
+	            group.setLeaderAddress(resultSet.getString("leader_address"));
 	            group.setPassword(resultSet.getString("password"));
 	            group.setLeaderName(resultSet.getString("leader_name"));
 	            group.setLeaderTel(resultSet.getString("leader_tel"));
+
 	        }
 	    } finally {
 	        if (statement != null) statement.close();
