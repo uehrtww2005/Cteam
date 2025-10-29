@@ -29,7 +29,7 @@
 
 </form>
 
-<a href="<%=request.getContextPath()%>/Adpay/login.jsp">戻る</a>
+<p><input type="button" value="戻る" onclick="history.back();">
 
 <%-- フッター部分（共通デザイン）を読み込む --%>
 <%@ include file="../footer.html" %>
