@@ -15,7 +15,7 @@ public class GroupDAO extends DAO{
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement("SELECT * FROM groups WHERE leaderAddress=?");
+	        statement = connection.prepareStatement("SELECT * FROM groups WHERE leader_address=?");
 	        statement.setString(1, leaderAddress);
 	        ResultSet resultSet = statement.executeQuery();
 
