@@ -24,6 +24,7 @@ public class GroupDAO extends DAO{
 	            group.setGroupId(resultSet.getInt("group_id"));
 	            group.setPassword(resultSet.getString("password"));
 	            group.setLeaderName(resultSet.getString("leader_name"));
+	            group.setLeaderTel(resultSet.getString("leader_tel"));
 	        }
 	    } finally {
 	        if (statement != null) statement.close();
@@ -59,8 +60,7 @@ public class GroupDAO extends DAO{
               statement.setString(3, group.getLeaderName());
               statement.setString(4, group.getLeaderTel());
 
-              count = statement.executeUpdate();
-
+              count = statement.executeUpdate(); //大事
 	        } catch (Exception e) {
 	            throw e;
 	        } finally {
