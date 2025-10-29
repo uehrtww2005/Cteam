@@ -25,7 +25,7 @@ public class StoreDAO extends DAO{
 	            store.setStoreAddress(resultSet.getString("store_address"));
 	            store.setPassword(resultSet.getString("password"));
 	            store.setStoreName(resultSet.getString("store_name"));
-	            store.setStoreTel(resultSet.getString("leader_tel"));
+	            store.setStoreTel(resultSet.getString("store_tel"));
 
 	        }
 	    } finally {
