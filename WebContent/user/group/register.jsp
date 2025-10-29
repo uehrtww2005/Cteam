@@ -25,4 +25,6 @@
 
 </form>
 
+<p><input type="button" value="戻る" onclick="history.back();">
+
 <%@ include file="../../footer.html" %>

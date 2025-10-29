@@ -12,4 +12,6 @@
     <button type="submit">団体の方はこちら</button>
 </form>
 
+<p><input type="button" value="戻る" onclick="history.back();">
+
 <%@include file="../footer.html" %>

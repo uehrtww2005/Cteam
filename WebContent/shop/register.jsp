@@ -17,4 +17,6 @@
     <p><input type="submit" value="登録"></p>
 </form>
 
+<p><input type="button" value="戻る" onclick="history.back();">
+
 <%@ include file="../footer.html" %>

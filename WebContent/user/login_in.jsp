@@ -18,5 +18,6 @@
 </form>
 
 <p><a href="<%=request.getContextPath()%>/user/register.jsp">一般の新規登録はこちら</a></p>
+<p><input type="button" value="戻る" onclick="history.back();">
 
 <%@ include file="../footer.html" %>
