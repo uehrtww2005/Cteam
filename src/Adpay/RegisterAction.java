@@ -1,7 +1,6 @@
 package Adpay;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ import dao.UserDAO;
 
 @WebServlet("/Adpay/Register.action")
 public class RegisterAction extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
@@ -25,7 +24,9 @@ public class RegisterAction extends HttpServlet {
         String genderStr = request.getParameter("gender");
 
         int gender = 0;
-        try { gender = Integer.parseInt(genderStr); } catch (Exception e) {}
+        try {
+            gender = Integer.parseInt(genderStr);
+        } catch (Exception e) {}
 
         User user = new User();
         user.setUserName(userName);
@@ -42,18 +43,12 @@ public class RegisterAction extends HttpServlet {
             e.printStackTrace();
         }
 
-        // 完了画面にリダイレクト（文字コード対策）
-        if(success) {
-            String msg = URLEncoder.encode("登録成功", "UTF-8");
-            response.sendRedirect(request.getContextPath() + "/user/registerResult.jsp?msg=" + msg);
-        } else {
-            String msg = URLEncoder.encode("登録失敗", "UTF-8");
-            response.sendRedirect(request.getContextPath() + "/user/registerResult.jsp?msg=" + msg);
-        }
+        // JSP に渡すメッセージ
+        String msg = success ? "登録成功" : "登録失敗";
+
+        // JSP に値を渡して内部転送（URLに出ない）
+        request.setAttribute("msg", msg);
+        request.getRequestDispatcher("/user/registerResult.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
 }
