@@ -23,6 +23,14 @@ public class GroupRegisterAction extends HttpServlet {
         String leaderAddress = request.getParameter("leader_address");
         String password = request.getParameter("password");
         String leaderTel = request.getParameter("leader_tel");
+        String passwordConfirm = request.getParameter("password_confirm");
+
+        // 1. パスワードと確認用が一致するかチェック
+           if (!password.equals(passwordConfirm)) {
+               request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
+               request.getRequestDispatcher("/user/register.jsp").forward(request, response);
+               return;
+           }
 
         // Groupオブジェクト作成
         Group group = new Group();

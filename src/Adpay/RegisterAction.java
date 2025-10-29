@@ -22,6 +22,15 @@ public class RegisterAction extends HttpServlet {
         String email = request.getParameter("address");
         String tel = request.getParameter("user_tel");
         String genderStr = request.getParameter("gender");
+        String passwordConfirm = request.getParameter("password_confirm");
+
+     // 1. パスワードと確認用が一致するかチェック
+        if (!password.equals(passwordConfirm)) {
+            request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
+            request.getRequestDispatcher("/user/register.jsp").forward(request, response);
+            return;
+        }
+
 
         int gender = 0;
         try {

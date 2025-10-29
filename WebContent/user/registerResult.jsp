@@ -15,6 +15,5 @@
 
 <!-- ログインページへのリンク -->
 <p><a href="<%=request.getContextPath()%>/user/login_in.jsp">ログインページへ</a></p>
-<p><a href="<%=request.getContextPath()%>/user/login_in.jsp">戻る</a></p>
 
 <%@ include file="../footer.html" %>

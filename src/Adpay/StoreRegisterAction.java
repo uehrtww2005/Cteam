@@ -21,6 +21,14 @@ public class StoreRegisterAction extends HttpServlet {
         String password = request.getParameter("password");
         String storeAddres = request.getParameter("store_address");
         String tel = request.getParameter("store_tel");
+        String passwordConfirm = request.getParameter("password_confirm");
+
+        // 1. パスワードと確認用が一致するかチェック
+           if (!password.equals(passwordConfirm)) {
+               request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
+               request.getRequestDispatcher("/user/register.jsp").forward(request, response);
+               return;
+           }
 
         Store store = new Store();
         store.setStoreName(storeName);

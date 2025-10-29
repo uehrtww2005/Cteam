@@ -3,6 +3,14 @@
 
 <h1>グループ新規登録</h1>
 
+<%
+    // RegisterAction から送られる msg（リクエスト属性）を取得
+    String msg = (String) request.getAttribute("msg");
+    if (msg != null && !msg.isEmpty()) {
+%>
+    <p style="color:red;"><%= msg %></p>
+<% } %>
+
 <form action="<%=request.getContextPath()%>/Adpay/GroupRegister.action" method="post">
 
     <p>代表者名：
@@ -13,13 +21,13 @@
         <input type="email" name="leader_address" maxlength="30" required>
     </p>
 
-    <p>パスワード：
-        <input type="password" name="password" maxlength="15" required>
-    </p>
-
     <p>代表者電話番号：
         <input type="text" name="leader_tel" maxlength="15" required>
     </p>
+
+    <p>パスワード：<input type="password" name="password" maxlength="15" required></p>
+
+    <p>パスワード確認：<input type="password" name="password_confirm" required></p>
 
     <p><input type="submit" value="登録"></p>
 

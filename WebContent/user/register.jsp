@@ -3,11 +3,18 @@
 
 <h1>ユーザー新規登録</h1>
 
+<%
+    // RegisterAction から送られる msg（リクエスト属性）を取得
+    String msg = (String) request.getAttribute("msg");
+    if (msg != null && !msg.isEmpty()) {
+%>
+    <p style="color:red;"><%= msg %></p>
+<% } %>
+
+
 <form action="<%=request.getContextPath()%>/Adpay/Register.action" method="post">
 
     <p>ユーザー名：<input type="text" name="user_name" maxlength="10" required></p>
-
-    <p>パスワード：<input type="password" name="password" maxlength="15" required></p>
 
     <p>メールアドレス：<input type="text" name="address" maxlength="30" required></p>
 
@@ -18,6 +25,10 @@
     <label><input type="radio" name="gender" value="2" required> 女性</label>
     <label><input type="radio" name="gender" value="0" required> 回答したくない</label>
     </p>
+
+    <p>パスワード：<input type="password" name="password" maxlength="15" required></p>
+
+    <p>パスワード確認：<input type="password" name="password_confirm" required></p>
 
 
     <p><input type="submit" value="登録"></p>
