@@ -5,7 +5,7 @@ public class Store {
 	private int storeId;
 	private String password;
 	private String storeName;
-	private String storeAdress;
+	private String storeAddress;
 	private String storeTel;
 
 
@@ -27,11 +27,11 @@ public class Store {
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
 	}
-	public String getStoreAdress() {
-		return storeAdress;
+	public String getStoreAddress() {
+		return storeAddress;
 	}
-	public void setStoreAdress(String storeAdress) {
-		this.storeAdress = storeAdress;
+	public void setStoreAddress(String storeAddress) {
+		this.storeAddress = storeAddress;
 	}
 	public String getStoreTel() {
 		return storeTel;
