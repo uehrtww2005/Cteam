@@ -11,7 +11,7 @@ h1 {
     text-align: center;
     font-size: 80px;
     font-weight: bold;
-    margin-top: 50px;
+    margin-top: 40px;
     margin-bottom: 0px;
     color: #222;
     font-family: 'Comic Sans MS', 'Rounded Mplus 1c', cursive;
@@ -28,7 +28,7 @@ p {
 /* ======== 管理者ボタン（トップ画面用login_in） ======== */
 form[action$="admin/login_in.jsp"] {
     position: absolute;
-    top: 30px;
+    top: 50px;
     right: 50px;
 }
 
@@ -75,7 +75,7 @@ form[action$="Adpay/login_choise.jsp"] {
 form[action$="/Adpay/Login.action"] p {
     font-size: 18px;
     color: #333;
-    margin: 20px 0;
+    margin: 0px 0;
 }
 
 /* テキストボックス */
@@ -116,14 +116,13 @@ form[action$="/Adpay/Login.action"] input[type="submit"]:hover {
 }
 
 /* ======== 店舗・利用者ログインボタン ======== */
-form[action$="shop/login_in.jsp"] button,
-form[action$="Adpay/login_choise.jsp"] button {
+form[action$="shop/login_in.jsp"] button {
     width: 100%;
     max-width: 100%;
     padding: 20px 0;
     font-size: 18px;
     border-radius: 10px;
-    background-color: #b3e5fc;
+    background-color: #7ba5f0;
     border: none;
     color: #333;
     cursor: pointer;
@@ -133,9 +132,29 @@ form[action$="Adpay/login_choise.jsp"] button {
     display: block;
 }
 
-form[action$="shop/login_in.jsp"] button:hover,
+form[action$="shop/login_in.jsp"] button:hover {
+    background-color: #6495ED;
+    transform: translateY(-3px);
+}
+
+form[action$="Adpay/login_choise.jsp"] button {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 0;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #00ec8d;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    margin: 0 auto; /* 上下余白ゼロでくっつける */
+    display: block;
+}
+
 form[action$="Adpay/login_choise.jsp"] button:hover {
-    background-color: #81d4fa;
+    background-color: #00B16B;
     transform: translateY(-3px);
 }
 
