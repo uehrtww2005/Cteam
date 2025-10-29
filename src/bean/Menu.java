@@ -5,6 +5,7 @@ public class Menu {
 	private int menuId;
 	private int storeId;  //storeIdは外部キー
 	private String menuName;
+	private int price;
 
 
 	public int getMenuId() {
@@ -24,6 +25,12 @@ public class Menu {
 	}
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 }
