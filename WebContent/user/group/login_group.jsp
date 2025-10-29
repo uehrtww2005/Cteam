@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../header.html" %>
+<%@ include file="../../header.html" %>
 
-<h1>個人 ログイン</h1>
+<h1>団体 ログイン</h1>
 
 <%
     // Servletで設定されたmsgを取得
@@ -11,12 +11,12 @@
     <p style="color:red;"><%= msg %></p>
 <% } %>
 
-<form action="<%=request.getContextPath()%>/Adpay/UserLogin.action" method="post">
-    <p>メールアドレス：<input type="text" name="address" required></p>
+<form action="<%=request.getContextPath()%>/Adpay/GroupLogin.action" method="post">
+    <p>メールアドレス：<input type="text" name="leader_address" required></p>
     <p>パスワード：<input type="password" name="password" required></p>
     <p><input type="submit" value="ログイン"></p>
 </form>
 
-<p><a href="<%=request.getContextPath()%>/user/register.jsp">一般の新規登録はこちら</a></p>
+<p><a href="<%=request.getContextPath()%>/user/group/register.jsp">団体の新規登録はこちら</a></p>
 
-<%@ include file="../footer.html" %>
+<%@ include file="../../footer.html" %>

@@ -15,7 +15,7 @@
 <form action="<%=request.getContextPath()%>/shop/login_in.jsp" method="post">
     <button type="submit">店舗ログインの方はこちら</button>
 </form>
-<form action="<%=request.getContextPath()%>/user/login_in.jsp" method="post">
+<form action="<%=request.getContextPath()%>/Adpay/login_choise.jsp" method="post">
     <button type="submit">利用者の方はこちら</button>
 </form>
 
