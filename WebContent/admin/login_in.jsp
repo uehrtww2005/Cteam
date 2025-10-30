@@ -7,7 +7,7 @@
 <%-- ヘッダー部分（共通デザイン）を読み込む --%>
 <%@ include file="../header.html" %>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin.css">
 
 <h1>AdPay</h1>
 <p>管理者ログイン画面</p>

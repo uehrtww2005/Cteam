@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@include file="../header.html" %>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/top.css">
 
 <h1>AdPay</h1>
 

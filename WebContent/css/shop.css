@@ -91,28 +91,22 @@ form[action$="StoreLogin.action"] input[type="button"] {
     transition: all 0.2s ease;
 }
 
-form[action$="shop/login_in.jsp"] a:hover,
-form[action$="shop/login_in.jsp"] input[type="button"]:hover {
-    background-color: #ffe082;
-    transform: scale(1.05);
-}
-
 /* レスポンシブ */
 @media screen and (max-width: 768px) {
-    form[action$="shop/login_in.jsp"] {
+    form[action$="StoreLogin.action"] {
         width: 85%;
         padding: 20px 15px;
     }
 
-    form[action$="shop/login_in.jsp"] input[type="text"],
-    form[action$="shop/login_in.jsp"] input[type="password"] {
+    form[action$="StoreLogin.action"] input[type="text"],
+    form[action$="StoreLogin.action"] input[type="password"] {
         width: 90%;
         font-size: 15px;
     }
 
-    form[action$="shop/login_in.jsp"] input[type="submit"],
-    form[action$="shop/login_in.jsp"] a,
-    form[action$="shop/login_in.jsp"] input[type="button"] {
+    form[action$="StoreLogin.action"] input[type="submit"],
+    form[action$="StoreLogin.action"] a,
+    form[action$="StoreLogin.action"] input[type="button"] {
         width: 70%;
         font-size: 16px;
         padding: 10px 30px;

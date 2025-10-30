@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../header.html" %>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin.css">
 <h1>AdPay</h1>
 
 <!-- 個人・団体 -->

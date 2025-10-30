@@ -1,0 +1,104 @@
+/* ======== トップ画面用CSS ======== */
+
+/* 全体設定 */
+body {
+    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 0;
+    color: #222;
+    font-family: 'Comic Sans MS', 'Rounded Mplus 1c', cursive;
+}
+
+p {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #222;
+}
+
+/* 管理者ボタン */
+form[action$="admin/login_in.jsp"] {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+}
+
+form[action$="admin/login_in.jsp"] button {
+    background-color: #ffecb3;
+    border: 2px solid #fbc02d;
+    color: #444;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+form[action$="admin/login_in.jsp"] button:hover {
+    background-color: #ffe082;
+    transform: scale(1.05);
+}
+
+/* 店舗ログイン */
+form[action$="shop/login_in.jsp"] button {
+    width: 400px;
+    padding: 20px 0;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #7ba5f0;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    margin: 20px auto 0; /* 上マージン20px、左右中央 */
+    display: block;
+}
+
+form[action$="shop/login_in.jsp"] button:hover {
+    background-color: #6495ED;
+    transform: translateY(-3px);
+}
+
+/* 利用者ログイン */
+form[action$="Adpay/login_choise.jsp"] button {
+    width: 400px;
+    padding: 20px 0;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #00ec8d;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    margin: 10px auto 0; /* 上マージン10px、左右中央 */
+    display: block;
+}
+
+form[action$="Adpay/login_choise.jsp"] button:hover {
+    background-color: #00B16B;
+    transform: translateY(-3px);
+}
+
+/* レスポンシブ */
+@media screen and (max-width: 768px) {
+    h1 { font-size: 60px; margin-top: 20px; }
+
+    form[action$="shop/login_in.jsp"] button,
+    form[action$="Adpay/login_choise.jsp"] button {
+        width: 85%; /* スマホで画面幅に合わせる */
+        font-size: 16px;
+        padding: 15px 0;
+    }
+}
