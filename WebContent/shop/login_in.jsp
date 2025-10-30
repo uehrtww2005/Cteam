@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../header.html" %>
-<h1>店舗　ログイン</h1>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/shop.css">
+<h1>AdPay</h1>
+<p>店舗ログイン画面</p>
 <%
     // Servletで設定されたmsgを取得
     String msg = (String) request.getAttribute("msg");
@@ -11,8 +13,8 @@
 <% } %>
 
 <form action="<%=request.getContextPath()%>/Adpay/StoreLogin.action" method="post">
-    <p>電話番号：<input type="text" name="store_tel" required></p>
-    <p>パスワード：<input type="password" name="password" required></p>
+    <p>電話番号 <input type="text" name="store_tel" required placeholder="電話番号を入力してください"></p>
+    <p>パスワード <input type="password" name="password" required placeholder="パスワードを入力してください"></p>
     <p><input type="submit" value="ログイン"></p>
 </form>
 
