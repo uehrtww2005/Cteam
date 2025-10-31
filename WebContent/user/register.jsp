@@ -15,11 +15,11 @@
 
 <form action="<%=request.getContextPath()%>/Adpay/Register.action" method="post">
 
-    <p><label>ユーザー名</label><input type="text" name="user_name" maxlength="10" required></p>
+    <p><label>ユーザー名</label><input type="text" name="user_name" maxlength="10" required placeholder="ユーザー名を入力してください"></p>
 
-    <p><label>メールアドレス</label><input type="text" name="address" maxlength="30" required></p>
+    <p><label>メールアドレス</label><input type="text" name="address" maxlength="30" required placeholder="メールアドレスを入力してください"></p>
 
-    <p><label>電話番号</label><input type="text" name="user_tel" maxlength="15" required></p>
+    <p><label>電話番号</label><input type="text" name="user_tel" maxlength="15" required placeholder="電話番号を入力してください"></p>
 
 	 <p>
 	    <label>性別</label>
@@ -31,9 +31,9 @@
 	</p>
 
 
-    <p><label>パスワード</label><input type="password" name="password" maxlength="15" required></p>
+    <p><label>パスワード</label><input type="password" name="password" maxlength="15" required placeholder="パスワードを入力してください"></p>
 
-    <p><label>パスワード確認</label><input type="password" name="password_confirm" required></p>
+    <p><label>パスワード確認</label><input type="password" name="password_confirm" required placeholder="もう一度パスワードを入力してください"></p>
 
     <p><input type="submit" value="登録"></p>
 </form>

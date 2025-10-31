@@ -14,15 +14,15 @@
 <!-- ★ 画像アップロードがあるので enctype を multipart/form-data に変更！ -->
 <form action="<%=request.getContextPath()%>/Adpay/StoreRegister.action" method="post" enctype="multipart/form-data">
 
-    <p><label>店舗名</label><input type="text" name="store_name" maxlength="10" required></p>
+    <p><label>店舗名</label><input type="text" name="store_name" maxlength="10" required placeholder="店舗名を入力してください"></p>
 
-    <p><label>住所</label><input type="text" name="store_address" maxlength="30" required></p>
+    <p><label>住所</label><input type="text" name="store_address" maxlength="30" required placeholder="住所を入力してください"></p>
 
-    <p><label>電話番号</label><input type="text" name="store_tel" maxlength="15" required></p>
+    <p><label>電話番号</label><input type="text" name="store_tel" maxlength="15" required placeholder="電話番号を入力してください"></p>
 
-    <p><label>パスワード</label><input type="password" name="password" maxlength="15" required></p>
+    <p><label>パスワード</label><input type="password" name="password" maxlength="15" required placeholder="パスワードを入力してください"></p>
 
-    <p><label>パスワード確認</label><input type="password" name="password_confirm" required></p>
+    <p><label>パスワード確認</label><input type="password" name="password_confirm" required placeholder="もう一度パスワードを入力してください"></p>
 
     <p><label>店舗外観写真</label><input type="file" name="store_image" accept="image/*" required></p>
 
