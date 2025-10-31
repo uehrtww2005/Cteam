@@ -12,8 +12,8 @@
 <% } %>
 
 <form action="<%=request.getContextPath()%>/Adpay/UserLogin.action" method="post">
-    <p>メールアドレス：<input type="text" name="address" required placeholder="メールアドレスを入力してください"></p>
-    <p>パスワード：<input type="password" name="password" required placeholder="パスワードを入力してください"></p>
+    <p>メールアドレス<input type="text" name="address" required placeholder="メールアドレスを入力してください"></p>
+    <p>パスワード<input type="password" name="password" required placeholder="パスワードを入力してください"></p>
     <p><input type="submit" value="ログイン"></p>
 </form>
 

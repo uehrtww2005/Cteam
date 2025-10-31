@@ -1,0 +1,170 @@
+/* ========= 基本設定 ========= */
+body {
+    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* タイトル・見出し */
+h1 {
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    color: #222;
+    font-family: 'Comic Sans MS', 'Rounded Mplus 1c', cursive;
+}
+
+p:first-of-type {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #444;
+}
+
+/* ========= フォームエリア ========= */
+form {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto 40px auto;
+    background-color: #fafafa;
+    border-radius: 16px;
+    padding: 30px 30px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+/* 各行（項目）を Grid で統一 */
+form p {
+    display: grid;
+    grid-template-columns: 120px 1fr; /* ラベル幅固定で入力欄を揃える */
+    column-gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;   /* 行間を均等に */
+    font-size: 14px;
+    color: #333;
+}
+
+/* ラベル部分 */
+form p label {
+    font-weight: bold;
+    text-align: right;
+}
+
+/* 入力欄 */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    height: 34px; /* 高さを統一 */
+}
+
+/* 性別の横並び */
+.gender-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.gender-options label {
+    font-weight: normal; /* 太字を無効に */
+    display: flex;
+    align-items: center;
+}
+
+/* 2列配置用（もしあれば） */
+form p input + input {
+    margin-left: 8px;
+}
+
+/* ボタン類 */
+input[type="submit"],
+input[type="button"] {
+    display: inline-block;
+    background-color: #0078D7;
+    color: #fff;
+    font-size: 15px;
+    padding: 8px 0;
+    width: 180px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 8px 5px;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #005fa3;
+}
+
+/* ボタンを中央に */
+form p:last-of-type {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+/* エラーメッセージ */
+p[style*="color:red"] {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* ラジオボタンのマージン調整 */
+input[type="radio"] {
+    margin-left: 0; /* gender-options 内で調整 */
+}
+
+/* ========= スマホ対応 ========= */
+@media screen and (max-width: 600px) {
+    form {
+        padding: 20px 15px;
+    }
+
+    form p {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+
+    form p label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+        width: 100%;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+        width: 100%;
+        margin: 8px 0;
+        font-size: 14px;
+        padding: 7px 0;
+    }
+
+    form p:last-of-type {
+        justify-content: center;
+    }
+
+    /* 性別ラジオも縦並びにする */
+    .gender-options {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
