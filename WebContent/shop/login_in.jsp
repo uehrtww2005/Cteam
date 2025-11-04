@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@include file="../header.html" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/shop.css">
-<h1>AdPay</h1>
 <p>店舗ログイン画面</p>
 <%
     // Servletで設定されたmsgを取得

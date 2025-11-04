@@ -1,0 +1,14 @@
+/* ======== AdPayリンク設定 ======== */
+.logo-link {
+    text-decoration: none; /* 下線を消す */
+    color: #000; /* 常に黒文字 */
+    cursor: pointer;
+}
+
+/* ホバー・クリック・訪問後も色変化なし */
+.logo-link:hover,
+.logo-link:active,
+.logo-link:visited {
+    color: #000;
+    text-decoration: none;
+}

@@ -161,7 +161,7 @@ public class StoreRegisterAction extends HttpServlet {
 
             // ★★★ 修正箇所: getRealPath() を使用せず、指定された絶対パスに固定 ★★★
             // C:\Users\sotu\git\Cteam\WebContent\shop\store_images を構築
-            String uploadDir = "C:" + File.separator + "Users" + File.separator + "sotu" + File.separator +
+            String uploadDir = "C:" + File.separator + "Users" + File.separator + "k_niwa" + File.separator +
                                "git" + File.separator + "Cteam" + File.separator + "WebContent" +
                                File.separator + "shop" + File.separator + "store_images";
 

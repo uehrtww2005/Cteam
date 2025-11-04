@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.html" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/register.css">
-<h1>AdPay</h1>
 <p>店舗新規登録</p>
 <%
     // RegisterAction から送られる msg（リクエスト属性）を取得
