@@ -3,6 +3,8 @@
 <%@include file="../header.html" %>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/top.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+
 
 <h1>AdPay</h1>
 

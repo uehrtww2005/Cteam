@@ -1,4 +1,4 @@
-/* ページ全体設定 */
+/* ========= ページ全体設定 ========= */
 body {
   margin: 0;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
@@ -6,97 +6,133 @@ body {
   color: #fff;
 }
 
-/* ヘッダー全体 */
+/* ========= ヘッダー全体 ========= */
 header {
   background-color: #000;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #333;
   padding: 10px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  box-sizing: border-box;
 }
 
-/* ロゴ画像 */
-header img {
-  height: 80px;       /* ← ここで画像の大きさを調整 */
+/* ========= ロゴ画像 ========= */
+header a img {
+  height: 70px;
   width: auto;
   display: block;
   cursor: pointer;
 }
 
-/* ナビゲーション */
+/* ========= ナビゲーション ========= */
 nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 40px;
+  gap: 36px;
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
   font-size: 18px;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
   color: gold;
 }
 
-/* ドロップダウン */
+/* ========= ドロップダウン ========= */
 .dropdown {
   position: relative;
 }
 
+/* ▼ メガメニュー（基本設定） */
 .mega-menu {
-  display: none; /* 初期は非表示 */
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
   position: absolute;
   top: 100%;
-  left: 0;
-  background-color: #111;
-  padding: 20px 40px;
+  right: 0;
+  left: auto;
+  background-color: rgba(17, 17, 17, 0.8); /* ← ★ ここを追加（黒＋80%不透明） */
+  padding: 16px 28px 20px 20px;
   border: 1px solid #333;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-  display: flex;
-  gap: 60px;
-  z-index: 1000;
-  min-width: 400px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
+  gap: 48px;
+  z-index: 999;
+  min-width: 420px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transform-origin: top right;
+  transition: all 0.25s ease;
 }
 
-.dropdown:hover .mega-menu {
-  display: flex; /* ホバーで表示 */
+
+/* ▼ 開いた状態 */
+.dropdown:hover .mega-menu,
+.dropdown:focus-within .mega-menu,
+.mega-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-.mega-left,
-.mega-right {
-  flex: 1;
+/* ========= サービスメニュー専用：右揃え ========= */
+.dropdown .mega-menu {
+  right: 0;               /* 親要素の右端に揃える */
+  left: auto;             /* 左位置を無効化 */
+  transform-origin: top right; /* アニメーションの起点も右に */
+  justify-content: flex-end;   /* 内部要素を右寄せ配置 */
 }
 
+/* ========= メガメニュー内デザイン ========= */
+.mega-right h2,
 .mega-right h4 {
+  margin: 0 0 10px 0;
   color: gold;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #444;
-  padding-bottom: 5px;
 }
 
 .mega-right ul {
   list-style: none;
+  margin: 0 0 15px 0;
   padding: 0;
-  margin: 0 0 20px 0;
 }
 
 .mega-right ul li {
-  margin: 8px 0;
+  margin-bottom: 6px;
 }
 
 .mega-right ul li a {
-  color: #ccc;
+  color: #fff;
   text-decoration: none;
-  transition: color 0.3s;
+  font-size: 16px;
 }
 
 .mega-right ul li a:hover {
   color: gold;
+}
+
+/* ========= 補強 ========= */
+html, body {
+  background-color: #111 !important;
+  color: #fff !important;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif !important;
+}
+
+/* ========= スマホ対策（任意） ========= */
+@media (max-width: 768px) {
+  .mega-menu {
+    right: 10px;
+    left: 10px;
+    flex-direction: column;
+    min-width: auto;
+    justify-content: center;
+  }
 }
