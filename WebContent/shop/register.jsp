@@ -21,14 +21,15 @@
                placeholder="店舗名を入力してください">
     </p>
 
-    <!-- 住所：文字と数字のみ（全角・半角OK） -->
-    <p>
-        <label>住所</label>
-        <input type="text" name="store_address" maxlength="30" required
-               pattern="^[0-9A-Za-z０-９ぁ-んァ-ン一-龥ー]+$"
-               title="文字と数字のみ入力できます（記号は不可）"
-               placeholder="住所を入力してください">
-    </p>
+    <!-- 住所：都道府県・市町村・番地・建物名・部屋番号（10～50文字、記号禁止） -->
+	<p>
+	    <label>住所</label>
+	    <input type="text" name="store_address" maxlength="30" required
+	           pattern="^[^<>]{10,30}$"
+	           title="住所は10文字以上30文字以内で入力してください（県名、市・町名、番地、建物名、部屋番号を含め、<>は不可）"
+	           placeholder="例：東京都港区芝公園４丁目２−８ザ・タワー101号室">
+	</p>
+
 
     <!-- 電話番号：数字とハイフンのみ、形式チェックあり -->
     <p>
