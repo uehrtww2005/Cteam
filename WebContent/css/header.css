@@ -1,14 +1,102 @@
-/* ======== AdPayリンク設定 ======== */
-.logo-link {
-    text-decoration: none; /* 下線を消す */
-    color: #000; /* 常に黒文字 */
-    cursor: pointer;
+/* ページ全体設定 */
+body {
+  margin: 0;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  background-color: #111;
+  color: #fff;
 }
 
-/* ホバー・クリック・訪問後も色変化なし */
-.logo-link:hover,
-.logo-link:active,
-.logo-link:visited {
-    color: #000;
-    text-decoration: none;
+/* ヘッダー全体 */
+header {
+  background-color: #000;
+  border-bottom: 1px solid #444;
+  padding: 10px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* ロゴ画像 */
+header img {
+  height: 80px;       /* ← ここで画像の大きさを調整 */
+  width: auto;
+  display: block;
+  cursor: pointer;
+}
+
+/* ナビゲーション */
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 40px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: gold;
+}
+
+/* ドロップダウン */
+.dropdown {
+  position: relative;
+}
+
+.mega-menu {
+  display: none; /* 初期は非表示 */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #111;
+  padding: 20px 40px;
+  border: 1px solid #333;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  gap: 60px;
+  z-index: 1000;
+  min-width: 400px;
+}
+
+.dropdown:hover .mega-menu {
+  display: flex; /* ホバーで表示 */
+}
+
+.mega-left,
+.mega-right {
+  flex: 1;
+}
+
+.mega-right h4 {
+  color: gold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+.mega-right ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.mega-right ul li {
+  margin: 8px 0;
+}
+
+.mega-right ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.mega-right ul li a:hover {
+  color: gold;
 }
