@@ -2,6 +2,7 @@ package Adpay;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Admin;
 import dao.AdminDAO;
@@ -12,20 +13,36 @@ public class LoginAction extends Action {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        // フォームから送信された「管理者名」と「パスワード」を取得
+        request.setCharacterEncoding("UTF-8");
+
         String adminName = request.getParameter("adminName");
         String password = request.getParameter("password");
 
-        // DAO（データアクセスオブジェクト）を利用して、ログイン認証を行う
+        // --- 入力チェック ---
+        if (adminName == null || password == null ||
+            adminName.isEmpty() || password.isEmpty() ||
+            !adminName.matches("^[A-Za-z0-9ぁ-んァ-ヶ一-龥ーａ-ｚＡ-Ｚ０-９]+$") ||
+            !password.matches("^[A-Za-z0-9ａ-ｚＡ-Ｚ０-９]+$")) {
+
+            request.setAttribute("error", "名前またはパスワードの形式が正しくありません。");
+            request.getRequestDispatcher("/admin/login_in.jsp").forward(request, response);
+            return;
+        }
+
+        // --- DB認証 ---
         AdminDAO dao = new AdminDAO();
         Admin admin = dao.login(adminName, password);
 
-        // 認証結果（adminオブジェクト）をリクエストスコープに保存
-        // この情報はフォワード先の JSP（hoge.jsp）で利用できる
-        request.setAttribute("admin", admin);
+        if (admin != null) {
+            // 認証成功 → ホーム画面へ
+            HttpSession session = request.getSession();
+            session.setAttribute("admin", admin);
+            request.getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
 
-        // 認証結果を表示する JSP へ画面遷移
-        // 「/」から始まるので WebContent 直下を基準に /admin/hoge.jsp を参照する
-        request.getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+        } else {
+            // 認証失敗 → 同じ画面に戻してメッセージ表示
+            request.setAttribute("error", "名前またはパスワードが間違っています。");
+            request.getRequestDispatcher("/admin/login_in.jsp").forward(request, response);
+        }
     }
 }
