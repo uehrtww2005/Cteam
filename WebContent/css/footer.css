@@ -1,0 +1,90 @@
+/* ========= フッター全体 ========= */
+footer {
+  background-color: #000;
+  border-top: 1px solid #333;
+  color: #ccc;
+  padding: 40px 60px 20px 60px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  text-align: center; /* 全体中央寄せ */
+}
+
+/* ========= コンテナ ========= */
+.footer-container {
+  display: flex;
+  flex-direction: column; /* ← 縦配置に変更 */
+  align-items: center;    /* ← 中央寄せ */
+  gap: 30px;
+}
+
+/* ========= 左側（ロゴと説明） ========= */
+.footer-left {
+  max-width: 600px;
+}
+
+.footer-logo {
+  height: 50px;
+  width: auto;
+  margin-bottom: 12px;
+}
+
+.footer-left p {
+  margin: 0;
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ========= 右側（リンク） ========= */
+.footer-right ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;              /* ← 横並びにする */
+  justify-content: center;    /* ← 中央揃え */
+  gap: 60px;                  /* ← 均等間隔（調整可） */
+}
+
+.footer-right ul li {
+  margin: 0;
+}
+
+.footer-right ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.footer-right ul li a:hover {
+  color: gold;
+}
+
+/* ========= 下部コピーライト ========= */
+.footer-bottom {
+  border-top: 1px solid #333;
+  margin-top: 30px;
+  padding-top: 20px;
+  color: #ccc;
+}
+
+.footer-bottom p {
+  color: #ccc !important;
+  margin: 0;
+  font-size: 13px;
+}
+
+/* ========= レスポンシブ対応 ========= */
+@media (max-width: 768px) {
+  footer {
+    padding: 30px 20px;
+  }
+
+  .footer-right ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-left {
+    max-width: 100%;
+  }
+}

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +8,34 @@
 </head>
 <body>
   <header>
-    <a href="<%=request.getContextPath()%>/Adpay/login.jsp">
+    <!-- ▼ ロゴをクリックしたらホーム（動的リンク対応） -->
+    <%
+        String role = (String) session.getAttribute("role");
+        String homeUrl;
+        if ("admin".equals(role)) {
+            homeUrl = request.getContextPath() + "/admin/hoge.jsp";
+        } else if ("store".equals(role)) {
+            homeUrl = request.getContextPath() + "/Cteam/Adpay/StoreLogin.action";
+        } else if ("user".equals(role)) {
+            homeUrl = request.getContextPath() + "/user/hoge.jsp";
+        } else if ("group".equals(role)) {
+            homeUrl = request.getContextPath() + "/user/group/hoge.jsp";
+        } else {
+            homeUrl = request.getContextPath() + "/Adpay/login.jsp";
+        }
+    %>
+
+    <a href="<%= homeUrl %>">
       <img src="<%=request.getContextPath()%>/images/adpay.png" alt="サービス画像">
     </a>
 
+    <!-- ▼ ナビゲーション -->
     <nav>
       <ul>
-        <li><a href="<%=request.getContextPath()%>/Adpay/login.jsp">ホーム</a></li>
+        <!-- 動的ホームリンク -->
+        <li><a href="<%= homeUrl %>">ホーム</a></li>
 
-        <!-- ▼ クラスを追加 -->
+        <!-- サービスメニュー -->
         <li class="dropdown">
           <a href="#" class="dropdown-toggle">サービス</a>
           <div class="mega-menu">
@@ -44,7 +63,7 @@
     </nav>
   </header>
 
-  <!-- ▼ JavaScript -->
+  <!-- ▼ メニュー制御スクリプト -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const dropdown = document.querySelector(".dropdown");

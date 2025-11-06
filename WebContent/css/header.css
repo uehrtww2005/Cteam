@@ -4,135 +4,132 @@ body {
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
   background-color: #111;
   color: #fff;
+  padding-top: 100px; /* ← 固定ヘッダーに隠れないように余白を確保 */
 }
 
 /* ========= ヘッダー全体 ========= */
 header {
+  position: fixed;          /* ← スクロールしても常に上に固定 */
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: #000;
   border-bottom: 1px solid #333;
   padding: 10px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  z-index: 1000;
   box-sizing: border-box;
 }
 
 /* ========= ロゴ画像 ========= */
-header a img {
-  height: 70px;
-  width: auto;
-  display: block;
-  cursor: pointer;
+header img {
+  height: 60px;
+  object-fit: contain;
 }
 
-/* ========= ナビゲーション ========= */
+/* ========= ナビゲーション全体 ========= */
 nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 36px;
+  gap: 40px;
+  align-items: center;
 }
 
-nav a {
+/* ========= ナビゲーションリンク ========= */
+nav ul li a {
   color: #fff;
   text-decoration: none;
   font-size: 18px;
-  transition: color 0.3s ease;
+  letter-spacing: 0.05em;
+  transition: color 0.3s, opacity 0.3s;
 }
 
-nav a:hover {
-  color: gold;
+nav ul li a:hover {
+  color: #FFD700;
+  opacity: 0.9;
 }
 
-/* ========= ドロップダウン ========= */
+/* ========= ドロップダウンメニュー（親） ========= */
 .dropdown {
   position: relative;
 }
 
-/* ▼ メガメニュー（基本設定） */
+/* ========= メガメニュー全体 ========= */
 .mega-menu {
-  display: flex;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
+  display: none;
   position: absolute;
   top: 100%;
-  right: 0;
-  left: auto;
-  background-color: rgba(17, 17, 17, 0.8); /* ← ★ ここを追加（黒＋80%不透明） */
-  padding: 16px 28px 20px 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
   border: 1px solid #333;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
-  gap: 48px;
+  padding: 25px 10px;
+  min-width: 600px;
+  max-width: 90vw;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   z-index: 999;
-  min-width: 420px;
-  white-space: nowrap;
+  border-radius: 4px;
   box-sizing: border-box;
-  transform-origin: top right;
-  transition: all 0.25s ease;
 }
 
-
-/* ▼ 開いた状態 */
-.dropdown:hover .mega-menu,
-.dropdown:focus-within .mega-menu,
-.mega-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+/* ▼ サービスにマウスを合わせたら表示 */
+.dropdown:hover .mega-menu {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-/* ========= サービスメニュー専用：右揃え ========= */
-.dropdown .mega-menu {
-  right: 0;               /* 親要素の右端に揃える */
-  left: auto;             /* 左位置を無効化 */
-  transform-origin: top right; /* アニメーションの起点も右に */
-  justify-content: flex-end;   /* 内部要素を右寄せ配置 */
+/* ========= メガメニュー内（左カラム） ========= */
+.mega-left {
+  flex: 0;
+  min-width: 0;
 }
 
-/* ========= メガメニュー内デザイン ========= */
-.mega-right h2,
-.mega-right h4 {
-  margin: 0 0 10px 0;
-  color: gold;
+/* ========= メガメニュー内（右カラム） ========= */
+.mega-right {
+  flex: 2;
+  color: #fff;
+  padding-left: 20px;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
 }
 
+/* ========= メガメニュー見出し ========= */
+.mega-right h2 {
+  margin-top: 0;
+  font-size: 20px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+/* ========= メガメニュー内リンクリスト ========= */
 .mega-right ul {
   list-style: none;
-  margin: 0 0 15px 0;
   padding: 0;
+  margin: 10px 0 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
+/* ========= メガメニュー内リンク ========= */
 .mega-right ul li {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .mega-right ul li a {
-  color: #fff;
+  color: #ccc;
   text-decoration: none;
   font-size: 16px;
+  letter-spacing: 0.03em;
+  transition: color 0.3s;
 }
 
 .mega-right ul li a:hover {
-  color: gold;
-}
-
-/* ========= 補強 ========= */
-html, body {
-  background-color: #111 !important;
-  color: #fff !important;
-  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif !important;
-}
-
-/* ========= スマホ対策（任意） ========= */
-@media (max-width: 768px) {
-  .mega-menu {
-    right: 10px;
-    left: 10px;
-    flex-direction: column;
-    min-width: auto;
-    justify-content: center;
-  }
+  color: #FFD700;
 }
