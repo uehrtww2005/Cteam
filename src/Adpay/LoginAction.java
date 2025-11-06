@@ -29,6 +29,6 @@ public class LoginAction extends Action {
 
         // 認証結果を表示する JSP へ画面遷移
         // 「/」から始まるので WebContent 直下を基準に /admin/hoge.jsp を参照する
-        request.getRequestDispatcher("/admin/hoge.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
     }
 }

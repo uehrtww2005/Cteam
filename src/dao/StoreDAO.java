@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import bean.Store;
 
@@ -91,5 +93,26 @@ public class StoreDAO extends DAO {
         }
 
         return generatedId;
+    }
+
+    public List<Store> findAll() throws Exception {
+        List<Store> list = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM stores ORDER BY store_id");
+             ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                Store store = new Store();
+                store.setStoreId(rs.getInt("store_id"));
+                store.setStoreAddress(rs.getString("store_address"));
+                store.setPassword(rs.getString("password"));
+                store.setStoreName(rs.getString("store_name"));
+                store.setStoreTel(rs.getString("store_tel"));
+                list.add(store);
+            }
+        }
+
+        return list;
     }
 }

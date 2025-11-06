@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bean.Group;
 
@@ -95,4 +97,27 @@ public class GroupDAO extends DAO{
 	            return false;
 	        }
 	    }
+
+
+	public List<Group> findAll() throws Exception {
+	    List<Group> list = new ArrayList<>();
+
+	    try (Connection connection = getConnection();
+	         PreparedStatement statement = connection.prepareStatement("SELECT * FROM groups ORDER BY group_id");
+	         ResultSet rs = statement.executeQuery()) {
+
+	        while (rs.next()) {
+	            Group group = new Group();
+	            group.setGroupId(rs.getInt("group_id"));
+	            group.setLeaderAddress(rs.getString("leader_address"));
+	            group.setPassword(rs.getString("password"));
+	            group.setLeaderName(rs.getString("leader_name"));
+	            group.setLeaderTel(rs.getString("leader_tel"));
+	            list.add(group);
+	        }
+	    }
+
+	    return list;
+	}
+
 }

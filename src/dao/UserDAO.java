@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import bean.User;
 
@@ -71,5 +73,27 @@ public class UserDAO extends DAO {
         }
 
         return count > 0;
+    }
+
+    public List<User> findAll() throws Exception {
+        List<User> list = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users ORDER BY user_id");
+             ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setAddress(rs.getString("address"));
+                user.setPassword(rs.getString("password"));
+                user.setUserName(rs.getString("user_name"));
+                user.setGender(rs.getInt("gender"));
+                user.setUserTel(rs.getString("user_tel"));
+                list.add(user);
+            }
+        }
+
+        return list;
     }
 }

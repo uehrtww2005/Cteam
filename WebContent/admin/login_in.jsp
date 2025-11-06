@@ -19,7 +19,7 @@
 <form action="<%=request.getContextPath()%>/Adpay/Login.action" method="post">
 
     <%-- 管理者名の入力欄。Action側では getParameter("adminName") で受け取る。 --%>
-    <p>管理者ID <input type="text" name="adminName" placeholder="管理者IDを入力してください"></p>
+    <p>名前 <input type="text" name="adminName" placeholder="名前を入力してください"></p>
 
     <%-- パスワード入力欄。セキュリティ上、type="password" で非表示入力。 --%>
     <p>パスワード <input type="password" name="password" placeholder="パスワードを入力してください"></p>
