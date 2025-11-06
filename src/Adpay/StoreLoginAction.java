@@ -13,10 +13,21 @@ public class StoreLoginAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-
-        // フォームから送信されたメールアドレスとパスワードを取得
+        // フォームから送信された電話番号とパスワードを取得
         String storetel = request.getParameter("store_tel");
         String password = request.getParameter("password");
+
+        // セッションを取得（存在しない場合は新規作成）
+        HttpSession session = request.getSession();
+
+        // すでにログイン済みなら再認証をスキップ
+        Store sessionStore = (Store) session.getAttribute("store");
+        if (sessionStore != null) {
+            // 既にログイン中の店舗 → ホームへ直接遷移
+            request.setAttribute("store", sessionStore);
+            request.getRequestDispatcher("/shop/hoge.jsp").forward(request, response);
+            return;
+        }
 
         // DAOでログイン認証
         StoreDAO dao = new StoreDAO();
@@ -24,19 +35,19 @@ public class StoreLoginAction extends Action {
 
         if (store != null) {
             // ログイン成功 → セッションにユーザー情報を保存
-        	HttpSession session = request.getSession();
-        	session.setAttribute("store", store);
-        	request.setAttribute("store", store);
+            session.setAttribute("store", store);
+            session.setAttribute("role", "store"); // ★これが店舗判定のキー
 
+            // JSP側でも使えるようにセット
+            request.setAttribute("store", store);
 
-            // ログイン成功ページへフォワード
+            // 店舗用ホームへフォワード
             request.getRequestDispatcher("/shop/hoge.jsp").forward(request, response);
 
         } else {
             System.out.println("ログイン失敗：フォワード実行");
-            request.setAttribute("msg", "メールアドレスまたはパスワードが間違っています");
+            request.setAttribute("msg", "電話番号またはパスワードが間違っています");
             request.getRequestDispatcher("/shop/login_in.jsp").forward(request, response);
         }
-
     }
 }

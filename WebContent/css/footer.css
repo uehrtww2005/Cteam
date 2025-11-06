@@ -1,3 +1,16 @@
+/* ========= 全体レイアウトの土台 ========= */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========= コンテンツ全体 ========= */
+main {
+  flex: 1; /* ← これがポイント！中身が少なくてもフッターを下に押す */
+}
+
 /* ========= フッター全体 ========= */
 footer {
   background-color: #000;
@@ -5,14 +18,15 @@ footer {
   color: #ccc;
   padding: 40px 60px 20px 60px;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
-  text-align: center; /* 全体中央寄せ */
+  text-align: center;
+  margin-top: auto; /* ← ページ下に固定する魔法の1行✨ */
 }
 
 /* ========= コンテナ ========= */
 .footer-container {
   display: flex;
-  flex-direction: column; /* ← 縦配置に変更 */
-  align-items: center;    /* ← 中央寄せ */
+  flex-direction: column;
+  align-items: center;
   gap: 30px;
 }
 
@@ -39,13 +53,9 @@ footer {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;              /* ← 横並びにする */
-  justify-content: center;    /* ← 中央揃え */
-  gap: 60px;                  /* ← 均等間隔（調整可） */
-}
-
-.footer-right ul li {
-  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
 }
 
 .footer-right ul li a {
@@ -68,7 +78,6 @@ footer {
 }
 
 .footer-bottom p {
-  color: #ccc !important;
   margin: 0;
   font-size: 13px;
 }
