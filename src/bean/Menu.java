@@ -6,6 +6,7 @@ public class Menu {
 	private int storeId;  //storeIdは外部キー
 	private String menuName;
 	private int price;
+	private String imageExtension;
 
 
 	public int getMenuId() {
@@ -31,6 +32,12 @@ public class Menu {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public String getImageExtension() {
+		return imageExtension;
+		}
+	public void setImageExtension(String imageExtension) {
+		this.imageExtension = imageExtension;
 	}
 
 }
