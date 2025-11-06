@@ -28,8 +28,6 @@ public class UserListServletAction extends Action {
         request.setAttribute("userList", users);
         request.setAttribute("groupList", groups);
 
-        System.out.println("UserListServletAction execute called!");
-
 
         // JSPにフォワード
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/userList.jsp");

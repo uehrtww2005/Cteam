@@ -20,9 +20,6 @@ public class LoginAction extends Action {
         AdminDAO dao = new AdminDAO();
         Admin admin = dao.login(adminName, password);
 
-        // 動作確認用の出力（サーバーのコンソールに表示）
-        System.out.println("unko");
-
         // 認証結果（adminオブジェクト）をリクエストスコープに保存
         // この情報はフォワード先の JSP（hoge.jsp）で利用できる
         request.setAttribute("admin", admin);
