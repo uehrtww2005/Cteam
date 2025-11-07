@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../header.html" %>
 <html>
 <head>
   <title>メニュー登録</title>
@@ -13,7 +14,7 @@
     <div class="msg">${msg}</div>
   </c:if>
 
-  <form action="MenuRegist.action" method="post" enctype="multipart/form-data">
+  <form action="<%=request.getContextPath()%>/Adpay/MenuRegist.action" method="post" enctype="multipart/form-data">
     <input type="hidden" name="store_id" value="${store_id}">
     <label>メニュー名：</label>
     <input type="text" name="menu_name" required><br>
@@ -23,6 +24,8 @@
     <input type="file" name="menu_image" accept="image/*"><br>
     <button type="submit">登録</button>
   </form>
+
+<p><a href="<%=request.getContextPath()%>/shop/store_home.jsp">Homeに戻る</a></p>
 
   <h2>登録済みメニュー一覧</h2>
 
@@ -40,3 +43,4 @@
 
 </body>
 </html>
+<%@ include file="../footer.html" %>

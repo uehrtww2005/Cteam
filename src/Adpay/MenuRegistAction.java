@@ -2,7 +2,6 @@ package Adpay;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -22,7 +21,7 @@ import dao.MenuDAO;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 public class MenuRegistAction extends HttpServlet {
 
-    // 🟢 GET：一覧表示
+    // 🟢 GET：一覧表示（登録画面）
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -68,7 +67,7 @@ public class MenuRegistAction extends HttpServlet {
 
         // --- 入力チェック ---
         if (menuName == null || menuName.trim().isEmpty()) {
-            redirectWithMsg(response, "メニュー名を入力してください。", storeId);
+            forwardToComplete(request, response, "メニュー名を入力してください。", storeId);
             return;
         }
 
@@ -76,12 +75,12 @@ public class MenuRegistAction extends HttpServlet {
         try {
             price = Integer.parseInt(priceStr);
         } catch (NumberFormatException e) {
-            redirectWithMsg(response, "価格は数値で入力してください。", storeId);
+            forwardToComplete(request, response, "価格は数値で入力してください。", storeId);
             return;
         }
 
         if (imagePart == null || imagePart.getSize() == 0) {
-            redirectWithMsg(response, "画像を選択してください。", storeId);
+            forwardToComplete(request, response, "画像を選択してください。", storeId);
             return;
         }
 
@@ -94,7 +93,7 @@ public class MenuRegistAction extends HttpServlet {
         }
 
         if (!extension.equals("jpg") && !extension.equals("jpeg") && !extension.equals("png")) {
-            redirectWithMsg(response, "アップロードできる画像は jpg / jpeg / png のみです。", storeId);
+            forwardToComplete(request, response, "アップロードできる画像は jpg / jpeg / png のみです。", storeId);
             return;
         }
 
@@ -114,26 +113,23 @@ public class MenuRegistAction extends HttpServlet {
             msg = "メニュー「" + menuName + "」を登録しました！";
         } catch (Exception e) {
             e.printStackTrace();
-            redirectWithMsg(response, "メニュー登録中にエラーが発生しました。", storeId);
+            forwardToComplete(request, response, "メニュー登録中にエラーが発生しました。", storeId);
             return;
         }
 
-        // --- 🟢 即ファイル保存（ローカル直書き） ---
+        // --- 🟢 即ファイル保存 ---
         if (menuId > 0 && imagePart.getSize() > 0) {
-            // 保存先ディレクトリ（ローカル固定）
             String uploadDir = "C:" + File.separator + "Users" + File.separator + "sotu" + File.separator +
-                               "git" + File.separator + "Cteam" + File.separator + "WebContent" +
-                               File.separator + "shop" + File.separator + "store_menu_images";
+                    "git" + File.separator + "Cteam" + File.separator + "WebContent" +
+                    File.separator + "shop" + File.separator + "store_menu_images";
 
             File dir = new File(uploadDir);
-            if (!dir.exists()) dir.mkdirs(); // フォルダがなければ作成
+            if (!dir.exists()) dir.mkdirs();
 
-            // 保存ファイル名：storeId_menuId.拡張子
             String fileName = storeId + "_" + menuId + "." + extension;
             File filePath = new File(dir, fileName);
 
             try {
-                // 即保存（上書き対応）
                 Files.copy(imagePart.getInputStream(), filePath.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 msg += " 画像も保存しました！";
             } catch (IOException e) {
@@ -142,13 +138,14 @@ public class MenuRegistAction extends HttpServlet {
             }
         }
 
-        redirectWithMsg(response, msg, storeId);
+        forwardToComplete(request, response, msg, storeId);
     }
 
-    // ✅ 共通メソッド
-    private void redirectWithMsg(HttpServletResponse response, String msg, int storeId)
-            throws IOException {
-        String encodedMsg = URLEncoder.encode(msg, "UTF-8");
-        response.sendRedirect("MenuRegist.action?store_id=" + storeId + "&msg=" + encodedMsg);
+    // ✅ 完了画面へフォワード（3秒後に戻る）
+    private void forwardToComplete(HttpServletRequest request, HttpServletResponse response, String msg, int storeId)
+            throws ServletException, IOException {
+        request.setAttribute("msg", msg);
+        request.setAttribute("store_id", storeId);
+        request.getRequestDispatcher("/shop/menu_complete.jsp").forward(request, response);
     }
 }
