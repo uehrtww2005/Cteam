@@ -28,6 +28,8 @@ public class UserDAO extends DAO {
                 user.setUserName(resultSet.getString("user_name"));
                 user.setGender(resultSet.getInt("gender"));
                 user.setUserTel(resultSet.getString("user_tel"));
+                user.setRank(resultSet.getString("rank"));
+                user.setPrepaidAmount(resultSet.getInt("prepaid_amount"));
             }
         } finally {
             if (statement != null) statement.close();
@@ -90,6 +92,8 @@ public class UserDAO extends DAO {
                 user.setUserName(rs.getString("user_name"));
                 user.setGender(rs.getInt("gender"));
                 user.setUserTel(rs.getString("user_tel"));
+                user.setRank(rs.getString("rank"));
+                user.setPrepaidAmount(rs.getInt("prepaid_amount"));
                 list.add(user);
             }
         }

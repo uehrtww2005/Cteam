@@ -7,7 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.Menu;
 import bean.Store;
+import bean.StoreDetail;
 
 public class StoreDAO extends DAO {
 
@@ -115,4 +117,76 @@ public class StoreDAO extends DAO {
 
         return list;
     }
+
+    public Store getStoreWithDetailAndMenu(int storeId) throws Exception {
+        Store store = null;
+
+        String sql =
+        	    "SELECT " +
+        	    "s.store_id, " +
+        	    "s.store_name, " +
+        	    "s.store_address, " +
+        	    "s.store_tel, " +
+        	    "d.detail_id, " +
+        	    "d.store_hours, " +
+        	    "d.store_close, " +
+        	    "d.store_introduct, " +
+        	    "d.seat_detail, " +
+        	    "m.menu_id, " +
+        	    "m.menu_name " +
+        	    "FROM stores s " +
+        	    "JOIN store_details d ON s.store_id = d.store_id " +
+        	    "LEFT JOIN menu m ON s.store_id = m.store_id " +
+        	    "WHERE s.store_id = ?";
+
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, storeId);
+            ResultSet rs = ps.executeQuery();
+
+            List<Menu> menuList = new ArrayList<>();
+
+            while (rs.next()) {
+                if (store == null) {
+                    store = new Store();
+                    store.setStoreId(rs.getInt("store_id"));
+                    store.setStoreName(rs.getString("store_name"));
+                    store.setStoreAddress(rs.getString("store_address"));
+                    store.setStoreTel(rs.getString("store_tel"));
+
+                    // StoreDetail設定
+                    StoreDetail detail = new StoreDetail();
+                    detail.setDetailId(rs.getInt("detail_id"));
+                    detail.setStoreId(rs.getInt("store_id"));
+                    detail.setStoreHours(rs.getString("store_hours"));
+                    detail.setStoreClose(rs.getString("store_close"));
+                    detail.setStoreIntroduct(rs.getString("store_introduct"));
+                    detail.setSeatDetail(rs.getString("seat_detail"));
+                    store.setStoreDetail(detail);
+                }
+
+                // Menu設定
+                int menuId = rs.getInt("menu_id");
+                if (menuId != 0) {
+                    Menu menu = new Menu();
+                    menu.setMenuId(menuId);
+                    menu.setStoreId(rs.getInt("store_id"));
+                    menu.setMenuName(rs.getString("menu_name"));
+                    menu.setPrice(rs.getInt("price"));
+                    menuList.add(menu);
+                }
+            }
+
+            if (store != null) {
+                store.setMenus(menuList);
+            }
+        }
+
+        return store;
+    }
+
+
 }
+
