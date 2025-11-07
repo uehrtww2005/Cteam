@@ -8,8 +8,22 @@ public class User {
 	private String userName;
 	private int gender;
 	private String userTel;
+	private String rank;
+	private int prepaidAmount;
 
 
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public int getPrepaidAmount() {
+		return prepaidAmount;
+	}
+	public void setPrepaidAmount(int prepaidAmount) {
+		this.prepaidAmount = prepaidAmount;
+	}
 	public String getUserTel() {
 		return userTel;
 	}

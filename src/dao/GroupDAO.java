@@ -28,8 +28,10 @@ public class GroupDAO extends DAO{
 	            group.setPassword(resultSet.getString("password"));
 	            group.setLeaderName(resultSet.getString("leader_name"));
 	            group.setLeaderTel(resultSet.getString("leader_tel"));
+	            group.setRank(resultSet.getString("rank"));
+	            group.setPrepaidAmount(resultSet.getInt("prepaid_amount"));
 
-	        }
+ 	        }
 	    } finally {
 	        if (statement != null) statement.close();
 	        if (connection != null) connection.close();
@@ -113,6 +115,8 @@ public class GroupDAO extends DAO{
 	            group.setPassword(rs.getString("password"));
 	            group.setLeaderName(rs.getString("leader_name"));
 	            group.setLeaderTel(rs.getString("leader_tel"));
+	            group.setRank(rs.getString("rank"));
+	            group.setPrepaidAmount(rs.getInt("prepaid_amount"));
 	            list.add(group);
 	        }
 	    }

@@ -7,8 +7,22 @@ public class Group {
 	private String password;
 	private String leaderName;
 	private String leaderTel;
+	private String rank;
+	private int prepaidAmount;
 
 
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public int getPrepaidAmount() {
+		return prepaidAmount;
+	}
+	public void setPrepaidAmount(int prepaidAmount) {
+		this.prepaidAmount = prepaidAmount;
+	}
 	public int getGroupId() {
 		return groupId;
 	}
