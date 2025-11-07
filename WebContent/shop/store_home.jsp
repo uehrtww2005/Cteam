@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/register.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_home.css">
 
 <div class="welcome-page">
   <h1>お帰りなさい！</h1>

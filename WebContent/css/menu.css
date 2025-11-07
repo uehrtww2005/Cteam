@@ -1,98 +1,147 @@
-.menu-page {
-  max-width: 900px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.menu-page h1 {
-  font-size: 28px;
-  color: #333;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.menu-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 30px;
-}
-
-.menu-form input[type="text"],
-.menu-form input[type="number"],
-.menu-form input[type="file"] {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.btn {
-  border: none;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.btn-blue {
-  background: #3b82f6;
-}
-.btn-blue:hover {
-  background: #2563eb;
-}
-
-.btn-red {
-  background: #ef4444;
-}
-.btn-red:hover {
-  background: #dc2626;
-}
-
-.menu-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
-}
-
-.menu-item {
-  background: #fafafa;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* ===============================
+   ベース全体のスタイル
+================================*/
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
-.menu-photo {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
+/* ===============================
+   見出し
+================================*/
+h2 {
+  color: #d4af37; /* ゴールド */
+  border-bottom: 2px solid #d4af37;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+/* ===============================
+   メッセージ表示
+================================*/
+.msg {
+  background-color: rgba(212, 175, 55, 0.1);
+  border: 1px solid #d4af37;
+  color: #ffcc33;
+  padding: 10px;
+  width: 60%;
+  margin: 20px auto;
   border-radius: 10px;
 }
 
-.menu-info {
-  margin-top: 8px;
+/* ===============================
+   フォーム全体
+================================*/
+form {
+  background: #1e1e1e;
+  padding: 30px;
+  width: 400px;
+  margin: 30px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+  border: 1px solid #333;
 }
 
-.menu-name {
+label {
+  display: block;
+  color: #ffffff;
   font-weight: bold;
-  font-size: 16px;
-  color: #333;
+  margin-top: 10px;
+  text-align: left;
 }
 
-.menu-price {
-  color: #666;
-}
-
-.message {
-  text-align: center;
-  background: #e0f7fa;
-  color: #00796b;
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+  width: 100%;
   padding: 10px;
+  margin-top: 4px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #222;
+  color: #e0e0e0;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #d4af37;
+  outline: none;
+}
+
+/* ===============================
+   ボタン
+================================*/
+button {
+  background: linear-gradient(135deg, #d4af37, #b7950b);
+  color: #000;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
   border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 15px;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #ffdb58, #c5a300);
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   リンク
+================================*/
+a {
+  color: #d4af37;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   メニュー一覧
+================================*/
+.menu-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin: 40px auto;
+  width: 90%;
+}
+
+.menu-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 16px;
+  width: 220px;
+  padding: 15px;
+  color: #f0f0f0;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.menu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.menu-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
   margin-bottom: 10px;
+  border: 1px solid #444;
 }
