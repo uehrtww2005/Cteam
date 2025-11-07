@@ -25,7 +25,7 @@ public class StoreLoginAction extends Action {
         if (sessionStore != null) {
             // 既にログイン中の店舗 → ホームへ直接遷移
             request.setAttribute("store", sessionStore);
-            request.getRequestDispatcher("/shop/hoge.jsp").forward(request, response);
+            request.getRequestDispatcher("/shop/store_home.jsp").forward(request, response);
             return;
         }
 
@@ -42,7 +42,7 @@ public class StoreLoginAction extends Action {
             request.setAttribute("store", store);
 
             // 店舗用ホームへフォワード
-            request.getRequestDispatcher("/shop/hoge.jsp").forward(request, response);
+            request.getRequestDispatcher("/shop/store_home.jsp").forward(request, response);
 
         } else {
             System.out.println("ログイン失敗：フォワード実行");
