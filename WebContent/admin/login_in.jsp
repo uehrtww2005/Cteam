@@ -16,7 +16,7 @@
     }
 %>
 
-<form action="<%=request.getContextPath()%>/Adpay/Login.action" method="post">
+<form action="<%=request.getContextPath()%>/Adpay/AdminLogin.action" method="post">
 
     <p>
         名前

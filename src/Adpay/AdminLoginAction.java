@@ -8,7 +8,7 @@ import bean.Admin;
 import dao.AdminDAO;
 import tool.Action;
 
-public class LoginAction extends Action {
+public class AdminLoginAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws Exception {

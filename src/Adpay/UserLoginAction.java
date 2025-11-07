@@ -31,7 +31,7 @@ public class UserLoginAction extends Action {
 
 
             // ログイン成功ページへフォワード
-            request.getRequestDispatcher("/user/hoge.jsp").forward(request, response);
+            request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
 
         } else {
             System.out.println("ログイン失敗：フォワード実行");

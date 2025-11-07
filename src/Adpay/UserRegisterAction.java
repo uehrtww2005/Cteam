@@ -12,7 +12,7 @@ import bean.User;
 import dao.UserDAO;
 
 @WebServlet("/Adpay/Register.action")
-public class RegisterAction extends HttpServlet {
+public class UserRegisterAction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

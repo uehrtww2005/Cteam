@@ -11,7 +11,7 @@
     <p style="color:red;"><%= msg %></p>
 <% } %>
 
-<form action="<%=request.getContextPath()%>/Adpay/Register.action" method="post" onsubmit="return validatePasswords();">
+<form action="<%=request.getContextPath()%>/Adpay/UserRegister.action" method="post" onsubmit="return validatePasswords();">
 
     <!-- ユーザー名：< > 禁止 -->
     <p>
