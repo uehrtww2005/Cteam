@@ -36,7 +36,7 @@ public class UserLoginAction extends Action {
         } else {
             System.out.println("ログイン失敗：フォワード実行");
             request.setAttribute("msg", "メールアドレスまたはパスワードが間違っています");
-            request.getRequestDispatcher("/user/login_in.jsp").forward(request, response);
+            request.getRequestDispatcher("/user/login_user.jsp").forward(request, response);
         }
 
     }
