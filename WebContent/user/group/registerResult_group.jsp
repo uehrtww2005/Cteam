@@ -14,6 +14,6 @@
 <p style="font-weight:bold; font-size:1.2em;"><%= msg %></p>
 
 <!-- ログインページへのリンク -->
-<p><a href="<%=request.getContextPath()%>/Adpay/login_group.jsp">ログインページへ</a></p>
+<p><a href="<%=request.getContextPath()%>/user/group/login_group.jsp">ログインページへ</a></p>
 
 <%@ include file="../../footer.html" %>
