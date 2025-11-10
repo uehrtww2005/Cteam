@@ -19,7 +19,7 @@ p {
 }
 
 /* フォーム */
-form[action$="Adpay/Login.action"] {
+form[action$="Adpay/AdminAdminLogin.action"] {
     width: 400px;       /* 幅を統一 */
     margin: 0px auto;  /* 中央揃え */
     text-align: center;
@@ -31,15 +31,15 @@ form[action$="Adpay/Login.action"] {
 }
 
 /* フォーム内p */
-form[action$="Adpay/Login.action"] p {
+form[action$="Adpay/AdminAdminLogin.action"] p {
     font-size: 18px;
     font-weight: bold;
     margin: 5px 0;
 }
 
 /* テキストボックス */
-form[action*="Adpay/Login.action"] input[type="text"],
-form[action*="Adpay/Login.action"] input[type="password"] {
+form[action*="Adpay/AdminLogin.action"] input[type="text"],
+form[action*="Adpay/AdminLogin.action"] input[type="password"] {
     width: 60%;
     padding: 10px 15px;
     font-size: 16px;
@@ -50,13 +50,13 @@ form[action*="Adpay/Login.action"] input[type="password"] {
     transition: border-color 0.2s ease;
 }
 
-form[action$="Adpay/Login.action"] input:focus {
+form[action$="Adpay/AdminLogin.action"] input:focus {
     border-color: #64b5f6;
     outline: none;
 }
 
 /* ログインボタン */
-form[action$="Adpay/Login.action"] input[type="submit"] {
+form[action$="Adpay/AdminLogin.action"] input[type="submit"] {
     background-color: #64b5f6;
     color: white;
     border: none;
@@ -69,14 +69,14 @@ form[action$="Adpay/Login.action"] input[type="submit"] {
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-form[action$="Adpay/Login.action"] input[type="submit"]:hover {
+form[action$="Adpay/AdminLogin.action"] input[type="submit"]:hover {
     background-color: #42a5f5;
     transform: translateY(-2px);
 }
 
 /* リンクと戻るボタン */
-form[action$="Adpay/Login.action"] a,
-form[action$="Adpay/Login.action"] input[type="button"] {
+form[action$="Adpay/AdminLogin.action"] a,
+form[action$="Adpay/AdminLogin.action"] input[type="button"] {
     display: inline-block;
     margin: 10px 5px;
     padding: 10px 20px;
@@ -92,20 +92,20 @@ form[action$="Adpay/Login.action"] input[type="button"] {
 
 /* レスポンシブ */
 @media screen and (max-width: 768px) {
-    form[action$="Adpay/Login.action"] {
+    form[action$="Adpay/AdminLogin.action"] {
         width: 85%;
         padding: 20px 15px;
     }
 
-    form[action$="Adpay/Login.action"] input[type="text"],
-    form[action$="Adpay/Login.action"] input[type="password"] {
+    form[action$="Adpay/AdminLogin.action"] input[type="text"],
+    form[action$="Adpay/AdminLogin.action"] input[type="password"] {
         width: 90%;
         font-size: 15px;
     }
 
-    form[action$="Adpay/Login.action"] input[type="submit"],
-    form[action$="Adpay/Login.action"] a,
-    form[action$="Adpay/Login.action"] input[type="button"] {
+    form[action$="Adpay/AdminLogin.action"] input[type="submit"],
+    form[action$="Adpay/AdminLogin.action"] a,
+    form[action$="Adpay/AdminLogin.action"] input[type="button"] {
         width: 70%;
         font-size: 16px;
         padding: 10px 30px;
