@@ -1,21 +1,69 @@
-/* ======== トップ画面用CSS ======== */
+/* ======== トップ画面用CSS（背景画像を画面いっぱい表示＋ローディング） ======== */
 
-/* 全体設定 */
-body {
-    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
-    background-color: #fff;
+/* ======== HTML, body 全体設定 ======== */
+html, body {
+    height: 100%;
     margin: 0;
-    padding: 0;
+    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
+    color: #fff;
+    position: relative;
 }
 
+/* ======== 背景画像レイヤー ======== */
+.bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+/* ======== 半透明オーバーレイ ======== */
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 30, 30, 0.6);
+    z-index: 1;
+}
+
+/* ======== コンテンツ層を上に表示 ======== */
+h1, h2, p, form {
+    position: relative;
+    z-index: 2;
+}
+
+/* ======== メインタイトル ======== */
 h1 {
     text-align: center;
-    font-size: 80px;
+    font-size: 60px;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 80px;
     margin-bottom: 0;
-    color: #222;
-    font-family: 'Comic Sans MS', 'Rounded Mplus 1c', cursive;
+    opacity: 0.9;
+}
+
+/* ======== 説明テキスト ======== */
+h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    line-height: 1.8;
 }
 
 p {
@@ -23,82 +71,165 @@ p {
     font-size: 20px;
     font-weight: bold;
     margin: 0;
-    color: #222;
+    color: #ddd;
 }
 
-/* 管理者ボタン */
-form[action$="admin/login_in.jsp"] {
+/* ======== 管理者ボタン ======== */
+form[action$="admin/login_adimn.jsp"] {
     position: absolute;
     top: 50px;
     right: 50px;
 }
 
-form[action$="admin/login_in.jsp"] button {
-    background-color: #ffecb3;
-    border: 2px solid #fbc02d;
-    color: #444;
+form[action$="admin/login_admin.jsp"] button {
+    background-color: #222;
+    border: 1px solid #FFD700;
+    color: #FFD700;
     padding: 10px 25px;
     font-size: 16px;
     border-radius: 25px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
-form[action$="admin/login_in.jsp"] button:hover {
-    background-color: #ffe082;
-    transform: scale(1.05);
+form[action$="admin/login_admin.jsp"] button:hover {
+    background-color: #000;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
-/* 店舗ログイン */
-form[action$="shop/login_in.jsp"] button {
-    width: 400px;
-    padding: 20px 0;
-    font-size: 18px;
-    border-radius: 10px;
-    background-color: #7ba5f0;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    transition: all 0.2s ease;
-    margin: 20px auto 0; /* 上マージン20px、左右中央 */
-    display: block;
-}
-
-form[action$="shop/login_in.jsp"] button:hover {
-    background-color: #6495ED;
-    transform: translateY(-3px);
-}
-
-/* 利用者ログイン */
+/* ======== 共通ボタンデザイン（店舗・利用者） ======== */
+form[action$="shop/login_store.jsp"] button,
 form[action$="Adpay/login_choise.jsp"] button {
     width: 400px;
     padding: 20px 0;
     font-size: 18px;
-    border-radius: 10px;
-    background-color: #00ec8d;
-    border: none;
-    color: #333;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #222, #111);
+    color: #fff;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    transition: all 0.2s ease;
-    margin: 10px auto 0; /* 上マージン10px、左右中央 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
     display: block;
+    letter-spacing: 0.05em;
 }
 
+/* ボタン間隔 */
+form[action$="shop/login_store.jsp"] button {
+    margin: 25px auto 25px;
+    border: 1px solid #555;
+}
+
+form[action$="Adpay/login_choise.jsp"] button {
+    margin: 25px auto 100px;
+    border: 1px solid #666;
+}
+
+/* ホバー時 */
+form[action$="shop/login_store.jsp"] button:hover,
 form[action$="Adpay/login_choise.jsp"] button:hover {
-    background-color: #00B16B;
+    background: linear-gradient(145deg, #333, #000);
+    color: #FFD700;
+    border-color: #FFD700;
     transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-/* レスポンシブ */
-@media screen and (max-width: 768px) {
-    h1 { font-size: 60px; margin-top: 20px; }
+/* main に padding-bottom を追加してフッターとの距離を確保 */
+main {
+    padding-bottom: 120px;
+}
 
-    form[action$="shop/login_in.jsp"] button,
+/* ======== ローディング画面 ======== */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+#loader img {
+    width: 300px;
+    height: auto;
+    opacity: 0;
+    animation: imageFadeIn 1s forwards 0.3s;
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes imageFadeIn { to { opacity: 1; } }
+
+/* フェードアウト用クラス */
+.fadeOut {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut { to { opacity: 0; } }
+
+/* ======== レスポンシブ ======== */
+@media screen and (max-width: 768px) {
+    h1 { font-size: 60px; margin-top: 40px; }
+    form[action$="shop/login_store.jsp"] button,
     form[action$="Adpay/login_choise.jsp"] button {
-        width: 85%; /* スマホで画面幅に合わせる */
+        width: 85%;
         font-size: 16px;
         padding: 15px 0;
     }
+    form[action$="Adpay/login_choise.jsp"] button {
+        margin-bottom: 80px;
+    }
 }
+/* ======== ローディング画面 ======== */
+#loader {
+    position: fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background-color:#0a0a08;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+#loader img {
+    max-width:300px;
+    opacity:0;
+    transition: opacity 1s ease;
+}
+
+/* ======== 背景画像 & オーバーレイ ======== */
+.bg-image, .bg-overlay {
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    opacity:0;
+    display:none;  /* 初期非表示 */
+    transition: opacity 1s ease;
+}
+.bg-image img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.bg-overlay {
+    background-color: rgba(30,30,30,0.6);
+}
+
+/* ======== ヘッダー・メイン・フッター ======== */
+#header, #main-content, #footer {
+    opacity:0;
+    display:none;
+    transition: opacity 1s ease;
+}
+#header { display:flex; }

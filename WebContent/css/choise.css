@@ -27,13 +27,13 @@ p {
 }
 
 /* 管理者ボタン */
-form[action$="admin/login_in.jsp"] {
+form[action$="admin/login_admin.jsp"] {
     position: absolute;
     top: 50px;
     right: 50px;
 }
 
-form[action$="admin/login_in.jsp"] button {
+form[action$="admin/login_admin.jsp"] button {
     background-color: #ffecb3;
     border: 2px solid #fbc02d;
     color: #444;
@@ -44,13 +44,13 @@ form[action$="admin/login_in.jsp"] button {
     transition: all 0.2s ease;
 }
 
-form[action$="admin/login_in.jsp"] button:hover {
+form[action$="admin/login_admin.jsp"] button:hover {
     background-color: #ffe082;
     transform: scale(1.05);
 }
 
 /* 店舗ログイン（青系） */
-form[action$="shop/login_in.jsp"] button {
+form[action$="shop/login_store.jsp"] button {
     width: 400px;
     padding: 20px 0;
     font-size: 18px;
@@ -66,7 +66,7 @@ form[action$="shop/login_in.jsp"] button {
     font-weight: bold;
 }
 
-form[action$="shop/login_in.jsp"] button:hover {
+form[action$="shop/login_store.jsp"] button:hover {
     background-color: #6495ED;
     transform: translateY(-3px);
 }
@@ -94,7 +94,7 @@ form[action$="Adpay/login_choise.jsp"] button:hover {
 }
 
 /* ======== 個人・団体ボタン（新規追加） ======== */
-form[action$="user/login_in.jsp"] button,
+form[action$="user/login_user.jsp"] button,
 form[action$="user/group/login_group.jsp"] button {
     width: 400px;
     padding: 20px 0;
@@ -111,11 +111,11 @@ form[action$="user/group/login_group.jsp"] button {
 }
 
 /* 個人ボタン（みどり系） */
-form[action$="user/login_in.jsp"] button {
+form[action$="user/login_user.jsp"] button {
     background-color: #00ec8d;
 }
 
-form[action$="user/login_in.jsp"] button:hover {
+form[action$="user/login_user.jsp"] button:hover {
     background-color: #00db84;
     transform: translateY(-3px);
 }
@@ -154,9 +154,9 @@ p input[type="button"]:hover {
         margin-top: 20px;
     }
 
-    form[action$="shop/login_in.jsp"] button,
+    form[action$="shop/login_store.jsp"] button,
     form[action$="Adpay/login_choise.jsp"] button,
-    form[action$="user/login_in.jsp"] button,
+    form[action$="user/login_user.jsp"] button,
     form[action$="user/group/login_group.jsp"] button {
         width: 85%;
         font-size: 16px;

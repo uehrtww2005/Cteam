@@ -13,4 +13,3 @@
 		// ブラウザが新しいURLへ移動する
 		response.sendRedirect(contextPath + "/Adpay/login.jsp");
 %>
-
