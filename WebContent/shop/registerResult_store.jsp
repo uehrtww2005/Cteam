@@ -16,7 +16,7 @@
     <p style="font-weight:bold; font-size:1.2em;"><%= msg %></p>
 
     <!-- ログインページへのリンク -->
-    <p><a href="<%=request.getContextPath()%>/shop/login_in.jsp">ログインページへ</a></p>
+    <p><a href="<%=request.getContextPath()%>/shop/login_store.jsp">ログインページへ</a></p>
 </div>
 
 <%@ include file="../footer.html" %>

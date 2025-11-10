@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.User;
 import dao.UserDAO;
 
-@WebServlet("/Adpay/Register.action")
+@WebServlet("/Adpay/UserRegister.action")
 public class UserRegisterAction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

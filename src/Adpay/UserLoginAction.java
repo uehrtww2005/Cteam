@@ -13,7 +13,6 @@ public class UserLoginAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        System.out.println("manpi"); // 動作確認用
 
         // フォームから送信されたメールアドレスとパスワードを取得
         String address = request.getParameter("address");

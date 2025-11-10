@@ -47,7 +47,7 @@ public class StoreLoginAction extends Action {
         } else {
             System.out.println("ログイン失敗：フォワード実行");
             request.setAttribute("msg", "電話番号またはパスワードが間違っています");
-            request.getRequestDispatcher("/shop/login_in.jsp").forward(request, response);
+            request.getRequestDispatcher("/shop/login_store.jsp").forward(request, response);
         }
     }
 }
