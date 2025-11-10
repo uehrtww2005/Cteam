@@ -38,7 +38,7 @@ public class GroupLoginAction extends HttpServlet {
             session.setAttribute("group", group);
             request.setAttribute("group", group);
 
-            request.getRequestDispatcher("/user/hoge.jsp").forward(request, response);
+            request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
         } else {
             // 失敗
             request.setAttribute("msg", "メールアドレスまたはパスワードが間違っています。");

@@ -7,7 +7,7 @@
 <h1>AdPay</h1>
 
 <!-- 個人・団体 -->
-<form action="<%=request.getContextPath()%>/user/login_in.jsp" method="post">
+<form action="<%=request.getContextPath()%>/user/login_user.jsp" method="post">
     <button type="submit">個人の方はこちら</button>
 </form>
 <form action="<%=request.getContextPath()%>/user/group/login_group.jsp" method="post">

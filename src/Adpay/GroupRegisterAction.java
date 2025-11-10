@@ -28,7 +28,7 @@ public class GroupRegisterAction extends HttpServlet {
         // 1. パスワードと確認用が一致するかチェック
            if (!password.equals(passwordConfirm)) {
                request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
-               request.getRequestDispatcher("/user/register.jsp").forward(request, response);
+               request.getRequestDispatcher("/user/register_group.jsp").forward(request, response);
                return;
            }
 
@@ -53,6 +53,6 @@ public class GroupRegisterAction extends HttpServlet {
 
         // JSPに値を渡して内部転送（URLに出ない）
         request.setAttribute("msg", msg);
-        request.getRequestDispatcher("/user/group/registerResult.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/group/registerResult_group.jsp").forward(request, response);
     }
 }

@@ -27,7 +27,7 @@ public class UserRegisterAction extends HttpServlet {
      // 1. パスワードと確認用が一致するかチェック
         if (!password.equals(passwordConfirm)) {
             request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
-            request.getRequestDispatcher("/user/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
             return;
         }
 
@@ -57,7 +57,7 @@ public class UserRegisterAction extends HttpServlet {
 
         // JSP に値を渡して内部転送（URLに出ない）
         request.setAttribute("msg", msg);
-        request.getRequestDispatcher("/user/registerResult.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/registerResult_user.jsp").forward(request, response);
     }
 
 }
