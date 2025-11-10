@@ -188,7 +188,8 @@ main {
         margin-bottom: 80px;
     }
 }
-/* ======== ローディング画面 ======== */
+
+/* ======== ローディング画面（重複定義） ======== */
 #loader {
     position: fixed;
     top:0; left:0;
@@ -206,7 +207,7 @@ main {
     transition: opacity 1s ease;
 }
 
-/* ======== 背景画像 & オーバーレイ ======== */
+/* ======== 背景画像 & オーバーレイ（重複定義） ======== */
 .bg-image, .bg-overlay {
     position:fixed;
     top:0; left:0;

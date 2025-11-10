@@ -1,6 +1,4 @@
-/* ======== トップ画面用CSS ======== */
-
-/* 全体設定 */
+/* ======== 全体設定 ======== */
 body {
     font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
     background-color: #fff;
@@ -26,108 +24,45 @@ p {
     color: #222;
 }
 
-/* 管理者ボタン */
-form[action$="admin/login_admin.jsp"] {
-    position: absolute;
-    top: 50px;
-    right: 50px;
-}
-
-form[action$="admin/login_admin.jsp"] button {
-    background-color: #ffecb3;
-    border: 2px solid #fbc02d;
-    color: #444;
-    padding: 10px 25px;
-    font-size: 16px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-form[action$="admin/login_admin.jsp"] button:hover {
-    background-color: #ffe082;
-    transform: scale(1.05);
-}
-
-/* 店舗ログイン（青系） */
-form[action$="shop/login_store.jsp"] button {
-    width: 400px;
-    padding: 20px 0;
-    font-size: 18px;
-    border-radius: 10px;
-    background-color: #7ba5f0;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    margin: 20px auto 0;
-    display: block;
-    font-weight: bold;
-}
-
-form[action$="shop/login_store.jsp"] button:hover {
-    background-color: #6495ED;
-    transform: translateY(-3px);
-}
-
-/* 利用者ログイン（緑系） */
-form[action$="Adpay/login_choise.jsp"] button {
-    width: 400px;
-    padding: 20px 0;
-    font-size: 18px;
-    border-radius: 10px;
-    background-color: #00ec8d;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    margin: 10px auto 0;
-    display: block;
-    font-weight: bold;
-}
-
-form[action$="Adpay/login_choise.jsp"] button:hover {
-    background-color: #00B16B;
-    transform: translateY(-3px);
-}
-
-/* ======== 個人・団体ボタン（新規追加） ======== */
+/* ======== 個人・団体ボタン（トップと統一） ======== */
 form[action$="user/login_user.jsp"] button,
 form[action$="user/group/login_group.jsp"] button {
     width: 400px;
     padding: 20px 0;
     font-size: 18px;
-    border-radius: 10px;
-    border: none;
-    color: #333;
+    border-radius: 12px;
+    color: #fff;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
     display: block;
-    margin: 20px auto 0;
+    margin: 25px auto 0;
+    letter-spacing: 0.05em;
     font-weight: bold;
 }
 
-/* 個人ボタン（みどり系） */
+/* 個人ボタン（緑系トップ配色） */
 form[action$="user/login_user.jsp"] button {
-    background-color: #00ec8d;
+    background: linear-gradient(145deg, #00ec8d, #00b16b);
 }
 
 form[action$="user/login_user.jsp"] button:hover {
-    background-color: #00db84;
+    background: linear-gradient(145deg, #00b16b, #00a65a);
+    color: #FFD700;
     transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-/* 団体ボタン（青系） */
+/* 団体ボタン（青系トップ配色） */
 form[action$="user/group/login_group.jsp"] button {
-    background-color: #ffd86b;
+    background: linear-gradient(145deg, #7ba5f0, #6495ED);
 }
 
 form[action$="user/group/login_group.jsp"] button:hover {
-    background-color: #ffc93c;
+    background: linear-gradient(145deg, #6495ED, #4d7cd1);
+    color: #FFD700;
     transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
 /* ======== 戻るボタン ======== */
@@ -140,6 +75,7 @@ p input[type="button"] {
     cursor: pointer;
     font-size: 16px;
     transition: all 0.2s ease;
+    display: inline-block;
 }
 
 p input[type="button"]:hover {
@@ -154,12 +90,14 @@ p input[type="button"]:hover {
         margin-top: 20px;
     }
 
-    form[action$="shop/login_store.jsp"] button,
-    form[action$="Adpay/login_choise.jsp"] button,
     form[action$="user/login_user.jsp"] button,
     form[action$="user/group/login_group.jsp"] button {
         width: 85%;
         font-size: 16px;
         padding: 15px 0;
+    }
+
+    p input[type="button"] {
+        width: 80%;
     }
 }
