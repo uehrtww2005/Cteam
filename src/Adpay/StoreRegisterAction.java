@@ -56,7 +56,7 @@ public class StoreRegisterAction extends HttpServlet {
         // --- 画像保存処理 ---
         if (storeId > 0 && imagePart != null && imagePart.getSize() > 0) {
 
-            String uploadDir = "C:" + File.separator + "Users" + File.separator + "sotu" + File.separator +
+            String uploadDir = "C:" + File.separator + "Users" + File.separator + "k_niwa" + File.separator +
                                "git" + File.separator + "Cteam" + File.separator + "WebContent" +
                                File.separator + "shop" + File.separator + "store_images";
 
