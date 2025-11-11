@@ -25,7 +25,7 @@ public class AdminLoginAction extends Action {
             !password.matches("^[A-Za-z0-9ａ-ｚＡ-Ｚ０-９]+$")) {
 
             request.setAttribute("error", "名前またはパスワードの形式が正しくありません。");
-            request.getRequestDispatcher("/admin/login_in.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/login_admin.jsp").forward(request, response);
             return;
         }
 
@@ -42,7 +42,7 @@ public class AdminLoginAction extends Action {
         } else {
             // 認証失敗 → 同じ画面に戻してメッセージ表示
             request.setAttribute("error", "名前またはパスワードが間違っています。");
-            request.getRequestDispatcher("/admin/login_in.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/login_admin.jsp").forward(request, response);
         }
     }
 }
