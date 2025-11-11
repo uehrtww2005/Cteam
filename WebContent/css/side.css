@@ -59,3 +59,20 @@ body {
     border-right: none;
   }
 }
+/* サイドバー内プラン表示（背景なし、文字だけ） */
+.sidebar-plan {
+    display: flex;
+    align-items: center;
+    color: #ffffff;            /* 文字色はリンクと同じ */
+    font-size: 18px;           /* sidebar-link と同じ */
+    line-height: 1.5;          /* sidebar-link に合わせる */
+    padding: 15px 20px;        /* sidebar-link と同じ */
+    margin: 0;                  /* リンク間に自然に配置 */
+    text-decoration: none;      /* リンク風に見せる場合も装飾なし */
+}
+
+
+.plan-text {
+    font-size: 18px;           /* sidebar-link と揃える */
+    line-height: 1.5;
+}

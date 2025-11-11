@@ -24,7 +24,7 @@
                    List<String> sampleNews = new ArrayList<>();
                    sampleNews.add("システムメンテナンスのお知らせ：11月15日 2:00〜5:00");
                    sampleNews.add("新機能追加：メニュー表の編集機能が改善されました");
-                   sampleNews.add("キャンペーン：12月限定ポイント2倍キャンペーン実施中");
+                   sampleNews.add("新機能追加：俺馬鹿だからわかんねぇけどよ");
 
                    for (String news : sampleNews) {
                 %>
