@@ -180,7 +180,7 @@ public class StoreDAO extends DAO {
             }
 
             if (store != null) {
-                store.setMenus(menuList);
+                store.setMenu(menuList);
             }
         }
 

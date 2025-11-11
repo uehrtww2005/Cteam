@@ -55,10 +55,10 @@ public class Store {
         this.storeDetail = storeDetail;
     }
 
-    public List<Menu> getMenus() {
+    public List<Menu> getMenu() {
         return menu;
     }
-    public void setMenus(List<Menu> menu) {
+    public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
 }
