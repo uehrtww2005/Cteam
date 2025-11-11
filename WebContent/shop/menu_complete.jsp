@@ -7,13 +7,65 @@
   <title>登録完了</title>
   <meta http-equiv="refresh" content="5; URL=<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store_id}">
   <style>
-    body { text-align: center; font-family: "Yu Gothic", sans-serif; margin-top: 100px; }
-    .msg { font-size: 20px; color: #444; margin-bottom: 20px; }
-    .loading { color: #999; font-size: 14px; }
+    body {
+      background-color: #121212; /* 黒ベース */
+      color: #f5f5f5;
+      font-family: "Yu Gothic", "Hiragino Sans", sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .msg {
+      font-size: 28px;
+      font-weight: bold;
+      color: #f8f8f8;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .loading {
+      color: #d4af37; /* 金色 */
+      font-size: 16px;
+      opacity: 0.8;
+      animation: blink 1.8s infinite;
+    }
+
+    /* フェードイン */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 点滅アニメーション */
+    @keyframes blink {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* 金のボーダーライン */
+    .line {
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+      margin: 25px 0;
+      animation: lineGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes lineGlow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
-  <div class="msg">${msg}</div>
+  <div class="msg">✨ ${msg} ✨</div>
+  <div class="line"></div>
   <div class="loading">5秒後にメニュー一覧に戻ります...</div>
 </body>
 </html>
