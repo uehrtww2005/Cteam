@@ -1,0 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
+<div class="sidebar">
+    <a href="<%=request.getContextPath()%>/Adpay/StoreLogin.action" class="sidebar-link">トップ</a>
+    <a href="#" class="sidebar-link">お知らせ</a>
+    <a href="<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store.storeId}" class="sidebar-link">メニュー表</a>
+    <a href="#" class="sidebar-link">月額プラン</a>
+</div>

@@ -1,24 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page import="java.util.List, java.util.ArrayList" %>
 <%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_home.css?ver=2.0">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_home.css?ver=2.3">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+<div class="store-home-container">
 
-<div class="welcome-page">
+    <!-- サイドバー読み込み -->
+    <%@ include file="../side.jsp" %>
 
-  <div class="welcome-text">
-    <h1>お帰りなさい！</h1>
-    <h2>${store.storeName}様！</h2>
-  </div>
+    <!-- メインコンテンツ -->
+    <div class="main-content">
 
-  <div class="plan-box">
-    <span class="plan-glow"></span>
-    プラン内容：FreePran
-  </div>
+        <!-- おかえりなさいブロック -->
+        <div class="welcome-block">
+            <h1>お帰りなさい、${store.storeName}様</h1>
+        </div>
 
-  <div class="menu-buttons">
-    <a href="#" class="btn btn-red"><span>店舗情報</span></a>
-    <a href="<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store.storeId}" class="btn btn-yellow"><span>メニュー表</span></a>
-    <a href="#" class="btn btn-blue"><span>月額プラン</span></a>
-  </div>
+        <!-- お知らせブロック -->
+        <div class="news-block">
+            <h3>AdPayからのお知らせ</h3>
+            <ul>
+                <%
+                   List<String> sampleNews = new ArrayList<>();
+                   sampleNews.add("システムメンテナンスのお知らせ：11月15日 2:00〜5:00");
+                   sampleNews.add("新機能追加：メニュー表の編集機能が改善されました");
+                   sampleNews.add("キャンペーン：12月限定ポイント2倍キャンペーン実施中");
+
+                   for (String news : sampleNews) {
+                %>
+                  <li><%= news %></li>
+                <%
+                   }
+                %>
+            </ul>
+        </div>
+
+    </div>
 
 </div>
 

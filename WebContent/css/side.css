@@ -1,0 +1,61 @@
+/* 全体設定 */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* コンテナ: サイドバー + メイン */
+.store-home-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* サイドバー */
+.sidebar {
+  width: 220px;
+  background-color: #171717;
+  display: flex;
+  flex-direction: column;
+  padding-top: 110px; /* もともとの50px + ヘッダー60px */
+  box-sizing: border-box;
+}
+
+
+.sidebar-link {
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid #d9d9d9; /* AdPay線色 */
+  transition: background 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: #585858;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+  .store-home-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 20px;
+    border-right: none;
+    border-bottom: 1px solid #d9d9d9;
+  }
+
+  .sidebar-link {
+    border-bottom: none;
+    border-right: 1px solid #d9d9d9;
+    padding: 10px;
+  }
+
+  .sidebar-link:last-child {
+    border-right: none;
+  }
+}
