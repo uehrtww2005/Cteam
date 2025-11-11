@@ -124,4 +124,21 @@ public class GroupDAO extends DAO{
 	    return list;
 	}
 
+	// ランク更新
+    public void updateRank(int groupId, String newRank) throws Exception {
+        Connection con = getConnection();
+        PreparedStatement st = null;
+
+        try {
+            String sql = "UPDATE groups SET rank=? WHERE group_id=?";
+            st = con.prepareStatement(sql);
+            st.setString(1, newRank);
+            st.setInt(2, groupId);
+            st.executeUpdate();
+        } finally {
+            if (st != null) st.close();
+            if (con != null) con.close();
+        }
+    }
+
 }

@@ -61,4 +61,21 @@ public class User {
 		this.gender = gender;
 	}
 
+	// ★ 次のランクまでの残額を計算するメソッド ★
+	public int getRemainingToNextRank() {
+	    switch (rank) {
+	        case "ビギナー":
+	            return Math.max(5000 - prepaidAmount, 0);
+	        case "ブロンズ":
+	            return Math.max(15000 - prepaidAmount, 0);
+	        case "シルバー":
+	            return Math.max(40000 - prepaidAmount, 0);
+	        case "ゴールド":
+	            return 0; // 最高ランク
+	        default:
+	            return 0;
+	    }
+	}
+
+
 }

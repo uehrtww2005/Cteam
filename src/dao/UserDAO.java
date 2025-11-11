@@ -100,4 +100,16 @@ public class UserDAO extends DAO {
 
         return list;
     }
+
+    public void updateRank(int userId, String newRank) throws Exception {
+        Connection con = getConnection();
+        String sql = "UPDATE user SET rank=? WHERE user_id=?";
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setString(1, newRank);
+        st.setInt(2, userId);
+        st.executeUpdate();
+        st.close();
+        con.close();
+    }
+
 }
