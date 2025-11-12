@@ -5,7 +5,6 @@
 <head>
   <meta charset="UTF-8">
   <title>登録完了</title>
-  <meta http-equiv="refresh" content="5; URL=<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store_id}">
   <style>
     body {
       background-color: #121212; /* 黒ベース */
@@ -62,11 +61,27 @@
     }
 
   </style>
+  <script>
+    let countdown = 5; // 秒数
+    function updateCountdown() {
+      document.getElementById("countdown").innerText = countdown;
+      if (countdown === 0) {
+        // 0秒になったら一覧に遷移
+        window.location.href = "<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store_id}";
+      } else {
+        countdown--;
+        setTimeout(updateCountdown, 1000); // 1秒ごとに更新
+      }
+    }
+    window.onload = updateCountdown;
+  </script>
 </head>
 <body>
   <div class="msg">✨ ${msg} ✨</div>
   <div class="line"></div>
-  <div class="loading">5秒後にメニュー一覧に戻ります...</div>
+  <div class="loading">
+    <span id="countdown">5</span>秒後にメニュー一覧に戻ります...
+  </div>
 </body>
 </html>
 <%@ include file="../footer.html" %>
