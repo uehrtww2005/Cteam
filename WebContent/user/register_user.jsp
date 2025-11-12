@@ -34,7 +34,7 @@
     <!-- 電話番号：数字＋ハイフン形式チェック -->
     <p>
         <label>電話番号</label>
-        <input type="text" name="user_tel" maxlength="15" required
+        <input type="text" name="user_tel" maxlength="13" required
                pattern="^0\d{1,3}-\d{1,4}-\d{1,4}$"
                title="電話番号は 例：090-1234-5678 の形式で入力してください"
                placeholder="例：090-1234-5678">

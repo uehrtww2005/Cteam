@@ -23,7 +23,7 @@
 <form action="<%=request.getContextPath()%>/Adpay/StoreLogin.action" method="post">
     <div class="input-group">
         <p>電話番号</p>
-        <input type="text" name="store_tel" required placeholder="電話番号を入力してください">
+        <input type="text" name="store_tel" maxlength="13" required placeholder="電話番号を入力してください">
     </div>
 
     <div class="input-group">
