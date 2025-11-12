@@ -40,4 +40,12 @@ public class Menu {
 		this.imageExtension = imageExtension;
 	}
 
+	public String getImagePath() {
+        if (imageExtension == null || imageExtension.isEmpty()) {
+            return ""; // 画像がない場合
+        }
+        // Web上でアクセスできるパス
+        return "shop/store_menu_images/" + storeId + "_" + menuId + "." + imageExtension;
+    }
+
 }

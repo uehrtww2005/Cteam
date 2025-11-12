@@ -57,22 +57,31 @@ public class MenuDAO extends DAO {
     }
 
     // 更新処理
-    public int update(Menu menu, int storeId) throws Exception {
+    public boolean update(Menu menu) throws Exception {
         Connection con = getConnection();
+        PreparedStatement ps = null;
+        boolean result = false;
 
-        PreparedStatement st = con.prepareStatement(
-            "UPDATE menu SET menu_name = ?, price = ? WHERE menu_id = ? AND store_id = ?"
-        );
-        st.setString(1, menu.getMenuName());
-        st.setInt(2, menu.getPrice());
-        st.setInt(3, menu.getMenuId());
-        st.setInt(4, storeId);
+        try {
+            String sql = "UPDATE menu SET menu_name = ?, price = ? WHERE menu_id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, menu.getMenuName());
+            ps.setInt(2, menu.getPrice());
+            ps.setInt(3, menu.getMenuId());
 
-        int line = st.executeUpdate();
+            int updated = ps.executeUpdate();
+            if (updated > 0) {
+                result = true; // 更新成功
+            }
 
-        st.close();
-        con.close();
-        return line;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        }
+
+        return result;
     }
 
     // 全件取得
@@ -191,4 +200,25 @@ public class MenuDAO extends DAO {
         con.close();
         return id;
     }
+
+    public Menu getMenuById(int menuId) throws Exception {
+        Menu menu = null;
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM menu WHERE menu_id = ?")) {
+
+            ps.setInt(1, menuId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                menu = new Menu();
+                menu.setMenuId(rs.getInt("menu_id"));
+                menu.setStoreId(rs.getInt("store_id"));
+                menu.setMenuName(rs.getString("menu_name"));
+                menu.setPrice(rs.getInt("price"));
+                menu.setImageExtension(rs.getString("image_extension"));
+            }
+        }
+        return menu;
+    }
+
 }

@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/menu.css?ver=1.1">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/menu.css?ver=1.2">
 
 <html>
 <head>
   <title>メニュー登録</title>
-
 </head>
 <body>
 
@@ -23,23 +22,30 @@
     <label>価格：</label>
     <input type="number" name="price" required><br>
     <label>画像：</label>
-    <input type="file" name="menu_image" accept="image/*"><br>
+    <input type="file" name="menu_image" accept="image/*" required><br>
     <button type="submit">登録</button>
   </form>
 
-<p><a href="<%=request.getContextPath()%>/shop/store_home.jsp">Homeに戻る</a></p>
+  <p><a href="<%=request.getContextPath()%>/shop/store_home.jsp">Homeに戻る</a></p>
 
   <h2>登録済みメニュー一覧</h2>
 
   <div class="menu-list">
     <c:forEach var="menu" items="${menuList}">
-      <div class="menu-card">
-        <img class="menu-img"
-             src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
-             alt="メニュー画像">
-        <div><strong>${menu.menuName}</strong></div>
-        <div>${menu.price}円</div>
-      </div>
+      <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}" class="menu-card-link">
+        <div class="menu-card">
+          <c:if test="${not empty menu.imageExtension}">
+            <img class="menu-img"
+                 src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
+                 alt="メニュー画像">
+          </c:if>
+          <c:if test="${empty menu.imageExtension}">
+            <p>（画像が登録されていません）</p>
+          </c:if>
+          <div><strong>${menu.menuName}</strong></div>
+          <div>${menu.price}円</div>
+        </div>
+      </a>
     </c:forEach>
   </div>
 
