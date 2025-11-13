@@ -11,9 +11,16 @@ public class Store {
     private String storeTel;
 
     private StoreDetail storeDetail; // 1店舗に1つの詳細
-    private List<Menu> menu;        // 1店舗に複数のメニュー
+    private List<Menu> menu;  		 // 1店舗に複数のメニュー
+    private List<String> tags;
 
-    public int getStoreId() {
+    public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+	public int getStoreId() {
         return storeId;
     }
     public void setStoreId(int storeId) {
