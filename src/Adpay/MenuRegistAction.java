@@ -21,12 +21,10 @@ import dao.MenuDAO;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 public class MenuRegistAction extends HttpServlet {
 
-    // 🟢 GET：store_idごとのメニュー一覧表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String msg = request.getParameter("msg");
         String storeIdStr = request.getParameter("store_id");
 
         if (storeIdStr == null || storeIdStr.isEmpty()) {
@@ -39,7 +37,7 @@ public class MenuRegistAction extends HttpServlet {
 
         try {
             MenuDAO dao = new MenuDAO();
-            List<Menu> menuList = dao.findByStoreId(storeId);  // 🟢 店舗ごとのメニュー取得
+            List<Menu> menuList = dao.findByStoreId(storeId);
             request.setAttribute("menuList", menuList);
             request.setAttribute("store_id", storeId);
         } catch (Exception e) {
@@ -47,15 +45,9 @@ public class MenuRegistAction extends HttpServlet {
             request.setAttribute("msg", "メニュー一覧の取得に失敗しました。");
         }
 
-        if (msg != null && !msg.isEmpty()) {
-            request.setAttribute("msg", msg);
-        }
-
-        // 🟢 menu_regist.jsp にフォワード（同ページで登録＋一覧を表示する）
         request.getRequestDispatcher("/shop/menu_list.jsp").forward(request, response);
     }
 
-    // 🔴 POST：メニュー登録処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -120,7 +112,7 @@ public class MenuRegistAction extends HttpServlet {
 
         // --- 画像ファイル保存 ---
         if (menuId > 0 && imagePart.getSize() > 0) {
-            String uploadDir = "C:" + File.separator + "Users" + File.separator + "k_niwa" + File.separator +
+            String uploadDir = "C:" + File.separator + "Users" + File.separator + "sotu" + File.separator +
                     "git" + File.separator + "Cteam" + File.separator + "WebContent" +
                     File.separator + "shop" + File.separator + "store_menu_images";
 
@@ -139,7 +131,7 @@ public class MenuRegistAction extends HttpServlet {
             }
         }
 
-        // 🟢 完了後、再度メニュー一覧を表示
+        // --- メニュー一覧を再取得 ---
         request.setAttribute("msg", msg);
         request.setAttribute("store_id", storeId);
         try {
@@ -150,16 +142,13 @@ public class MenuRegistAction extends HttpServlet {
             request.setAttribute("msg", msg + "（一覧再取得に失敗）");
         }
 
-        // 🟢 登録完了後も同じJSP（menu_regist.jsp）へ戻す
         request.getRequestDispatcher("/shop/menu_complete.jsp").forward(request, response);
     }
 
-    // ✅ 旧：完了専用ページに飛ばしていた処理（不要なら削除OK）
     private void forwardToComplete(HttpServletRequest request, HttpServletResponse response, String msg, int storeId)
             throws ServletException, IOException {
         request.setAttribute("msg", msg);
         request.setAttribute("store_id", storeId);
-        // 🟢 一覧も表示できるように再利用
         try {
             MenuDAO dao = new MenuDAO();
             List<Menu> menuList = dao.findByStoreId(storeId);

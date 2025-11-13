@@ -11,9 +11,9 @@ public class Store {
     private String storeTel;
 
     private StoreDetail storeDetail; // 1店舗に1つの詳細
-    private List<Menu> menu;        // 1店舗に複数のメニュー
+    private List<Menu> menu;  		 // 1店舗に複数のメニュー
 
-    public int getStoreId() {
+	public int getStoreId() {
         return storeId;
     }
     public void setStoreId(int storeId) {

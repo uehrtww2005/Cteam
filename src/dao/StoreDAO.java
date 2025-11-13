@@ -186,7 +186,5 @@ public class StoreDAO extends DAO {
 
         return store;
     }
-
-
 }
 
