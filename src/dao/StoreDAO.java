@@ -186,21 +186,5 @@ public class StoreDAO extends DAO {
 
         return store;
     }
-
-    public Store getStoreWithDetailMenuAndTags(int storeId) throws Exception {
-        Store store = getStoreWithDetailAndMenu(storeId);
-
-        if (store != null) {
-            // ★ StoreTagDAOを呼んでタグを取得
-            StoreTagDAO tagDAO = new StoreTagDAO();
-            List<String> tags = tagDAO.getTagsByStoreId(storeId);
-            store.setTags(tags);
-        }
-
-        return store;
-    }
-
-
-
 }
 
