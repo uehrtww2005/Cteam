@@ -10,7 +10,6 @@
 <!-- ファビコン -->
 <link rel="icon" href="<%=request.getContextPath()%>/images/adpay.ico" type="image/x-icon">
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/adpay.ico" type="image/x-icon">
-
 </head>
 <body>
   <header>
@@ -18,15 +17,18 @@
     <%
         String role = (String) session.getAttribute("role");
         String homeUrl;
+
         if ("admin".equals(role)) {
             homeUrl = request.getContextPath() + "/Adpay/Login.action";
         } else if ("store".equals(role)) {
             homeUrl = request.getContextPath() + "/Adpay/StoreLogin.action";
         } else if ("user".equals(role)) {
-            homeUrl = request.getContextPath() + "/user/hoge.jsp";
+            // ✅ ユーザーはログイン後ページへ（.action 経由）
+            homeUrl = request.getContextPath() + "/Adpay/UserLogin.action";
         } else if ("group".equals(role)) {
             homeUrl = request.getContextPath() + "/user/group/hoge.jsp";
         } else {
+            // 未ログイン時はトップページ
             homeUrl = request.getContextPath() + "/Adpay/login.jsp";
         }
     %>
@@ -36,46 +38,46 @@
     </a>
 
     <!-- ▼ ナビゲーション -->
-<nav>
-  <ul>
-    <!-- 動的ホームリンク -->
-    <li><a href="<%= homeUrl %>">ホーム</a></li>
+    <nav>
+      <ul>
+        <!-- 動的ホームリンク -->
+        <li><a href="<%= homeUrl %>">ホーム</a></li>
 
-    <!-- サービスメニュー -->
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle">サービス</a>
-      <div class="mega-menu">
-        <div class="mega-left"></div>
-        <div class="mega-right">
-          <h2>広告サービス</h2>
-          <ul>
-            <li><a href="#">デジタル広告</a></li>
-            <li><a href="#">リターゲティング</a></li>
-            <li><a href="#">SNSプロモーション</a></li>
-          </ul>
-          <h2>サポート</h2>
-          <ul>
-            <li><a href="#">導入ガイド</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">お問い合わせ</a></li>
-          </ul>
-        </div>
-      </div>
-    </li>
+        <!-- サービスメニュー -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">サービス</a>
+          <div class="mega-menu">
+            <div class="mega-left"></div>
+            <div class="mega-right">
+              <h2>広告サービス</h2>
+              <ul>
+                <li><a href="#">デジタル広告</a></li>
+                <li><a href="#">リターゲティング</a></li>
+                <li><a href="#">SNSプロモーション</a></li>
+              </ul>
+              <h2>サポート</h2>
+              <ul>
+                <li><a href="#">導入ガイド</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">お問い合わせ</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
 
-    <li><a href="#">料金プラン</a></li>
+        <li><a href="#">料金プラン</a></li>
 
-    <%-- ▼ 未ログイン時のみ「管理者ログイン」を表示 --%>
-    <% if (role == null) { %>
-      <li><a href="<%=request.getContextPath()%>/admin/login_admin.jsp">管理者ログイン</a></li>
-    <% } %>
+        <%-- ▼ 未ログイン時のみ「管理者ログイン」を表示 --%>
+        <% if (role == null) { %>
+          <li><a href="<%=request.getContextPath()%>/admin/login_admin.jsp">管理者ログイン</a></li>
+        <% } %>
 
-    <%-- ▼ ログイン中のみ「ログアウト」を表示 --%>
-    <% if (role != null) { %>
-      <li><a href="<%= request.getContextPath() %>/Adpay/Logout.action">ログアウト</a></li>
-    <% } %>
-  </ul>
-</nav>
+        <%-- ▼ ログイン中のみ「ログアウト」を表示 --%>
+        <% if (role != null) { %>
+          <li><a href="<%= request.getContextPath() %>/Adpay/Logout.action">ログアウト</a></li>
+        <% } %>
+      </ul>
+    </nav>
   </header>
 
   <!-- ▼ メニュー制御スクリプト -->

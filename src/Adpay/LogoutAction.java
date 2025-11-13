@@ -33,7 +33,7 @@ public class LogoutAction extends Action {
         String redirectPath;
         switch (userType) {
             case "user":
-                redirectPath = "/Adpay/user/login.jsp";
+                redirectPath = "/Adpay/login.jsp";
                 break;
             case "shop":
                 redirectPath = "/Adpay/shop/login.jsp";

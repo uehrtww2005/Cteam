@@ -22,6 +22,7 @@ public class GroupLoginAction extends Action {
         if (group != null) {
             HttpSession session = request.getSession();
             session.setAttribute("group", group);
+            session.setAttribute("role", "group"); 
             request.setAttribute("group", group);
 
             String oldRank = group.getRank();

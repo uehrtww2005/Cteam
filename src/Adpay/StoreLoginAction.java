@@ -36,8 +36,7 @@ public class StoreLoginAction extends Action {
         if (store != null) {
             // ログイン成功 → セッションにユーザー情報を保存
             session.setAttribute("store", store);
-            session.setAttribute("role", "store"); // ★これが店舗判定のキー
-
+            session.setAttribute("role", "store");
             // JSP側でも使えるようにセット
             request.setAttribute("store", store);
 

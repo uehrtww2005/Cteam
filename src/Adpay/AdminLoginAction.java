@@ -37,6 +37,7 @@ public class AdminLoginAction extends Action {
             // 認証成功 → ホーム画面へ
             HttpSession session = request.getSession();
             session.setAttribute("admin", admin);
+            session.setAttribute("role", "admin");
             request.getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
 
         } else {
