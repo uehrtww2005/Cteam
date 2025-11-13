@@ -40,22 +40,25 @@
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-/* 戻るボタンは少し小さく */
-.choice-container .back-btn {
-  width: 200px;
-  padding: 12px 0;
-  font-size: 16px;
-  margin-top: 40px;
-  background: linear-gradient(145deg, #111, #000);
-  border: 1px solid #444;
-  color: #ccc;
+/* フォーム外リンク（戻るリンク） */
+.form-links {
+  text-align: center;
+  margin: 40px 0 0 0;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
-.choice-container .back-btn:hover {
-  background: linear-gradient(145deg, #222, #000);
-  color: #FFD700;
-  border-color: #FFD700;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+.form-links a {
+  display: block;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: underline; /* 下線あり */
+  transition: color 0.3s ease;
+  cursor: pointer;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.form-links a:hover {
+  color: #f1c40f; /* ホバーでゴールドに変化 */
 }
 
 /* レスポンシブ */

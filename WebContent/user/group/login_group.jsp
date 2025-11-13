@@ -34,10 +34,7 @@
 <div class="form-links">
     <a href="<%=request.getContextPath()%>/user/group/register_group.jsp">団体の新規登録はこちら</a>
 
-    <!-- 戻るボタン -->
-    <form action="javascript:history.back();" method="post" style="display:inline;">
-        <button type="submit" class="back-btn">戻る</button>
-    </form>
+    <a href="<%=request.getContextPath()%>/Adpay/login.jsp">ホームに戻る</a>
 </div>
 
 <%@ include file="../../footer.html" %>

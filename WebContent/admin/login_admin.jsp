@@ -1,44 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.html" %>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin_login.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
 
-<h1>AdPay</h1>
-<p>管理者ログイン画面</p>
+<!-- 管理者アイコン画像 -->
+<div class="admin-image">
+    <img src="<%=request.getContextPath()%>/images/adpayno.png" alt="管理者イメージ">
+</div>
 
-<%-- ▼ここでエラーメッセージを表示 --%>
+<h1>管理者ログイン画面</h1>
+
 <%
     String error = (String) request.getAttribute("error");
-    if (error != null) {
+    if (error != null && !error.isEmpty()) {
 %>
-    <p style="color:red; font-weight:bold;"><%= error %></p>
-<%
-    }
-%>
+    <p class="error-msg"><%= error %></p>
+<% } %>
 
 <form action="<%=request.getContextPath()%>/Adpay/AdminLogin.action" method="post">
-
-    <p>
-        名前
+    <div class="input-group">
+        <p>名前</p>
         <input type="text" name="adminName"
                placeholder="名前を入力してください"
                required
                pattern="^[A-Za-z0-9ぁ-んァ-ヶ一-龥ーａ-ｚＡ-Ｚ０-９]+$"
-               title="記号は使用できません。英数字または日本語で入力してください。">
-    </p>
+               title="記号は使用できません。英数字または日本語で入力してください">
+    </div>
 
-    <p>
-        パスワード
+    <div class="input-group">
+        <p>パスワード</p>
         <input type="password" name="password"
                placeholder="パスワードを入力してください"
                required
                pattern="^[A-Za-z0-9ａ-ｚＡ-Ｚ０-９]+$"
-               title="記号は使用できません。英数字のみ入力してください。">
-    </p>
+               title="記号は使用できません。英数字のみ入力してください">
+    </div>
 
-    <p><input type="submit" value="ログイン"></p>
+    <div class="submit-wrapper">
+        <input type="submit" value="ログイン">
+    </div>
 </form>
 
-<p><input type="button" value="戻る" onclick="history.back();">
+<div class="form-links">
+    <a href="javascript:history.back();">ホームに戻る</a>
+</div>
 
 <%@ include file="../footer.html" %>

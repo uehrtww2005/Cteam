@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../header.html" %>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/shop.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/shop_login.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
 
 <!-- 店舗イメージ画像 -->

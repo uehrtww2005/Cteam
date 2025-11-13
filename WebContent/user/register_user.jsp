@@ -1,79 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/register.css">
-<h1>AdPay</h1>
-<p>ユーザー新規登録</p>
 
-<%
-    String msg = (String) request.getAttribute("msg");
-    if (msg != null && !msg.isEmpty()) {
-%>
-    <p style="color:red;"><%= msg %></p>
-<% } %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/register_user.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
 
-<form action="<%=request.getContextPath()%>/Adpay/UserRegister.action" method="post" onsubmit="return validatePasswords();">
+<div class="user-page-wrapper">
 
-    <!-- ユーザー名：< > 禁止 -->
-    <p>
-        <label>ユーザー名</label>
-        <input type="text" name="user_name" maxlength="10" required
-               pattern="^[^<>]+$"
-               title="ユーザー名に < や > は使用できません"
-               placeholder="ユーザー名を入力してください">
-    </p>
+  <div class="user-image">
+      <img src="<%=request.getContextPath()%>/images/adpayno.png" alt="登録アイコン">
+  </div>
 
-    <!-- メールアドレス：形式チェック + < > 禁止 -->
-    <p>
-        <label>メールアドレス</label>
-        <input type="email" name="address" maxlength="30" required
-               pattern="^[^<>]+$"
-               title="メールアドレスに < や > は使用できません"
-               placeholder="example@mail.com">
-    </p>
+  <h1>ユーザー新規登録</h1>
 
-    <!-- 電話番号：数字＋ハイフン形式チェック -->
-    <p>
-        <label>電話番号</label>
-        <input type="text" name="user_tel" maxlength="13" required
-               pattern="^0\d{1,3}-\d{1,4}-\d{1,4}$"
-               title="電話番号は 例：090-1234-5678 の形式で入力してください"
-               placeholder="例：090-1234-5678">
-    </p>
+  <%
+      String msg = (String) request.getAttribute("msg");
+      if (msg != null && !msg.isEmpty()) {
+  %>
+      <p class="error-msg"><%= msg %></p>
+  <% } %>
 
-    <!-- 性別 -->
-    <p>
-        <label>性別</label>
-        <span class="gender-options">
-            <label><input type="radio" name="gender" value="1" required> 男性</label>
-            <label><input type="radio" name="gender" value="2" required> 女性</label>
-            <label><input type="radio" name="gender" value="0" required> 回答したくない</label>
-        </span>
-    </p>
+  <form action="<%=request.getContextPath()%>/Adpay/UserRegister.action" method="post" onsubmit="return validatePasswords();">
+      <div class="input-group">
+          <p>ユーザー名</p>
+          <input type="text" name="user_name" maxlength="10" required
+                 pattern="^[^<>]+$"
+                 title="ユーザー名に < や > は使用できません"
+                 placeholder="ユーザー名を入力してください">
+      </div>
 
-    <!-- パスワード -->
-    <p>
-        <label>パスワード</label>
-        <input type="password" name="password" maxlength="15" required
-               pattern="^[A-Za-z0-9]+$"
-               title="半角英数字のみ入力できます"
-               placeholder="半角英数字で入力してください">
-    </p>
+      <div class="input-group">
+          <p>メールアドレス</p>
+          <input type="email" name="address" maxlength="30" required
+                 pattern="^[^<>]+$"
+                 title="メールアドレスに < や > は使用できません"
+                 placeholder="example@mail.com">
+      </div>
 
-    <!-- パスワード確認 -->
-    <p>
-        <label>パスワード確認</label>
-        <input type="password" name="password_confirm" required
-               pattern="^[A-Za-z0-9]+$"
-               title="半角英数字のみ入力できます"
-               placeholder="もう一度パスワードを入力してください">
-    </p>
+      <div class="input-group">
+          <p>電話番号</p>
+          <input type="text" name="user_tel" maxlength="13" required
+                 pattern="^0\\d{1,3}-\\d{1,4}-\\d{1,4}$"
+                 title="例：090-1234-5678 の形式で入力してください"
+                 placeholder="例：090-1234-5678">
+      </div>
 
-    <p><input type="submit" value="登録"></p>
-</form>
+      <div class="input-group gender-group">
+          <p>性別</p>
+          <div class="gender-options">
+              <label><input type="radio" name="gender" value="1" required> 男性</label>
+              <label><input type="radio" name="gender" value="2" required> 女性</label>
+              <label><input type="radio" name="gender" value="0" required> 回答したくない</label>
+          </div>
+      </div>
 
-<p><input type="button" value="戻る" onclick="history.back();"></p>
+      <div class="input-group">
+          <p>パスワード</p>
+          <input type="password" name="password" maxlength="15" required
+                 pattern="^[A-Za-z0-9]+$"
+                 title="半角英数字のみ入力できます"
+                 placeholder="半角英数字で入力してください">
+      </div>
 
-<!-- JS: パスワード一致チェック -->
+      <div class="input-group">
+          <p>パスワード確認</p>
+          <input type="password" name="password_confirm" required
+                 pattern="^[A-Za-z0-9]+$"
+                 title="半角英数字のみ入力できます"
+                 placeholder="もう一度パスワードを入力してください">
+      </div>
+
+      <div class="submit-wrapper">
+          <input type="submit" value="登録">
+      </div>
+  </form>
+
+  <div class="form-links">
+      <a href="javascript:history.back();">個人ログインに戻る</a>
+  </div>
+
+</div>
+
 <script>
 function validatePasswords() {
     const pw = document.querySelector('input[name="password"]').value;
