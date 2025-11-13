@@ -1,19 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@include file="../header.html" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AdPay</title>
+<%@ include file="../header.html" %>
+<!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/choise.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
-<h1>AdPay</h1>
+</head>
+<body>
 
-<!-- 個人・団体 -->
+
+
+<main class="choice-container">
+  <h1>ログイン選択</h1>
+
 <form action="<%=request.getContextPath()%>/user/login_user.jsp" method="post">
     <button type="submit">個人の方はこちら</button>
 </form>
-<form action="<%=request.getContextPath()%>/user/group/login_group.jsp" method="post">
+
+  <form action="../user/group/login_group.jsp" method="post">
     <button type="submit">団体の方はこちら</button>
-</form>
+  </form>
 
-<p><input type="button" value="戻る" onclick="history.back();">
+    <form action="javascript:history.back();" method="post" style="display:inline;">
+        <button type="submit" class="back-btn">戻る</button>
+    </form>
+</main>
 
-<%@include file="../footer.html" %>
+<%@ include file="../footer.html" %>
+
+</body>
+</html>

@@ -1,24 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/user.css">
-<h1>AdPay</h1>
-<p>団体ログイン画面</p>
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/group.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+
+<div class="store-image">
+    <img src="<%=request.getContextPath()%>/images/adpayno.png" alt="団体イメージ">
+</div>
+
+<h1>団体ログイン</h1>
 
 <%
-    // Servletで設定されたmsgを取得
     String msg = (String) request.getAttribute("msg");
     if (msg != null && !msg.isEmpty()) {
 %>
-    <p style="color:red;"><%= msg %></p>
+<p style="color:red;"><%= msg %></p>
 <% } %>
 
 <form action="<%=request.getContextPath()%>/Adpay/GroupLogin.action" method="post">
-    <p>メールアドレス：<input type="text" name="leader_address" required placeholder="メールアドレスを入力してください"></p>
-    <p>パスワード：<input type="password" name="password" required placeholder="パスワードを入力してください"></p>
-    <p><input type="submit" value="ログイン"></p>
+    <div class="input-group">
+        <p>メールアドレス</p>
+        <input type="text" name="leader_address" required placeholder="メールアドレスを入力してください">
+    </div>
+    <div class="input-group">
+        <p>パスワード</p>
+        <input type="password" name="password" required placeholder="パスワードを入力してください">
+    </div>
+    <div class="submit-wrapper">
+        <input type="submit" value="ログイン">
+    </div>
 </form>
 
-<p><a href="<%=request.getContextPath()%>/user/group/register_group.jsp">団体の新規登録はこちら</a></p>
-<p><input type="button" value="戻る" onclick="history.back();">
+<div class="form-links">
+    <a href="<%=request.getContextPath()%>/user/group/register_group.jsp">団体の新規登録はこちら</a>
+
+    <!-- 戻るボタン -->
+    <form action="javascript:history.back();" method="post" style="display:inline;">
+        <button type="submit" class="back-btn">戻る</button>
+    </form>
+</div>
 
 <%@ include file="../../footer.html" %>

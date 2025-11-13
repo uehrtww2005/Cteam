@@ -1,103 +1,71 @@
-/* ======== 全体設定 ======== */
-body {
-    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif;
-    background-color: #fff;
-    margin: 0;
-    padding: 0;
+/* ===== ログイン選択ボタン再現スタイル ===== */
+
+.choice-container {
+  text-align: center;
+  margin-top: 100px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
-h1 {
-    text-align: center;
-    font-size: 80px;
-    font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 0;
-    color: #222;
-    font-family: 'Comic Sans MS', 'Rounded Mplus 1c', cursive;
+.choice-container h1 {
+  font-size: 50px;
+  margin-bottom: 50px;
+  color: #fff;
+  letter-spacing: 0.05em;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
-p {
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0;
-    color: #222;
+/* ボタン共通デザイン */
+.choice-container button {
+  width: 400px;
+  padding: 20px 0;
+  font-size: 18px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #222, #111);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  display: block;
+  letter-spacing: 0.05em;
+  border: 1px solid #555;
+  margin: 25px auto;
 }
 
-/* ======== 個人・団体ボタン（トップと統一） ======== */
-form[action$="user/login_user.jsp"] button,
-form[action$="user/group/login_group.jsp"] button {
-    width: 400px;
-    padding: 20px 0;
-    font-size: 18px;
-    border-radius: 12px;
-    color: #fff;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
-    display: block;
-    margin: 25px auto 0;
-    letter-spacing: 0.05em;
-    font-weight: bold;
+/* ホバー時（金色に光る） */
+.choice-container button:hover {
+  background: linear-gradient(145deg, #333, #000);
+  color: #FFD700;
+  border-color: #FFD700;
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-/* 個人ボタン（緑系トップ配色） */
-form[action$="user/login_user.jsp"] button {
-    background: linear-gradient(145deg, #00ec8d, #00b16b);
+/* 戻るボタンは少し小さく */
+.choice-container .back-btn {
+  width: 200px;
+  padding: 12px 0;
+  font-size: 16px;
+  margin-top: 40px;
+  background: linear-gradient(145deg, #111, #000);
+  border: 1px solid #444;
+  color: #ccc;
 }
 
-form[action$="user/login_user.jsp"] button:hover {
-    background: linear-gradient(145deg, #00b16b, #00a65a);
-    color: #FFD700;
-    transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+.choice-container .back-btn:hover {
+  background: linear-gradient(145deg, #222, #000);
+  color: #FFD700;
+  border-color: #FFD700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-/* 団体ボタン（青系トップ配色） */
-form[action$="user/group/login_group.jsp"] button {
-    background: linear-gradient(145deg, #7ba5f0, #6495ED);
-}
-
-form[action$="user/group/login_group.jsp"] button:hover {
-    background: linear-gradient(145deg, #6495ED, #4d7cd1);
-    color: #FFD700;
-    transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-}
-
-/* ======== 戻るボタン ======== */
-p input[type="button"] {
-    margin-top: 30px;
-    padding: 10px 30px;
-    border-radius: 25px;
-    border: 2px solid #999;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.2s ease;
-    display: inline-block;
-}
-
-p input[type="button"]:hover {
-    background-color: #e0e0e0;
-    transform: scale(1.05);
-}
-
-/* ======== レスポンシブ対応 ======== */
+/* レスポンシブ */
 @media screen and (max-width: 768px) {
-    h1 {
-        font-size: 60px;
-        margin-top: 20px;
-    }
-
-    form[action$="user/login_user.jsp"] button,
-    form[action$="user/group/login_group.jsp"] button {
-        width: 85%;
-        font-size: 16px;
-        padding: 15px 0;
-    }
-
-    p input[type="button"] {
-        width: 80%;
-    }
+  .choice-container button {
+    width: 85%;
+    font-size: 16px;
+    padding: 15px 0;
+  }
+  .choice-container h1 {
+    font-size: 40px;
+  }
 }

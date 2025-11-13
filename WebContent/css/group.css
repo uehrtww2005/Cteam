@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Rounded Mplus 1c", "Meiryo", sans-serif;
-    background: url("../images/kozin.jpg") no-repeat center center fixed;
+    background: url("../images/dantai.jpg") no-repeat center center fixed;
     background-size: cover;
     position: relative;
 }
@@ -39,7 +39,7 @@ p {
 }
 
 /* ========= フォーム ========= */
-form[action$="UserLogin.action"] {
+form[action$="GroupLogin.action"] {
     width: 450px;
     max-width: 95%;
     margin: 20px auto;
@@ -52,7 +52,7 @@ form[action$="UserLogin.action"] {
 }
 
 /* 入力欄ラッパー */
-form[action$="UserLogin.action"] .input-group {
+form[action$="GroupLogin.action"] .input-group {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -60,15 +60,15 @@ form[action$="UserLogin.action"] .input-group {
 }
 
 /* ラベル */
-form[action$="UserLogin.action"] .input-group p {
+form[action$="GroupLogin.action"] .input-group p {
     margin: 0 0 5px 0;
     font-weight: bold;
     text-align: left;
 }
 
 /* 入力欄 */
-form[action$="UserLogin.action"] input[type="text"],
-form[action$="UserLogin.action"] input[type="password"] {
+form[action$="GroupLogin.action"] input[type="text"],
+form[action$="GroupLogin.action"] input[type="password"] {
     width: 100%;
     padding: 12px 15px;
     font-size: 16px;
@@ -81,18 +81,18 @@ form[action$="UserLogin.action"] input[type="password"] {
     transition: border-color 0.3s ease;
 }
 
-form[action$="UserLogin.action"] input:focus {
+form[action$="GroupLogin.action"] input:focus {
     border-color: #aaa;
     outline: none;
 }
 
 /* ログインボタン */
-form[action$="UserLogin.action"] .submit-wrapper {
+form[action$="GroupLogin.action"] .submit-wrapper {
     display: flex;
     justify-content: flex-end;
 }
 
-form[action$="UserLogin.action"] .submit-wrapper input[type="submit"] {
+form[action$="GroupLogin.action"] .submit-wrapper input[type="submit"] {
     padding: 12px 50px;
     font-size: 16px;
     background: rgba(50,50,50,0.85);
@@ -104,7 +104,7 @@ form[action$="UserLogin.action"] .submit-wrapper input[type="submit"] {
     transition: all 0.3s ease;
 }
 
-form[action$="UserLogin.action"] .submit-wrapper input[type="submit"]:hover {
+form[action$="GroupLogin.action"] .submit-wrapper input[type="submit"]:hover {
     background: rgba(70,70,70,0.9);
     transform: translateY(-2px);
 }
@@ -129,7 +129,26 @@ form[action$="UserLogin.action"] .submit-wrapper input[type="submit"]:hover {
     color: #f1c40f;
 }
 
-/* ユーザーイメージ */
+/* 戻るボタン */
+.back-btn {
+    margin-top: 10px;
+    padding: 10px 40px;
+    font-size: 16px;
+    background: rgba(50,50,50,0.85);
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: rgba(70,70,70,0.9);
+    transform: translateY(-2px);
+}
+
+/* 団体イメージ */
 .store-image {
     text-align: center;
     margin: 20px 0;
@@ -143,17 +162,17 @@ form[action$="UserLogin.action"] .submit-wrapper input[type="submit"]:hover {
 
 /* レスポンシブ */
 @media screen and (max-width: 768px) {
-    form[action$="UserLogin.action"] {
+    form[action$="GroupLogin.action"] {
         width: 90%;
         padding: 25px 20px;
     }
 
-    form[action$="UserLogin.action"] input[type="text"],
-    form[action$="UserLogin.action"] input[type="password"] {
+    form[action$="GroupLogin.action"] input[type="text"],
+    form[action$="GroupLogin.action"] input[type="password"] {
         width: 100%;
     }
 
-    form[action$="UserLogin.action"] .submit-wrapper input[type="submit"] {
+    form[action$="GroupLogin.action"] .submit-wrapper input[type="submit"] {
         width: auto;
     }
 }
