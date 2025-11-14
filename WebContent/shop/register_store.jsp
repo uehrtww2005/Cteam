@@ -37,7 +37,7 @@
     <div class="input-group">
         <p>電話番号</p>
         <input type="text" name="store_tel" maxlength="13" required
-               pattern="^0\\d{1,2}-\\d{1,4}-\\d{1,4}$"
+               pattern="^0\d{1,3}-\d{1,4}-\d{1,4}$"
                title="例：090-1234-5678 の形式で入力してください"
                placeholder="例：090-1234-5678">
     </div>
