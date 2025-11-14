@@ -26,7 +26,7 @@
             // ✅ ユーザーはログイン後ページへ（.action 経由）
             homeUrl = request.getContextPath() + "/Adpay/UserLogin.action";
         } else if ("group".equals(role)) {
-            homeUrl = request.getContextPath() + "/user/group/hoge.jsp";
+            homeUrl = request.getContextPath() + "/Adpay/GroupLogin.action";
         } else {
             // 未ログイン時はトップページ
             homeUrl = request.getContextPath() + "/Adpay/login.jsp";
