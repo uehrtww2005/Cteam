@@ -72,6 +72,12 @@ public class MenuRegistAction extends HttpServlet {
             return;
         }
 
+        // ★ ここを追加（マイナス値を禁止）
+        if (price < 0) {
+            forwardToComplete(request, response, "価格は0円以上で入力してください。", storeId);
+            return;
+        }
+
         if (imagePart == null || imagePart.getSize() == 0) {
             forwardToComplete(request, response, "画像を選択してください。", storeId);
             return;

@@ -30,7 +30,7 @@
         <label>メニュー名：</label>
         <input type="text" name="menu_name" required><br>
         <label>価格：</label>
-        <input type="number" name="price" required><br>
+        <input type="number" name="price" min="0" required><br>
         <label>画像：</label>
         <input type="file" name="menu_image" accept="image/*" required><br>
         <button type="submit">登録</button>

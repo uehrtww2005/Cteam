@@ -30,11 +30,17 @@ public class MenuEditExecuteAction extends Action {
 
         try {
             price = Integer.parseInt(priceStr);
+            if (price < 0) {
+                request.setAttribute("msg", "価格は0以上で入力してください。");
+                request.getRequestDispatcher("/shop/menu_edit.jsp").forward(request, response);
+                return;
+            }
         } catch (NumberFormatException e) {
             request.setAttribute("msg", "価格は数値で入力してください。");
-            request.getRequestDispatcher("/shop/menu_list.jsp").forward(request, response);
+            request.getRequestDispatcher("/shop/menu_edit.jsp").forward(request, response);
             return;
         }
+
 
         // --- DAOで更新 ---
         try {

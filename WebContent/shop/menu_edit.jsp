@@ -21,7 +21,8 @@
   <input type="text" name="menu_name" value="${menu.menuName}" required><br>
 
   <label>価格：</label>
-  <input type="number" name="price" value="${menu.price}" required><br>
+  <input type="number" name="price" value="${menu.price}" required min="0">
+
 
   <div class="btn-area">
     <button type="submit" class="update-btn">更新</button>
