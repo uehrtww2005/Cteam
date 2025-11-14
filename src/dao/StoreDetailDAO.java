@@ -3,116 +3,92 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import bean.Seat;
+import bean.StoreCalendar;
 import bean.StoreDetail;
-import bean.Tag;
 
 public class StoreDetailDAO extends DAO {
 
-    // store_details 取得
-    public StoreDetail get(int storeId) throws Exception {
+    private SeatDAO seatDAO = new SeatDAO();
+    private StoreCalendarDAO calendarDAO = new StoreCalendarDAO();
+
+    // 店舗詳細と席・カレンダーをまとめて取得
+    public StoreDetail getStoreDetailFull(int storeId) throws Exception {
         StoreDetail detail = null;
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                 "SELECT * FROM store_details WHERE store_id=?")) {
-            ps.setInt(1, storeId);
-            try (ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT * FROM store_details WHERE store_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, storeId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     detail = new StoreDetail();
+                    detail.setDetailId(rs.getInt("detail_id"));
                     detail.setStoreId(rs.getInt("store_id"));
-                    detail.setStoreHours(rs.getString("store_hours"));
-                    detail.setStoreClose(rs.getString("store_close"));
                     detail.setStoreIntroduct(rs.getString("store_introduct"));
-                    detail.setSeatDetail(rs.getString("seat_detail"));
+
+                    // 席情報とカレンダー情報もセット
+                    List<Seat> seats = seatDAO.getSeatsByStoreId(storeId);
+                    detail.setSeats(seats);
+
+                    List<StoreCalendar> calendars = calendarDAO.getCalendarsByStoreId(storeId);
+                    detail.setCalendars(calendars);
                 }
             }
         }
+
         return detail;
     }
 
-    // store_details 更新
-    public boolean update(StoreDetail detail) throws Exception {
-        int count;
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                 "UPDATE store_details SET store_hours=?, store_close=?, store_introduct=?, seat_detail=? WHERE store_id=?")) {
-            ps.setString(1, detail.getStoreHours());
-            ps.setString(2, detail.getStoreClose());
-            ps.setString(3, detail.getStoreIntroduct());
-            ps.setString(4, detail.getSeatDetail());
-            ps.setInt(5, detail.getStoreId());
-            count = ps.executeUpdate();
-        }
-        return count > 0;
-    }
+    // 店舗詳細の登録
+    public int insertStoreDetail(StoreDetail detail) throws Exception {
+        String sql = "INSERT INTO store_details (store_id, store_introduct) VALUES (?, ?) RETURNING detail_id";
 
-    // store_details 初回保存
-    public boolean save(StoreDetail detail) throws Exception {
-        int count;
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                 "INSERT INTO store_details(store_id, store_hours, store_close, store_introduct, seat_detail) VALUES (?, ?, ?, ?, ?)")) {
-            ps.setInt(1, detail.getStoreId());
-            ps.setString(2, detail.getStoreHours());
-            ps.setString(3, detail.getStoreClose());
-            ps.setString(4, detail.getStoreIntroduct());
-            ps.setString(5, detail.getSeatDetail());
-            count = ps.executeUpdate();
-        }
-        return count > 0;
-    }
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    // store_tags 保存（1つだけ）
-    public void saveSelectedTag(StoreDetail detail) throws Exception {
-        try (Connection con = getConnection()) {
-            // 既存削除
-            try (PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM store_tags WHERE store_id=?")) {
-                ps.setInt(1, detail.getStoreId());
-                ps.executeUpdate();
-            }
-            // 新規登録
-            if (detail.getSelectedTag() != null) {
-                try (PreparedStatement ps = con.prepareStatement(
-                        "INSERT INTO store_tags(store_id, tag_id) VALUES (?, ?)")) {
-                    ps.setInt(1, detail.getStoreId());
-                    ps.setInt(2, detail.getSelectedTag().getTagId());
-                    ps.executeUpdate();
-                }
-            }
-        }
-    }
+            stmt.setInt(1, detail.getStoreId());
+            stmt.setString(2, detail.getStoreIntroduct());
 
-    // タグ付きで取得
-    public StoreDetail getWithSelectedTag(int storeId) throws Exception {
-        StoreDetail detail = get(storeId);
-        if (detail == null) return null;
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                 "SELECT t.tag_id, t.tag_name FROM tags t " +
-                 "INNER JOIN store_tags st ON t.tag_id = st.tag_id WHERE st.store_id=?")) {
-            ps.setInt(1, storeId);
-            try (ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Tag t = new Tag();
-                    t.setTagId(rs.getInt("tag_id"));
-                    t.setTagName(rs.getString("tag_name"));
-                    detail.setSelectedTag(t);
+                    return rs.getInt(1);
                 }
             }
         }
+        return -1;
+    }
+
+    public StoreDetail getStoreDetailFullWithTags(int storeId) throws Exception {
+        // まず既存の詳細＋席＋カレンダーを取得
+        StoreDetail detail = getStoreDetailFull(storeId);
+        if (detail == null) return null;
+
+        // タグを取得
+        String sql = "SELECT t.tag_name " +
+                     "FROM store_tags st " +
+                     "JOIN tags t ON st.tag_id = t.tag_id " +
+                     "WHERE st.store_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, storeId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<String> tagList = new ArrayList<>();
+                while (rs.next()) {
+                    tagList.add(rs.getString("tag_name"));
+                }
+                detail.setTags(tagList);
+            }
+        }
+
         return detail;
     }
 
-    // 存在確認
-    public boolean exists(int storeId) throws Exception {
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                 "SELECT 1 FROM store_details WHERE store_id=?")) {
-            ps.setInt(1, storeId);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
-            }
-        }
-    }
 }

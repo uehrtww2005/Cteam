@@ -18,7 +18,7 @@ public class StoreDetailAction extends Action {
         int storeId = Integer.parseInt(request.getParameter("store_id"));
 
         StoreDetailDAO dao = new StoreDetailDAO();
-        StoreDetail detail = dao.getWithSelectedTag(storeId);
+        StoreDetail detail = dao.getStoreDetailFullWithTags(storeId);
 
         // 全タグ取得
         TagDAO tagDao = new TagDAO();
