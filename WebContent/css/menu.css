@@ -1,19 +1,17 @@
 /* ========= ページ全体設定 ========= */
 body {
   margin: 0;
-  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-family: "Rounded Mplus 1c", "Meiryo", sans-serif;
   background-color: #111;
   color: #fff;
-  padding-top: 140px; /* header.html が外部にあるため多めに確保 */
   text-align: center;
+  /* padding-top 削除：サイドバーと衝突するため */
 }
 
 /* ========= 見出し（h2） ========= */
-h2 {
+.store-main h3 {
+  font-size: 30px;
   color: #fff;
-  text-align: center;
-  margin-top: 20px;
-  font-size: 28px;
   letter-spacing: 0.05em;
   border-bottom: 2px solid #FFD700;
   display: inline-block;
@@ -123,12 +121,6 @@ p a:hover {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.menu-card-link:hover .menu-card {
-  transform: translateY(-5px);
-  border-color: #FFD700;
-  box-shadow: 0 6px 14px rgba(255, 215, 0, 0.3);
-}
-
 .menu-card {
   background-color: #1a1a1a;
   border: 1px solid rgba(255, 215, 0, 0.2);
@@ -176,7 +168,7 @@ p a:hover {
 .menu-actions .btn-edit {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(135deg, #8b0000, #4d0000); /* 黒寄り赤 */
+  background: linear-gradient(135deg, #8b0000, #4d0000);
   color: #fff;
   border-radius: 6px;
   text-decoration: none;
@@ -190,31 +182,21 @@ p a:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* ========= フォーム外リンク（テキストリンク） ========= */
-.form-links {
-    text-align: center;
-    margin: 5px 0 200px 0; /* 上5pxでフォームとの距離を狭める */
-}
-
-.form-links a {
-    display: block;           /* 縦並び */
-    margin: 5px 0;            /* 上下間隔 */
-    font-size: 16px;
-    color: #fff;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-    cursor: pointer;
-}
-
-.form-links a:hover {
-    color: #f1c40f;
-}
-/* 編集ページ用のメニュー画像 */
+/* ========= 編集ページ用のメニュー画像 ========= */
 .menu-image-section .menu-img {
-    width: 300px;   /* 幅を大きく */
-    height: 300px;  /* 高さも大きく */
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    margin-bottom: 20px;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  margin-bottom: 20px;
+}
+/* ========= セクションを横線で区切る ========= */
+.section-divider {
+  border: none;               /* デフォルト線を消す */
+  border-top: 2px solid #FFD700;  /* ゴールドの線 */
+  margin: 40px 0;             /* 上下の余白 */
+  width: 80%;                 /* 線の幅を調整 */
+  margin-left: auto;
+  margin-right: auto;
 }

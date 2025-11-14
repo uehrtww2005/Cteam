@@ -1,40 +1,81 @@
-/* 全体設定 */
+/* ========= 全体設定 ========= */
 body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box; /* ページ全体でボックスサイズを調整 */
 }
 
-/* コンテナ: サイドバー + メイン */
+/* ========= コンテナ: サイドバー + メイン ========= */
 .store-home-container {
   display: flex;
-  min-height: 100vh;
+  min-height: 100vh; /* ページ全体の高さ確保 */
 }
 
-/* サイドバー */
+/* ========= サイドバー ========= */
 .sidebar {
   width: 220px;
   background-color: #171717;
   display: flex;
   flex-direction: column;
-  padding-top: 110px; /* もともとの50px + ヘッダー60px */
+  padding-top: 110px; /* 元の50px + ヘッダー60px */
   box-sizing: border-box;
+
+  /* サイドバーを画面下まで伸ばす */
+  min-height: 100vh;
+
+  /* 左揃え */
+  align-items: flex-start;
 }
 
-
+/* ========= サイドバーのリンク ========= */
 .sidebar-link {
   padding: 15px 20px;
   font-size: 18px;
   color: #ffffff;
   text-decoration: none;
-  border-bottom: 1px solid #d9d9d9; /* AdPay線色 */
+  border-bottom: 1px solid #d9d9d9;
   transition: background 0.2s;
+
+  /* 左揃え */
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box; /* ← 追加: 背景内に収める */
 }
 
 .sidebar-link:hover {
   background-color: #585858;
 }
 
-/* レスポンシブ対応 */
+/* ========= サイドバー内のプラン表示（背景なし、文字だけ） ========= */
+.sidebar-plan {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.5;
+  padding: 15px 20px;
+  margin: 0;
+
+  /* 左揃え */
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box; /* ← 追加 */
+}
+
+.plan-text {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* ========= メインコンテンツ ========= */
+.store-main {
+  flex: 1;
+  padding: 40px;
+  padding-top: 140px; /* ヘッダー高さ分 */
+  box-sizing: border-box;
+}
+
+/* ========= レスポンシブ対応（スマホ） ========= */
 @media screen and (max-width: 768px) {
   .store-home-container {
     flex-direction: column;
@@ -43,36 +84,27 @@ body {
   .sidebar {
     width: 100%;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start; /* 左揃え */
     padding-top: 20px;
     border-right: none;
     border-bottom: 1px solid #d9d9d9;
+    min-height: auto;
   }
 
   .sidebar-link {
     border-bottom: none;
     border-right: 1px solid #d9d9d9;
     padding: 10px;
+    text-align: left; /* 左揃え */
+    box-sizing: border-box; /* ← 追加 */
   }
 
   .sidebar-link:last-child {
     border-right: none;
   }
-}
-/* サイドバー内プラン表示（背景なし、文字だけ） */
-.sidebar-plan {
-    display: flex;
-    align-items: center;
-    color: #ffffff;            /* 文字色はリンクと同じ */
-    font-size: 18px;           /* sidebar-link と同じ */
-    line-height: 1.5;          /* sidebar-link に合わせる */
-    padding: 15px 20px;        /* sidebar-link と同じ */
-    margin: 0;                  /* リンク間に自然に配置 */
-    text-decoration: none;      /* リンク風に見せる場合も装飾なし */
-}
 
-
-.plan-text {
-    font-size: 18px;           /* sidebar-link と揃える */
-    line-height: 1.5;
+  .sidebar-plan {
+    padding: 10px;
+    box-sizing: border-box; /* ← 追加 */
+  }
 }

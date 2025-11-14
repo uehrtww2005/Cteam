@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/menu.css?ver=1.2">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/menu.css?ver=1.4">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
 
 <html>
 <head>
@@ -9,46 +11,60 @@
 </head>
 <body>
 
-  <h2>メニュー登録フォーム</h2>
+<div class="store-home-container">  <!-- 横並びの親 -->
 
-  <c:if test="${not empty msg}">
-    <div class="msg">${msg}</div>
-  </c:if>
+    <%-- サイドバーをここに挿入 --%>
+    <%@ include file="../side.jsp" %>
 
-  <form action="<%=request.getContextPath()%>/Adpay/MenuRegist.action" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="store_id" value="${store_id}">
-    <label>メニュー名：</label>
-    <input type="text" name="menu_name" required><br>
-    <label>価格：</label>
-    <input type="number" name="price" required><br>
-    <label>画像：</label>
-    <input type="file" name="menu_image" accept="image/*" required><br>
-    <button type="submit">登録</button>
-  </form>
+    <div class="store-main">  <!-- 右側メイン領域 -->
 
-  <p><a href="<%=request.getContextPath()%>/shop/store_home.jsp">Homeに戻る</a></p>
+      <!-- メニュー登録フォーム -->
+      <h3>メニュー登録フォーム</h3>
 
-  <h2>登録済みメニュー一覧</h2>
+      <c:if test="${not empty msg}">
+        <div class="msg">${msg}</div>
+      </c:if>
 
-  <div class="menu-list">
-    <c:forEach var="menu" items="${menuList}">
-      <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}" class="menu-card-link">
-        <div class="menu-card">
-          <c:if test="${not empty menu.imageExtension}">
-            <img class="menu-img"
-                 src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
-                 alt="メニュー画像">
-          </c:if>
-          <c:if test="${empty menu.imageExtension}">
-            <p>（画像が登録されていません）</p>
-          </c:if>
-          <div><strong>${menu.menuName}</strong></div>
-          <div>${menu.price}円</div>
-        </div>
-      </a>
-    </c:forEach>
-  </div>
+      <form action="<%=request.getContextPath()%>/Adpay/MenuRegist.action" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="store_id" value="${store_id}">
+        <label>メニュー名：</label>
+        <input type="text" name="menu_name" required><br>
+        <label>価格：</label>
+        <input type="number" name="price" required><br>
+        <label>画像：</label>
+        <input type="file" name="menu_image" accept="image/*" required><br>
+        <button type="submit">登録</button>
+      </form>
+
+      <!-- 横線で区切る -->
+      <hr class="section-divider">
+
+      <!-- 登録済みメニュー一覧 -->
+      <h3>登録済みメニュー一覧</h3>
+
+      <div class="menu-list">
+        <c:forEach var="menu" items="${menuList}">
+          <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}" class="menu-card-link">
+            <div class="menu-card">
+              <c:if test="${not empty menu.imageExtension}">
+                <img class="menu-img"
+                     src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
+                     alt="メニュー画像">
+              </c:if>
+              <c:if test="${empty menu.imageExtension}">
+                <p>（画像が登録されていません）</p>
+              </c:if>
+              <div><strong>${menu.menuName}</strong></div>
+              <div>${menu.price}円</div>
+            </div>
+          </a>
+        </c:forEach>
+      </div>
+
+    </div> <!-- /store-main -->
+</div> <!-- /store-home-container -->
+
+<%@ include file="../footer.html" %>
 
 </body>
 </html>
-<%@ include file="../footer.html" %>
