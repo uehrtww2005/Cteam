@@ -8,101 +8,90 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Menu;
+import bean.Seat;
 import bean.Store;
+import bean.StoreCalendar;
 import bean.StoreDetail;
 
 public class StoreDAO extends DAO {
 
+    private SeatDAO seatDAO = new SeatDAO();
+    private StoreCalendarDAO calendarDAO = new StoreCalendarDAO();
+
+    // store_tel で取得
     public Store get(String storeTel) throws Exception {
         Store store = null;
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
+        String sql = "SELECT * FROM stores WHERE store_tel = ?";
 
-        try {
-            statement = connection.prepareStatement("SELECT * FROM stores WHERE store_tel=?");
-            statement.setString(1, storeTel);
-            ResultSet resultSet = statement.executeQuery();
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            if (resultSet.next()) {
-                store = new Store();
-                store.setStoreId(resultSet.getInt("store_id"));
-                store.setStoreAddress(resultSet.getString("store_address"));
-                store.setPassword(resultSet.getString("password"));
-                store.setStoreName(resultSet.getString("store_name"));
-                store.setStoreTel(resultSet.getString("store_tel"));
-            }
-        } finally {
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        }
-
-        return store;
-    }
-
-    public Store login(String storeTel, String password) throws Exception {
-        Store store = get(storeTel);
-
-        if (store == null || !store.getPassword().equals(password)) {
-            return null;
-        }
-
-        return store;
-    }
-
-    public boolean save(Store store) throws Exception {
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        int count = 0;
-
-        try {
-            statement = connection.prepareStatement(
-                "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)");
-            statement.setString(1, store.getStoreAddress());
-            statement.setString(2, store.getPassword());
-            statement.setString(3, store.getStoreName());
-            statement.setString(4, store.getStoreTel());
-
-            count = statement.executeUpdate();
-
-        } finally {
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        }
-
-        return count > 0;
-    }
-
-    // ★ 新規追加：登録後に自動生成された store_id を返すメソッド
-    public int saveAndReturnId(Store store) throws Exception {
-        int generatedId = -1;
-
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(
-                 "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)",
-                 Statement.RETURN_GENERATED_KEYS)) {
-
-            statement.setString(1, store.getStoreAddress());
-            statement.setString(2, store.getPassword());
-            statement.setString(3, store.getStoreName());
-            statement.setString(4, store.getStoreTel());
-            statement.executeUpdate();
-
-            try (ResultSet rs = statement.getGeneratedKeys()) {
+            ps.setString(1, storeTel);
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    generatedId = rs.getInt(1); // ← store_id を取得
+                    store = new Store();
+                    store.setStoreId(rs.getInt("store_id"));
+                    store.setStoreAddress(rs.getString("store_address"));
+                    store.setPassword(rs.getString("password"));
+                    store.setStoreName(rs.getString("store_name"));
+                    store.setStoreTel(rs.getString("store_tel"));
                 }
             }
         }
 
+        return store;
+    }
+
+    // ログイン
+    public Store login(String storeTel, String password) throws Exception {
+        Store store = get(storeTel);
+        if (store == null || !store.getPassword().equals(password)) return null;
+        return store;
+    }
+
+    // 登録
+    public boolean save(Store store) throws Exception {
+        String sql = "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, store.getStoreAddress());
+            ps.setString(2, store.getPassword());
+            ps.setString(3, store.getStoreName());
+            ps.setString(4, store.getStoreTel());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    // 登録して自動生成IDを返す
+    public int saveAndReturnId(Store store) throws Exception {
+        int generatedId = -1;
+        String sql = "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, store.getStoreAddress());
+            ps.setString(2, store.getPassword());
+            ps.setString(3, store.getStoreName());
+            ps.setString(4, store.getStoreTel());
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) generatedId = rs.getInt(1);
+            }
+        }
         return generatedId;
     }
 
+    // 全店舗取得
     public List<Store> findAll() throws Exception {
         List<Store> list = new ArrayList<>();
+        String sql = "SELECT * FROM stores ORDER BY store_id";
 
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM stores ORDER BY store_id");
-             ResultSet rs = statement.executeQuery()) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Store store = new Store();
@@ -118,73 +107,68 @@ public class StoreDAO extends DAO {
         return list;
     }
 
-    public Store getStoreWithDetailAndMenu(int storeId) throws Exception {
+    // ★ 改善版：Store + StoreDetail + Seats + Calendar + Menu をまとめて取得
+    public Store getStoreFull(int storeId) throws Exception {
         Store store = null;
 
-        String sql =
-        	    "SELECT " +
-        	    "s.store_id, " +
-        	    "s.store_name, " +
-        	    "s.store_address, " +
-        	    "s.store_tel, " +
-        	    "d.detail_id, " +
-        	    "d.store_hours, " +
-        	    "d.store_close, " +
-        	    "d.store_introduct, " +
-        	    "d.seat_detail, " +
-        	    "m.menu_id, " +
-        	    "m.menu_name " +
-        	    "FROM stores s " +
-        	    "JOIN store_details d ON s.store_id = d.store_id " +
-        	    "LEFT JOIN menu m ON s.store_id = m.store_id " +
-        	    "WHERE s.store_id = ?";
+        // まず stores + store_details
+        String sql = "SELECT s.store_id, s.store_name, s.store_address, s.store_tel, " +
+                     "d.detail_id, d.store_introduct " +
+                     "FROM stores s " +
+                     "LEFT JOIN store_details d ON s.store_id = d.store_id " +
+                     "WHERE s.store_id = ?";
 
-
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, storeId);
-            ResultSet rs = ps.executeQuery();
-
-            List<Menu> menuList = new ArrayList<>();
-
-            while (rs.next()) {
-                if (store == null) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     store = new Store();
                     store.setStoreId(rs.getInt("store_id"));
                     store.setStoreName(rs.getString("store_name"));
                     store.setStoreAddress(rs.getString("store_address"));
                     store.setStoreTel(rs.getString("store_tel"));
 
-                    // StoreDetail設定
                     StoreDetail detail = new StoreDetail();
                     detail.setDetailId(rs.getInt("detail_id"));
-                    detail.setStoreId(rs.getInt("store_id"));
-                    detail.setStoreHours(rs.getString("store_hours"));
-                    detail.setStoreClose(rs.getString("store_close"));
+                    detail.setStoreId(storeId);
                     detail.setStoreIntroduct(rs.getString("store_introduct"));
-                    detail.setSeatDetail(rs.getString("seat_detail"));
                     store.setStoreDetail(detail);
                 }
+            }
+        }
 
-                // Menu設定
-                int menuId = rs.getInt("menu_id");
-                if (menuId != 0) {
-                    Menu menu = new Menu();
-                    menu.setMenuId(menuId);
-                    menu.setStoreId(rs.getInt("store_id"));
-                    menu.setMenuName(rs.getString("menu_name"));
-                    menu.setPrice(rs.getInt("price"));
-                    menuList.add(menu);
+        if (store != null) {
+            // Seats 取得
+            List<Seat> seats = seatDAO.getSeatsByStoreId(storeId);
+            store.getStoreDetail().setSeats(seats);
+
+            // Calendar 取得
+            List<StoreCalendar> calendars = calendarDAO.getCalendarsByStoreId(storeId);
+            store.getStoreDetail().setCalendars(calendars);
+
+            // Menu 取得
+            List<Menu> menuList = new ArrayList<>();
+            String menuSql = "SELECT menu_id, menu_name, price FROM menu WHERE store_id = ?";
+            try (Connection conn = getConnection();
+                 PreparedStatement ps = conn.prepareStatement(menuSql)) {
+
+                ps.setInt(1, storeId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Menu menu = new Menu();
+                        menu.setMenuId(rs.getInt("menu_id"));
+                        menu.setStoreId(storeId);
+                        menu.setMenuName(rs.getString("menu_name"));
+                        menu.setPrice(rs.getInt("price"));
+                        menuList.add(menu);
+                    }
                 }
             }
-
-            if (store != null) {
-                store.setMenu(menuList);
-            }
+            store.setMenu(menuList);
         }
 
         return store;
     }
 }
-
