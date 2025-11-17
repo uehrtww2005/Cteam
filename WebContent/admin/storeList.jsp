@@ -21,6 +21,6 @@
     </c:forEach>
 </table>
 
-<p><a href="<%=request.getContextPath()%>/admin/adminhome.jsp">管理トップに戻る</a></p>
+<p><a href="<%=request.getContextPath()%>/Adpay/AdminLogin.action">管理トップに戻る</a></p>
 
 <%@include file="../footer.html" %>
