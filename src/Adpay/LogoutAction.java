@@ -39,7 +39,7 @@ public class LogoutAction extends Action {
                 redirectPath = "/Adpay/shop/login.jsp";
                 break;
             case "admin":
-                redirectPath = "/Adpay/admin/login.jsp";
+                redirectPath = "/Adpay/login.jsp";
                 break;
             default:
                 redirectPath = "/Adpay/login.jsp";

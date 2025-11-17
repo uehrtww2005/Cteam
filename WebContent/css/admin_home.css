@@ -1,0 +1,58 @@
+/* ===== 管理メニューレイアウト ===== */
+.menu-container {
+  text-align: center;
+  margin-top: 100px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  color: #fff;
+}
+
+.menu-container h1 {
+  font-size: 50px;
+  margin-bottom: 40px;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.menu-container p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: #ddd;
+}
+
+/* ===== あなたの Login_choice ボタン CSS をそのまま流用 ===== */
+.menu-container button {
+  width: 400px;
+  padding: 20px 0;
+  font-size: 18px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #222, #111);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  display: block;
+  letter-spacing: 0.05em;
+  border: 1px solid #555;
+  margin: 25px auto;
+}
+
+/* ホバー（金色に光る） */
+.menu-container button:hover {
+  background: linear-gradient(145deg, #333, #000);
+  color: #FFD700;
+  border-color: #FFD700;
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* レスポンシブ */
+@media screen and (max-width: 768px) {
+  .menu-container button {
+    width: 85%;
+    font-size: 16px;
+    padding: 15px 0;
+  }
+  .menu-container h1 {
+    font-size: 40px;
+  }
+}

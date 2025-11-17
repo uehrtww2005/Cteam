@@ -1,11 +1,38 @@
-<%@page contentType="text/html; charset=UTF-8" %>
-<%@include file="../header.html" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AdPay</title>
 
-<p>以下のメニューから管理項目を選択してください。</p>
+<%@ include file="../header.html" %>
 
-<ul>
-    <li><a href="<%=request.getContextPath()%>/Adpay/UserListServlet.action">利用者一覧</a></li>
-    <li><a href="<%=request.getContextPath()%>/Adpay/StoreListServlet.action">店舗一覧</a></li>
-</ul>
+<!-- CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin_home.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
 
-<%@include file="../footer.html" %>
+</head>
+<body>
+
+<main class="menu-container">
+
+    <h1>管理メニュー</h1>
+
+    <p>以下のメニューから管理項目を選択してください。</p>
+
+    <!-- 利用者一覧 -->
+    <form action="<%=request.getContextPath()%>/Adpay/UserListServlet.action" method="get">
+        <button type="submit">利用者一覧</button>
+    </form>
+
+    <!-- 店舗一覧 -->
+    <form action="<%=request.getContextPath()%>/Adpay/StoreListServlet.action" method="get">
+        <button type="submit">店舗一覧</button>
+    </form>
+
+</main>
+
+<%@ include file="../footer.html" %>
+
+</body>
+</html>
