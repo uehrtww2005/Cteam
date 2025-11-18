@@ -49,7 +49,7 @@
 <!-- ★ 許可記号バリデーション JS -->
 <script>
 // 許可記号：＆ ' ， ‐ ． ・
-const menuNamePattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]+$/;
+const menuNamePattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆ ，‐．・']+$/;
 
 function validateMenuEditForm() {
     const name = document.querySelector("input[name='menu_name']").value.trim();

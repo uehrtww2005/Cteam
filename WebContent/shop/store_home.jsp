@@ -6,7 +6,7 @@
 <div class="store-home-container">
 
     <!-- サイドバー読み込み -->
-    <%@ include file="../side.jsp" %>
+    <%@ include file="../store_side.jsp" %>
 
     <!-- メインコンテンツ -->
     <div class="main-content">

@@ -1,0 +1,104 @@
+/* ========================================
+   ページ全体設定
+======================================== */
+body {
+    margin: 0;
+    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+    background-color: #111; /* 背景は黒系 */
+    color: #fff; /* 文字は白 */
+    padding-top: 120px; /* 固定ヘッダー下の余白 */
+}
+
+/* 見出し */
+h2 {
+    text-align: center;
+    color: #CC9900; /* 見出しも白 */
+    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+    margin-bottom: 30px;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   テーブル全体
+======================================== */
+table {
+    width: 95%;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+    background-color: #222; /* 濃いグレー背景 */
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* テーブルヘッダー */
+th {
+    background-color: #CC9900; /* ヘッダーは少し濃め */
+    color: #111; /* 文字は白 */
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+/* テーブルセル */
+td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #444; /* 境界は文字以外の色 */
+    color: #fff; /* 文字は白 */
+}
+
+/* 最後の行のボーダー消去 */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* 行ホバー効果 */
+tr:hover {
+    background-color: #333; /* 背景変化だけで強調 */
+}
+
+/* ========================================
+   レスポンシブ対応
+======================================== */
+@media (max-width: 768px) {
+    table, th, td {
+        display: block;
+        width: 100%;
+    }
+
+    th {
+        background-color: #333;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: #fff; /* 文字は白 */
+    }
+}
+
+/* ========================================
+   共通アクセント（文字以外）
+======================================== */
+.accent-bg {
+    background-color: #444; /* ボタンやラベル用 */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+}

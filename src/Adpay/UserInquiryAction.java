@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import bean.Inquiry;
 import tool.Action;
 
-public class InquiryAction extends Action {
+public class UserInquiryAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class InquiryAction extends Action {
         try {
             // GETアクセス：フォーム表示
             if (req.getMethod().equalsIgnoreCase("GET")) {
-                req.getRequestDispatcher("/shop/inquiry.jsp").forward(req, res);
+                req.getRequestDispatcher("/user/inquiry.jsp").forward(req, res);
                 return;
             }
 
@@ -89,7 +89,7 @@ public class InquiryAction extends Action {
             }
 
             req.setAttribute("msg", "お問い合わせを受け付けました。ありがとうございました。");
-            req.getRequestDispatcher("/shop/inquiry.jsp").forward(req, res);
+            req.getRequestDispatcher("/user/inquiry.jsp").forward(req, res);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,6 +103,6 @@ public class InquiryAction extends Action {
         req.setAttribute("user_id", userId);
         req.setAttribute("store_id", storeId);
         req.setAttribute("group_id", groupId);
-        req.getRequestDispatcher("/shop/inquiry.jsp").forward(req, res);
+        req.getRequestDispatcher("/user/inquiry.jsp").forward(req, res);
     }
 }

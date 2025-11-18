@@ -1,0 +1,171 @@
+/* ========================================
+   ページ全体
+======================================== */
+body {
+    margin: 0;
+    font-family: "Rounded Mplus 1c", "Meiryo", sans-serif;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   サイドバー固定
+======================================== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #111;
+    color: #fff;
+    padding-top: 100px; /* ヘッダー分の余白 */
+    box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+    overflow-y: auto;
+    z-index: 1000; /* 前面表示 */
+}
+
+.sidebar-link {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #222;
+    color: #FFD700;
+}
+
+/* ========================================
+   フッター
+======================================== */
+footer {
+    position: relative;
+    z-index: 1; /* 背面表示 */
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ========================================
+   メインコンテンツ
+======================================== */
+.main-content {
+    margin-left: 220px; /* サイドバー幅分ずらす */
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   見出し
+======================================== */
+h2 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #FFD700;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* ========================================
+   メッセージ表示
+======================================== */
+.msg {
+    margin: 20px auto;
+    padding: 12px 20px;
+    background: rgba(0, 128, 0, 0.2);
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    border-radius: 6px;
+    width: fit-content;
+    font-weight: bold;
+}
+
+/* ========================================
+   フォーム全体
+======================================== */
+form {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px 40px;
+    margin: 0 auto 40px auto;
+    border-radius: 12px;
+    width: 420px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    text-align: left;
+}
+
+/* ラベル */
+form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* 入力フィールド */
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* テキストエリア */
+textarea {
+    resize: vertical;
+}
+
+/* 送信ボタン */
+form button {
+    margin-top: 25px;
+    background-color: #FFD700;
+    color: #111;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background-color: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   リンク（ホームに戻るなど）
+======================================== */
+.form-links {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.form-links a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.form-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}

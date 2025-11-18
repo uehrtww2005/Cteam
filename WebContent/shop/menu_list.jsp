@@ -14,7 +14,7 @@
 <div class="store-home-container">  <!-- 横並びの親 -->
 
     <%-- サイドバーをここに挿入 --%>
-    <%@ include file="../side.jsp" %>
+    <%@ include file="../store_side.jsp" %>
 
     <div class="store-main">  <!-- 右側メイン領域 -->
 
