@@ -1,18 +1,35 @@
 package bean;
 
+import java.sql.Timestamp;
+
 public class Inquiry {
-    private int inquiryId;
+
+    private Integer inquiryId;
     private String tel;
     private String content;
-    private Integer userId;   // NULL許可
-    private Integer storeId;  // NULL許可
-    private Integer groupId;  // NULL許可
+    private Integer userId;
+    private Integer storeId;
+    private Integer groupId;
+    private Timestamp createdAt;   // ★追加
+    private String userName;
+    private String storeName;
+    private String leaderName;
 
-    // --- getter / setter ---
-    public int getInquiryId() {
+
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getStoreName() { return storeName; }
+    public void setStoreName(String storeName) { this.storeName = storeName; }
+
+    public String getLeaderName() { return leaderName; }
+    public void setLeaderName(String leaderName) { this.leaderName = leaderName; }
+
+	// --- getter / setter ---
+    public Integer getInquiryId() {
         return inquiryId;
     }
-    public void setInquiryId(int inquiryId) {
+    public void setInquiryId(Integer inquiryId) {
         this.inquiryId = inquiryId;
     }
 
@@ -49,5 +66,13 @@ public class Inquiry {
     }
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
+    }
+
+    // ★ createdAt の getter/setter 追加
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }

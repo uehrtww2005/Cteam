@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ include file="../header.html" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/inquiry2.css">
+<!-- サイドバー読み込み -->
+    <%@ include file="../store_side.jsp" %>
 <html>
 <head>
     <title>お問い合わせ</title>
@@ -12,7 +15,7 @@
     <div style="color: green; font-weight: bold;">${msg}</div>
 </c:if>
 
-<form action="<%=request.getContextPath()%>/Adpay/Inquiry.action" method="post">
+<form action="<%=request.getContextPath()%>/Adpay/StoreInquiry.action" method="post">
 
     <label>電話番号（ハイフンあり）：</label><br>
     <input type="text" name="tel" required><br><br>

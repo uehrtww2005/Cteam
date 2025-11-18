@@ -25,10 +25,22 @@ public class InquiryDAO {
         }
     }
 
-    // 管理者用：全件取得
+ // 管理者用：全件取得（User名・店舗名・グループ名付き）
     public List<Inquiry> findAll(Connection con) throws Exception {
-        String sql = "SELECT inquiry_id, tel, content, user_id, store_id, group_id, created_at FROM inquiry ORDER BY created_at DESC";
+
+        String sql =
+            "SELECT i.inquiry_id, i.tel, i.content, i.created_at, " +
+            "       i.user_id, u.user_name, " +
+            "       i.store_id, s.store_name, " +
+            "       i.group_id, g.leader_name " +
+            "FROM inquiry i " +
+            "LEFT JOIN users u ON i.user_id = u.user_id " +
+            "LEFT JOIN stores s ON i.store_id = s.store_id " +
+            "LEFT JOIN groups g ON i.group_id = g.group_id " +
+            "ORDER BY i.created_at DESC";
+
         List<Inquiry> list = new ArrayList<>();
+
         try (PreparedStatement st = con.prepareStatement(sql);
              ResultSet rs = st.executeQuery()) {
 
@@ -37,15 +49,25 @@ public class InquiryDAO {
                 inq.setInquiryId(rs.getInt("inquiry_id"));
                 inq.setTel(rs.getString("tel"));
                 inq.setContent(rs.getString("content"));
+                inq.setCreatedAt(rs.getTimestamp("created_at"));
+
+                // --- IDと名前セット ---
                 int userId = rs.getInt("user_id");
                 inq.setUserId(rs.wasNull() ? null : userId);
+                inq.setUserName(rs.getString("user_name"));  // ★追加
+
                 int storeId = rs.getInt("store_id");
                 inq.setStoreId(rs.wasNull() ? null : storeId);
+                inq.setStoreName(rs.getString("store_name")); // ★追加
+
                 int groupId = rs.getInt("group_id");
                 inq.setGroupId(rs.wasNull() ? null : groupId);
+                inq.setLeaderName(rs.getString("leader_name")); // ★追加
+
                 list.add(inq);
             }
         }
+
         return list;
     }
 }

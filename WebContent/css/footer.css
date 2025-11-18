@@ -7,7 +7,7 @@ footer {
   text-align: center;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
   position: relative;
-  z-index: 1001; /* 背景画像より前面 */
+  z-index: 1000; /* 背景画像より前面 */
   margin-top: auto;
 }
 
