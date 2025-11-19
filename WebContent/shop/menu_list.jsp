@@ -27,11 +27,11 @@
 
       <form action="<%=request.getContextPath()%>/Adpay/MenuRegist.action" method="post" enctype="multipart/form-data">
         <input type="hidden" name="store_id" value="${store_id}">
-        <label>メニュー名：</label>
+        <label>メニュー名</label>
         <input type="text" name="menu_name" required pattern="^[^<>]+$" title="店舗名に < や > は使用できません" placeholder="店舗名を入力してください"><br>
-        <label>価格：</label>
+        <label>価格</label>
         <input type="number" name="price" min="0" required><br>
-        <label>画像：</label>
+        <label>画像</label>
         <input type="file" name="menu_image" accept="image/*" required><br>
         <button type="submit">登録</button>
       </form>
