@@ -27,9 +27,13 @@ public class StoreDetailEditAction extends Action {
         StoreDetailDAO dao = new StoreDetailDAO();
         StoreDetail detail = dao.getStoreDetailFullWithTags(storeId);
 
+        // 新規登録時は detail を空で初期化
         if (detail == null) {
             detail = new StoreDetail();
             detail.setStoreId(storeId);
+            detail.setCalendars(new ArrayList<StoreCalendar>()); // カレンダーリスト初期化
+            detail.setSeats(new ArrayList<>());                  // 席リスト初期化
+            // 文字列系フィールドは null のままで JSP で空表示される
         }
 
         // ▼ タグ一覧を取得
@@ -64,12 +68,11 @@ public class StoreDetailEditAction extends Action {
         req.setAttribute("startDays", startDays);
         req.setAttribute("lastDays", lastDays);
 
-        // ▼ カレンダーの時間を HH:mm 文字列に変換
+        // ▼ カレンダーの時間を HH:mm 文字列に変換（空リストでも安全）
         for (StoreCalendar c : detail.getCalendars()) {
             String openStr = "";
             String closeStr = "";
             if (c.getOpenTime() != null) {
-                // Time → HH:mm 形式
                 openStr = c.getOpenTime().toString().substring(0,5);
             }
             if (c.getCloseTime() != null) {
