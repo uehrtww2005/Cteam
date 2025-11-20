@@ -71,17 +71,28 @@ form input[type="file"] {
 
 /* ========= 登録ボタン ========= */
 form button {
-  margin-top: 25px;
-  background-color: #FFD700;
-  color: #fff !important;
-  font-weight: bold;
-  font-size: 16px;
-  padding: 12px 0;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+    margin-top: 25px;
+    background-color: #FFD700 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background: linear-gradient(145deg, #222, #111);
+    border:1px solid #666 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: 0.3s !important;
+}
+
+form button:hover {
+    background: linear-gradient(145deg, #333, #000) !important;
+    color: #FFD700 !important;
+    border-color: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
 }
 
 form button:hover {

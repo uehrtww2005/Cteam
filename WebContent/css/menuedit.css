@@ -1,7 +1,6 @@
 /* ========= ページ全体設定 ========= */
 body {
   margin: 0;
-  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   background-color: #111;
   color: #fff;
   padding-top: 140px; /* header.html が外部にあるため多めに確保 */
@@ -73,23 +72,28 @@ form input[type="file"] {
 
 /* ========= 登録ボタン ========= */
 form button {
-  margin-top: 25px;
-  background-color: #FFD700;
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 16px;
-  padding: 12px 0;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+    margin-top: 25px;
+    background-color: #FFD700 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background: linear-gradient(145deg, #222, #111);
+    border:1px solid #666 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: 0.3s !important;
 }
 
 form button:hover {
-  background-color: #fff;
-  color: #FFD700;
-  transform: translateY(-2px);
+    background: linear-gradient(145deg, #333, #000) !important;
+    color: #FFD700 !important;
+    border-color: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
 }
 
 /* ========= 「Homeに戻る」リンク ========= */
@@ -147,16 +151,17 @@ p a:hover {
 }
 
 /* ========= メニュー画像 ========= */
-/* 編集ページ用のメニュー画像（元サイズ比率で全体表示） */
+/* 編集ページ用のメニュー画像（拡大版・中央寄せ・アスペクト比保持） */
 .menu-image-section .menu-img {
-    max-width: 100%;    /* 横幅は親要素の幅まで */
-    height: auto;       /* 高さは自動調整 */
+    width: 80%;          /* 親要素の幅の80% */
+    max-width: 600px;    /* 最大幅600px */
+    height: auto;        /* 高さは自動調整して比率維持 */
     display: block;
-    margin: 0 auto 20px; /* 上下余白と中央寄せ */
+    margin: 0 auto 30px; /* 上下余白と中央寄せ */
     border-radius: 12px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
 }
-
 
 /* ========= メニュー名・価格 ========= */
 .menu-card strong {
@@ -178,7 +183,7 @@ p a:hover {
 .menu-actions .btn-edit {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(135deg, #8b0000, #4d0000); /* 黒寄り赤 */
+  background: linear-gradient(135deg, #8b0000, #4d0000);
   color: #fff;
   border-radius: 6px;
   text-decoration: none;
@@ -195,12 +200,12 @@ p a:hover {
 /* ========= フォーム外リンク（テキストリンク） ========= */
 .form-links {
     text-align: center;
-    margin: 5px 0 200px 0; /* 上5pxでフォームとの距離を狭める */
+    margin: 5px 0 200px 0;
 }
 
 .form-links a {
-    display: block;           /* 縦並び */
-    margin: 5px 0;            /* 上下間隔 */
+    display: block;
+    margin: 5px 0;
     font-size: 16px;
     color: #fff;
     text-decoration: underline;
@@ -211,4 +216,3 @@ p a:hover {
 .form-links a:hover {
     color: #f1c40f;
 }
-
