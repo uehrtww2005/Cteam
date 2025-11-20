@@ -76,12 +76,18 @@
 <script>
 // ------------------------------------------
 // 使用可能な文字
-// 許可記号：＆ ' ， ‐ ． ・
+// ・半角英数字 a-zA-Z0-9
+// ・全角英数字 ａ-ｚＡ-Ｚ０-９
+// ・ひらがな ぁ-ん
+// ・カタカナ ァ-ヶ ン（自然に含む）
+// ・漢字 一-龠
+// ・全角スペース \u3000
+// ・許可記号：＆ ' ， ‐ ． ・
 // ------------------------------------------
 
-// パターンは「禁止記号だけを拾う」方式にする（確実に動く）
-const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&'’，‐．・:：]/;
-const disallowedGlobal = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&'’，‐．・:：]/g;
+// 禁止記号を検出するパターン
+const disallowedPattern =
+    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶ一-龠\u3000 ＆&'’:：，‐．・]/;
 
 const regInput = document.getElementById("regMenuName");
 const regError = document.getElementById("regMenuNameError");
@@ -95,9 +101,10 @@ regInput.addEventListener("input", () => {
         return;
     }
 
-    // 禁止記号が見つかったら赤エラー表示（削除はしない）
+    // 禁止記号が見つかったら赤エラー表示
     if (disallowedPattern.test(value)) {
-        regError.textContent = "使用できる記号は「＆: ' ， ‐ ． ・」のみです。";
+        regError.textContent =
+            "使用できる記号は「＆ ' ， ‐ ． ・」のみです。";
     } else {
         regError.textContent = "";
     }
@@ -107,16 +114,14 @@ regInput.addEventListener("input", () => {
 function validateMenuRegistForm() {
     const value = regInput.value;
 
-    // 禁止記号が含まれる場合
     if (disallowedPattern.test(value)) {
-        alert("メニュー名に使用できない記号が含まれています。\n使用可能：＆ ' ， ‐ ． ・");
+        alert("メニュー名に使用できない記号が含まれています。\n使用可能は　：　＆　'　,　‐　．　・");
         return false;
     }
 
     return true;
 }
 </script>
-
 
 </body>
 </html>

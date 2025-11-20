@@ -52,11 +52,19 @@
 <script>
 // ------------------------------------------
 // 編集ページ用メニュー名バリデーション
+// 使用可能な文字：
+// 半角英数字 a-zA-Z0-9
+// 全角英数字 ａ-ｚＡ-Ｚ０-９
+// ひらがな ぁ-ん
+// カタカナ ァ-ヶ（ン含む）
+// 漢字 一-龠
+// 全角スペース \u3000
 // 許可記号：＆ ' ， ‐ ． ・
 // ------------------------------------------
 
-// 禁止記号だけを検出するパターン（もっとも安定）
-const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&':：’，‐．・]/;
+// 禁止記号のみを検出するパターン
+const disallowedPattern =
+    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶ一-龠\u3000 &＆'’：:，‐．・]/;
 
 const input = document.getElementById("menuNameInput");
 const error = document.getElementById("menuNameError");
@@ -70,25 +78,25 @@ input.addEventListener("input", () => {
         return;
     }
 
-    // 禁止記号が見つかったら赤エラー表示
+    // 禁止文字が含まれていたらエラー表示
     if (disallowedPattern.test(value)) {
-        error.textContent = "使用できる記号は「：＆ ' ， ‐ ． ・」のみです。";
+        error.textContent = "使用できる記号は「＆　:　'　，　‐　．　・」のみです。";
     } else {
         error.textContent = "";
     }
 });
 
-// 送信時の最終チェック
+// 送信前チェック
 function validateMenuEditForm() {
     const value = input.value;
 
-    // 禁止記号が含まれている
     if (disallowedPattern.test(value)) {
-        alert("メニュー名に使用できない記号が含まれています。\n使用可能：＆； ' ， ‐ ． ・");
+        alert("メニュー名に使用できない記号が含まれています。\n使用可能は「＆　:　'　，　‐　．　・」");
         return false;
     }
 
     return true;
 }
 </script>
+
 
