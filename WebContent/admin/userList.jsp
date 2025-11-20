@@ -12,7 +12,7 @@
         <th>住所</th>
         <th>電話番号</th>
     </tr>
-    <c:forEach var="user" items="${userList}">q
+    <c:forEach var="user" items="${userList}">
         <tr>
             <td>${user.userId}</td>
             <td>${user.userName}</td>
