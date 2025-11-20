@@ -28,6 +28,7 @@
             onsubmit="return validateMenuRegistForm();">
 
         <input type="hidden" name="store_id" value="${store_id}">
+<<<<<<< HEAD
 
         <label>メニュー名：</label>
         <input type="text" id="regMenuName" name="menu_name" required placeholder="メニュー名を入力してください">
@@ -39,6 +40,13 @@
 		<input type="number" name="price" min="0" required placeholder="価格を入力してください"><br>
 
         <label>画像：</label>
+=======
+        <label>メニュー名</label>
+        <input type="text" name="menu_name" required pattern="^[^<>]+$" title="店舗名に < や > は使用できません" placeholder="店舗名を入力してください"><br>
+        <label>価格</label>
+        <input type="number" name="price" min="0" required><br>
+        <label>画像</label>
+>>>>>>> branch 'master' of https://github.com/uehrtww2005/Cteam.git
         <input type="file" name="menu_image" accept="image/*" required><br>
 
         <button type="submit">登録</button>
