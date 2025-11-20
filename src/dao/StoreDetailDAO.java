@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import bean.Seat;
@@ -65,30 +64,112 @@ public class StoreDetailDAO extends DAO {
     }
 
     public StoreDetail getStoreDetailFullWithTags(int storeId) throws Exception {
-        // まず既存の詳細＋席＋カレンダーを取得
         StoreDetail detail = getStoreDetailFull(storeId);
         if (detail == null) return null;
 
-        // タグを取得
+        // タグ1つだけ取得
         String sql = "SELECT t.tag_name " +
                      "FROM store_tags st " +
                      "JOIN tags t ON st.tag_id = t.tag_id " +
-                     "WHERE st.store_id = ?";
+                     "WHERE st.store_id = ? LIMIT 1";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, storeId);
             try (ResultSet rs = stmt.executeQuery()) {
-                List<String> tagList = new ArrayList<>();
-                while (rs.next()) {
-                    tagList.add(rs.getString("tag_name"));
+                if (rs.next()) {
+                    detail.setTag(rs.getString("tag_name")); // ← 単一
                 }
-                detail.setTags(tagList);
             }
         }
 
         return detail;
     }
+
+
+    public void insertStoreTag(int storeId, int tagId) throws Exception {
+        String sql = "INSERT INTO store_tags (store_id, tag_id) VALUES (?, ?)";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, storeId);
+            ps.setInt(2, tagId);
+            ps.executeUpdate();
+        }
+    }
+
+    public void updateStoreDetail(StoreDetail detail) throws Exception {
+
+        try (Connection conn = getConnection()) {
+
+            // 1. store_details 更新
+            String sqlDetail = "UPDATE store_details SET store_introduct=? WHERE store_id=?";
+            try (PreparedStatement ps = conn.prepareStatement(sqlDetail)) {
+                ps.setString(1, detail.getStoreIntroduct());
+                ps.setInt(2, detail.getStoreId());
+                ps.executeUpdate();
+            }
+
+            // 2. タグ（1つだけ）更新 → DELETE → INSERT 1件
+            String sqlDeleteTags = "DELETE FROM store_tags WHERE store_id=?";
+            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTags)) {
+                ps.setInt(1, detail.getStoreId());
+                ps.executeUpdate();
+            }
+
+            if (detail.getTag() != null && !detail.getTag().trim().isEmpty()) {
+                // tag_name → tag_id を取得
+                String sqlTagId = "SELECT tag_id FROM tags WHERE tag_name=?";
+                int tagId = -1;
+
+                try (PreparedStatement ps = conn.prepareStatement(sqlTagId)) {
+                    ps.setString(1, detail.getTag());
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            tagId = rs.getInt("tag_id");
+                        }
+                    }
+                }
+
+                if (tagId != -1) {
+                    String sqlInsertTag = "INSERT INTO store_tags(store_id, tag_id) VALUES(?, ?)";
+                    try (PreparedStatement ps = conn.prepareStatement(sqlInsertTag)) {
+                        ps.setInt(1, detail.getStoreId());
+                        ps.setInt(2, tagId);
+                        ps.executeUpdate();
+                    }
+                }
+            }
+
+            // 3. 席 → 削除して追加
+            seatDAO.deleteSeatsByStoreId(detail.getStoreId());
+            if (detail.getSeats() != null) {
+                for (Seat s : detail.getSeats()) {
+                    seatDAO.insertSeat(detail.getStoreId(), s);
+                }
+            }
+
+            // 4. カレンダー → 削除して追加
+            calendarDAO.deleteCalendarsByStoreId(detail.getStoreId());
+            if (detail.getCalendars() != null) {
+                for (StoreCalendar cal : detail.getCalendars()) {
+                    calendarDAO.insertCalendar(detail.getStoreId(), cal);
+                }
+            }
+        }
+    }
+
+
+    public void saveOrUpdateStoreDetail(StoreDetail detail) throws Exception {
+        StoreDetail exist = getStoreDetailFull(detail.getStoreId());
+        if (exist == null) {
+            int id = insertStoreDetail(detail);
+            detail.setDetailId(id);
+        } else {
+            updateStoreDetail(detail);
+        }
+    }
+
 
 }
