@@ -28,7 +28,6 @@
             onsubmit="return validateMenuRegistForm();">
 
         <input type="hidden" name="store_id" value="${store_id}">
-<<<<<<< HEAD
 
         <label>メニュー名：</label>
         <input type="text" id="regMenuName" name="menu_name" required placeholder="メニュー名を入力してください">
@@ -40,13 +39,6 @@
 		<input type="number" name="price" min="0" required placeholder="価格を入力してください"><br>
 
         <label>画像：</label>
-=======
-        <label>メニュー名</label>
-        <input type="text" name="menu_name" required pattern="^[^<>]+$" title="店舗名に < や > は使用できません" placeholder="店舗名を入力してください"><br>
-        <label>価格</label>
-        <input type="number" name="price" min="0" required><br>
-        <label>画像</label>
->>>>>>> branch 'master' of https://github.com/uehrtww2005/Cteam.git
         <input type="file" name="menu_image" accept="image/*" required><br>
 
         <button type="submit">登録</button>
@@ -83,8 +75,8 @@
 <!-- ★ メニュー名バリデーション（禁止記号→削除 & 赤メッセージ表示） -->
 <script>
 // 許可記号：＆ ' ， ‐ ． ・
-const allowedPattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆&:：'’，ー‐．。・]+$/;
-const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆&:：'’，ー‐．。・]/g;
+const allowedPattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]+$/;
+const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]/g;
 
 const regInput = document.getElementById("regMenuName");
 const regError = document.getElementById("regMenuNameError");
@@ -101,7 +93,7 @@ regInput.addEventListener("input", () => {
     // 禁止記号があれば削除
     if (disallowedPattern.test(value)) {
         regInput.value = value.replace(disallowedPattern, "");
-        regError.textContent = "使用できる記号は「＆： ' ， ‐ ．。 ・」のみです。";
+        regError.textContent = "使用できる記号は「＆ ' ， ‐ ． ・」のみです。";
     } else {
         regError.textContent = "";
     }
@@ -119,7 +111,7 @@ function validateMenuRegistForm() {
 
     // 送信時も再チェック（保険）
     if (!allowedPattern.test(name)) {
-        alert("メニュー名に使用できる記号は「＆： ' ， ‐ ．。 ・」のみです。");
+        alert("メニュー名に使用できる記号は「＆ ' ， ‐ ． ・」のみです。");
         return false;
     }
 
