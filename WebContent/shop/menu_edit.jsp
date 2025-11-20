@@ -48,60 +48,47 @@
 
 <%@ include file="../footer.html" %>
 
-<!-- ★ 許可記号バリデーション JS（フィールドエラーメッセージ対応版） -->
+<!-- ★ メニュー名バリデーション（禁止記号→削除 & 赤メッセージ表示） -->
 <script>
+// ------------------------------------------
+// 編集ページ用メニュー名バリデーション
 // 許可記号：＆ ' ， ‐ ． ・
-// 送信時のチェック
-const fullPattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆&:：'’，ー‐．。・]+$/;
+// ------------------------------------------
 
-// 入力中の禁止文字除去
-const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆&:：'’，ー‐．。・]/g;
+// 禁止記号だけを検出するパターン（もっとも安定）
+const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&':：’，‐．・]/;
 
-const menuNameInput = document.getElementById("menuNameInput");
-const menuNameError = document.getElementById("menuNameError");
+const input = document.getElementById("menuNameInput");
+const error = document.getElementById("menuNameError");
 
-// ---- 入力中（禁止記号を削除＆フィールドメッセージ表示） ----
-menuNameInput.addEventListener("input", () => {
-    let value = menuNameInput.value;
+// 入力中の処理
+input.addEventListener("input", () => {
+    const value = input.value;
 
-    // 空ならメッセージ消す
     if (value === "") {
-        menuNameError.textContent = "";
+        error.textContent = "";
         return;
     }
 
-    // 禁止記号がある場合 → 自動削除
+    // 禁止記号が見つかったら赤エラー表示
     if (disallowedPattern.test(value)) {
-        menuNameInput.value = value.replace(disallowedPattern, "");
-        menuNameError.textContent = "使用できる記号は「＆： ' ， ‐ ．。 ・」のみです。";
+        error.textContent = "使用できる記号は「：＆ ' ， ‐ ． ・」のみです。";
     } else {
-        // 許可文字のみ → メッセージクリア
-        menuNameError.textContent = "";
+        error.textContent = "";
     }
 });
 
-// ---- 送信時チェック ----
+// 送信時の最終チェック
 function validateMenuEditForm() {
-    const name = menuNameInput.value.trim();
-    const price = document.querySelector("input[name='price']").value;
+    const value = input.value;
 
-    // フィールドエラーが残っている場合は送信禁止
-    if (menuNameError.textContent !== "") {
-        alert("メニュー名に使用できない記号が含まれています。");
-        return false;
-    }
-
-    // 空欄は required に任せる
-    if (name !== "" && !fullPattern.test(name)) {
-        alert("メニュー名に使用できる記号は「＆： ' ， ‐ ．。 ・」のみです。");
-        return false;
-    }
-
-    if (price === "" || isNaN(price) || Number(price) < 0) {
-        alert("価格は 0 以上の数値で入力してください。");
+    // 禁止記号が含まれている
+    if (disallowedPattern.test(value)) {
+        alert("メニュー名に使用できない記号が含まれています。\n使用可能：＆； ' ， ‐ ． ・");
         return false;
     }
 
     return true;
 }
 </script>
+

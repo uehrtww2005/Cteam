@@ -74,26 +74,30 @@
 
 <!-- ★ メニュー名バリデーション（禁止記号→削除 & 赤メッセージ表示） -->
 <script>
+// ------------------------------------------
+// 使用可能な文字
 // 許可記号：＆ ' ， ‐ ． ・
-const allowedPattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]+$/;
-const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]/g;
+// ------------------------------------------
+
+// パターンは「禁止記号だけを拾う」方式にする（確実に動く）
+const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&'’，‐．・:：]/;
+const disallowedGlobal = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&'’，‐．・:：]/g;
 
 const regInput = document.getElementById("regMenuName");
 const regError = document.getElementById("regMenuNameError");
 
 // 入力中の処理
 regInput.addEventListener("input", () => {
-    let value = regInput.value;
+    const value = regInput.value;
 
     if (value === "") {
         regError.textContent = "";
         return;
     }
 
-    // 禁止記号があれば削除
+    // 禁止記号が見つかったら赤エラー表示（削除はしない）
     if (disallowedPattern.test(value)) {
-        regInput.value = value.replace(disallowedPattern, "");
-        regError.textContent = "使用できる記号は「＆ ' ， ‐ ． ・」のみです。";
+        regError.textContent = "使用できる記号は「＆: ' ， ‐ ． ・」のみです。";
     } else {
         regError.textContent = "";
     }
@@ -101,23 +105,18 @@ regInput.addEventListener("input", () => {
 
 // 送信時の最終チェック
 function validateMenuRegistForm() {
-    const name = regInput.value.trim();
+    const value = regInput.value;
 
-    // エラーがある状態なら送信禁止
-    if (regError.textContent !== "") {
-        alert("メニュー名に使用できない記号が含まれています。");
-        return false;
-    }
-
-    // 送信時も再チェック（保険）
-    if (!allowedPattern.test(name)) {
-        alert("メニュー名に使用できる記号は「＆ ' ， ‐ ． ・」のみです。");
+    // 禁止記号が含まれる場合
+    if (disallowedPattern.test(value)) {
+        alert("メニュー名に使用できない記号が含まれています。\n使用可能：＆ ' ， ‐ ． ・");
         return false;
     }
 
     return true;
 }
 </script>
+
 
 </body>
 </html>
