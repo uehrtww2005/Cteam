@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>店舗詳細編集</title>
+<%@include file="../header.html" %>
+<%@ include file="../store_side.jsp" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
 
 <style>
 .calendar-table { border-collapse: collapse; margin-bottom: 30px; width: 100%; }
@@ -212,5 +212,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 </script>
 
-</body>
-</html>
+<%@include file="../footer.html" %>
