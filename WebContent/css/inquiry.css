@@ -13,7 +13,6 @@ body {
 h2 {
     text-align: center;
     color: #CC9900; /* 見出しも白 */
-    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
     margin-bottom: 30px;
     font-size: 28px;
     letter-spacing: 1px;
