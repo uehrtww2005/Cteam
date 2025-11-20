@@ -1,11 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../header.html" %>
+<%@ include file="../store_side.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/menuedit.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
 
 <h2>メニュー編集</h2>
 
-<!-- 編集フォーム（★バリデーション追加！） -->
 <form action="<%=request.getContextPath()%>/Adpay/MenuEditExecute.action"
       method="post"
       onsubmit="return validateMenuEditForm();">
@@ -21,7 +22,9 @@
   </div>
 
   <label>メニュー名：</label>
-  <input type="text" name="menu_name" value="${menu.menuName}" required><br>
+  <input type="text" id="menuNameInput" name="menu_name" value="${menu.menuName}" required>
+  <!-- フィールドエラーメッセージ -->
+  <div id="menuNameError" style="color:red; font-size:14px; height:18px; margin-bottom:8px;"></div>
 
   <label>価格：</label>
   <input type="number" name="price" value="${menu.price}" min="0" required><br>
@@ -31,7 +34,6 @@
   </div>
 </form>
 
-<!-- 削除フォーム -->
 <form action="<%=request.getContextPath()%>/Adpay/MenuDeleteExecute.action"
       method="post"
       onsubmit="return confirm('本当に削除しますか？');">
@@ -46,36 +48,47 @@
 
 <%@ include file="../footer.html" %>
 
-<!-- ★ 許可記号バリデーション JS -->
+<!-- ★ メニュー名バリデーション（禁止記号→削除 & 赤メッセージ表示） -->
 <script>
+// ------------------------------------------
+// 編集ページ用メニュー名バリデーション
 // 許可記号：＆ ' ， ‐ ． ・
-const menuNamePattern = /^[a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]+$/;
+// ------------------------------------------
 
-function validateMenuEditForm() {
-    const name = document.querySelector("input[name='menu_name']").value.trim();
-    const price = document.querySelector("input[name='price']").value;
+// 禁止記号だけを検出するパターン（もっとも安定）
+const disallowedPattern = /[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ \u3000＆&':：’，‐．・]/;
 
-    // メニュー名チェック
-    if (!menuNamePattern.test(name)) {
-        alert("メニュー名に使用できる記号は「＆ ' ， ‐ ． ・」のみです。");
-        return false;
+const input = document.getElementById("menuNameInput");
+const error = document.getElementById("menuNameError");
+
+// 入力中の処理
+input.addEventListener("input", () => {
+    const value = input.value;
+
+    if (value === "") {
+        error.textContent = "";
+        return;
     }
 
-    // 価格チェック
-    if (price === "" || isNaN(price) || Number(price) < 0) {
-        alert("価格は 0 以上の数値で入力してください。");
+    // 禁止記号が見つかったら赤エラー表示
+    if (disallowedPattern.test(value)) {
+        error.textContent = "使用できる記号は「：＆ ' ， ‐ ． ・」のみです。";
+    } else {
+        error.textContent = "";
+    }
+});
+
+// 送信時の最終チェック
+function validateMenuEditForm() {
+    const value = input.value;
+
+    // 禁止記号が含まれている
+    if (disallowedPattern.test(value)) {
+        alert("メニュー名に使用できない記号が含まれています。\n使用可能：＆； ' ， ‐ ． ・");
         return false;
     }
 
     return true;
 }
-
-// 入力中に禁止文字を自動削除
-document.querySelector("input[name='menu_name']").addEventListener("input", (e) => {
-    const value = e.target.value;
-    if (!menuNamePattern.test(value)) {
-        e.target.value = value.replace(/[^a-zA-Z0-9ぁ-んァ-ヶ一-龠０-９ 　＆'，‐．・]/g, "");
-        alert("使える記号は「＆ ' ， ‐ ． ・」だけです。");
-    }
-});
 </script>
+

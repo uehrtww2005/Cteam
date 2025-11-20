@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ page import="java.util.List, java.util.ArrayList" %>
 <%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_home.css?ver=2.3">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_home.css?ver=2.3">
 <div class="store-home-container">
 
     <!-- サイドバー読み込み -->
-    <%@ include file="../side.jsp" %>
+    <%@ include file="../store_side.jsp" %>
 
     <!-- メインコンテンツ -->
     <div class="main-content">

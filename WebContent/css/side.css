@@ -1,110 +1,252 @@
-/* ========= 全体設定 ========= */
+/* ========================================
+   ページ全体
+======================================== */
 body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* ページ全体でボックスサイズを調整 */
+    margin: 0;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
 }
 
-/* ========= コンテナ: サイドバー + メイン ========= */
-.store-home-container {
-  display: flex;
-  min-height: 100vh; /* ページ全体の高さ確保 */
-}
-
-/* ========= サイドバー ========= */
+/* ========================================
+   固定サイドバー
+======================================== */
 .sidebar {
-  width: 220px;
-  background-color: #171717;
-  display: flex;
-  flex-direction: column;
-  padding-top: 110px; /* 元の50px + ヘッダー60px */
-  box-sizing: border-box;
-
-  /* サイドバーを画面下まで伸ばす */
-  min-height: 100vh;
-
-  /* 左揃え */
-  align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #111;
+    color: #fff;
+    padding-top: 100px; /* ヘッダー分の余白 */
+    box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+    overflow-y: auto;
+    z-index: 1001;
 }
 
-/* ========= サイドバーのリンク ========= */
 .sidebar-link {
-  padding: 15px 20px;
-  font-size: 18px;
-  color: #ffffff;
-  text-decoration: none;
-  border-bottom: 1px solid #d9d9d9;
-  transition: background 0.2s;
-
-  /* 左揃え */
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box; /* ← 追加: 背景内に収める */
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: background 0.3s, color 0.3s;
 }
 
 .sidebar-link:hover {
-  background-color: #585858;
+    background-color: #222;
+    color: #FFD700; /* ホバーでアクセント */
 }
 
-/* ========= サイドバー内のプラン表示（背景なし、文字だけ） ========= */
 .sidebar-plan {
-  display: flex;
-  align-items: center;
-  color: #ffffff;
-  font-size: 18px;
-  line-height: 1.5;
-  padding: 15px 20px;
-  margin: 0;
-
-  /* 左揃え */
-  justify-content: flex-start;
-  width: 100%;
-  box-sizing: border-box; /* ← 追加 */
+    margin-top: auto;
+    padding: 15px 20px;
+    background-color: #222;
+    border-top: 1px solid #333;
+    text-align: center;
 }
 
 .plan-text {
-  font-size: 18px;
-  line-height: 1.5;
+    font-weight: bold;
+    line-height: 1.5;
 }
 
-/* ========= メインコンテンツ ========= */
+/* ========================================
+   メインコンテンツ
+======================================== */
 .store-main {
-  flex: 1;
-  padding: 40px;
-  padding-top: 140px; /* ヘッダー高さ分 */
-  box-sizing: border-box;
+    margin-left: 220px; /* サイドバー幅と同じだけ右にずらす */
+    padding: 20px;
 }
 
-/* ========= レスポンシブ対応（スマホ） ========= */
-@media screen and (max-width: 768px) {
-  .store-home-container {
-    flex-direction: column;
-  }
+/* 見出し */
+.store-main h3 {
+    font-size: 30px;
+    color: #fff;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #FFD700;
+    display: inline-block;
+    padding-bottom: 5px;
+}
 
-  .sidebar {
+/* メッセージ表示 */
+.msg {
+    margin: 20px auto;
+    padding: 12px 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid #FFD700;
+    color: #FFD700;
+    border-radius: 6px;
+    width: fit-content;
+    font-weight: bold;
+}
+
+/* ========================================
+   フォーム全体
+======================================== */
+form {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px 40px;
+    margin: 30px auto;
+    border-radius: 12px;
+    width: 420px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* フォームラベル */
+form label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* 入力フィールド */
+form input[type="text"],
+form input[type="number"],
+form input[type="file"] {
     width: 100%;
-    flex-direction: row;
-    justify-content: flex-start; /* 左揃え */
-    padding-top: 20px;
-    border-right: none;
-    border-bottom: 1px solid #d9d9d9;
-    min-height: auto;
-  }
-
-  .sidebar-link {
-    border-bottom: none;
-    border-right: 1px solid #d9d9d9;
     padding: 10px;
-    text-align: left; /* 左揃え */
-    box-sizing: border-box; /* ← 追加 */
-  }
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+}
 
-  .sidebar-link:last-child {
-    border-right: none;
-  }
+form input[type="file"] {
+    border: none;
+}
 
-  .sidebar-plan {
-    padding: 10px;
-    box-sizing: border-box; /* ← 追加 */
-  }
+/* 登録ボタン */
+form button {
+    margin-top: 25px;
+    background-color: #FFD700;
+    color: #111;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background-color: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Homeリンク */
+p a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+p a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* ========================================
+   メニュー一覧
+======================================== */
+.menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 40px auto 80px;
+    max-width: 1200px;
+}
+
+.menu-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-card {
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 12px;
+    width: 220px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.15);
+    text-align: center;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    border-color: #FFD700;
+    box-shadow: 0 6px 14px rgba(255, 215, 0, 0.3);
+}
+
+/* メニュー画像 */
+.menu-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+}
+
+/* メニュー名・価格 */
+.menu-card strong {
+    font-size: 18px;
+    color: #fff;
+}
+
+.menu-card div:last-child {
+    color: #FFD700;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* 編集ボタン */
+.menu-actions .btn-edit {
+    display: inline-block;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #8b0000, #4d0000);
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.menu-actions .btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* 編集ページ用メニュー画像 */
+.menu-image-section .menu-img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+/* 横線セクション */
+.section-divider {
+    border: none;
+    border-top: 2px solid #FFD700;
+    margin: 40px auto;
+    width: 80%;
 }

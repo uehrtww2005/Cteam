@@ -30,6 +30,10 @@
         <button type="submit">店舗一覧</button>
     </form>
 
+    <form action="<%=request.getContextPath()%>/Adpay/InquiryList.action" method="get">
+    	<button type="submit">問い合わせ保管庫</button>
+    </form>
+
 </main>
 
 <%@ include file="../footer.html" %>

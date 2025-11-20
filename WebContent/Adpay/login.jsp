@@ -37,9 +37,6 @@
         </a>
         <nav>
             <ul>
-                <li><a href="<%=request.getContextPath()%>/Adpay/login.jsp">ホーム</a></li>
-                <li><a href="#">サービス</a></li>
-                <li><a href="#">料金プラン</a></li>
                 <%
                     String role = (String) session.getAttribute("role");
                     if (role == null) {

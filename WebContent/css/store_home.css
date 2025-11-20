@@ -11,25 +11,7 @@ body {
   min-height: 100vh;/* サイドバー周りもグレー背景 */
 }
 
-/* サイドバー */
-.sidebar {
-  width: 220px;
-  background-color: #171717;
-  /* border-right: 1px solid #d9d9d9; 削除 */
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-  box-sizing: border-box;
-}
 
-.sidebar-link {
-  padding: 15px 20px;
-  font-size: 18px;
-  color: #ffffff; /* 文字白 */
-  text-decoration: none;
-  border-bottom: 1px solid #d9d9d9; /* AdPay線色 */
-  transition: background 0.2s;
-}
 
 .sidebar-link:hover {
   background-color: #585858;
