@@ -64,7 +64,7 @@
 
 // 禁止記号のみを検出するパターン
 const disallowedPattern =
-    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶ一-龠\u3000 &＆'’：:，‐．・]/;
+    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶ一-龠\u3000 &＆'’：:，ー-．・]/;
 
 const input = document.getElementById("menuNameInput");
 const error = document.getElementById("menuNameError");
