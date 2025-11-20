@@ -88,12 +88,14 @@ body {
 ======================================== */
 form {
     background-color: rgba(255, 255, 255, 0.05);
-    padding: 30px 40px;
+    padding: 30px 20px;
     margin: 30px auto;
     border-radius: 12px;
-    width: 420px;
+    width: calc(100% - 240px); /* サイドバー分を引く */
+    max-width: 700px;           /* 最大幅700px */
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     border: 1px solid rgba(255, 215, 0, 0.2);
+    box-sizing: border-box;
 }
 
 /* フォームラベル */
@@ -193,14 +195,15 @@ p a:hover {
     box-shadow: 0 6px 14px rgba(255, 215, 0, 0.3);
 }
 
-/* メニュー画像 */
+/* メニュー画像（一覧） */
 .menu-img {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 10px;
+    display: block;
 }
 
 /* メニュー名・価格 */
@@ -234,13 +237,20 @@ p a:hover {
 }
 
 /* 編集ページ用メニュー画像 */
+.menu-image-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .menu-image-section .menu-img {
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
+    width: 100%;       /* フォーム幅いっぱい */
+    max-width: 700px;  /* 最大幅700px */
+    height: auto;      /* アスペクト比維持 */
+    object-fit: contain; /* 切り抜かずに全体表示 */
+    display: block;
+    margin: 0 auto 20px;
     border-radius: 12px;
     border: 1px solid rgba(255, 215, 0, 0.2);
-    margin-bottom: 20px;
 }
 
 /* 横線セクション */
