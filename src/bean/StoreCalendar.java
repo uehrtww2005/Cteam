@@ -17,6 +17,10 @@ public class StoreCalendar {
     private Time openTime;    // 開店時間
     private Time closeTime;   // 閉店時間
 
+    // 追加：HH:mm形式の文字列（JSP表示用）
+    private String openTimeStr;
+    private String closeTimeStr;
+
     // getter / setter
     public int getStoreId() {
         return storeId;
@@ -51,5 +55,19 @@ public class StoreCalendar {
     }
     public void setCloseTime(Time closeTime) {
         this.closeTime = closeTime;
+    }
+
+    public String getOpenTimeStr() {
+        return openTimeStr;
+    }
+    public void setOpenTimeStr(String openTimeStr) {
+        this.openTimeStr = openTimeStr;
+    }
+
+    public String getCloseTimeStr() {
+        return closeTimeStr;
+    }
+    public void setCloseTimeStr(String closeTimeStr) {
+        this.closeTimeStr = closeTimeStr;
     }
 }

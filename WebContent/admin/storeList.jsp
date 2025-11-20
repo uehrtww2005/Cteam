@@ -11,7 +11,7 @@
         <th>住所</th>
         <th>電話番号</th>
     </tr>
-    <c:forEach var="store" items="${storeList}">
+    <c:forEach var="store" items="${storeList}">q
         <tr>
             <td>${store.storeId}</td>
             <td>${store.storeName}</td>

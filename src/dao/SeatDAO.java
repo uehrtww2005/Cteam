@@ -102,4 +102,25 @@ public class SeatDAO extends DAO {
 
         return seat;
     }
+
+    public void deleteSeatsByStoreId(int storeId) throws Exception {
+        String sql = "DELETE FROM seats WHERE store_id=?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, storeId);
+            ps.executeUpdate();
+        }
+    }
+
+    public void insertSeat(int storeId, Seat s) throws Exception {
+        String sql = "INSERT INTO seats (store_id, seat_type, seat_name, min_people) VALUES (?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, storeId);
+            ps.setString(2, s.getSeatType());
+            ps.setString(3, s.getSeatName());
+            ps.setInt(4, s.getMinPeople());
+            ps.executeUpdate();
+        }
+    }
 }

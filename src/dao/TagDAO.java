@@ -60,4 +60,13 @@ public class TagDAO extends DAO {
         }
         return tag;
     }
+
+    public List<String> getAllTags() throws Exception {
+        List<String> list = new ArrayList<>();
+        for (Tag t : findAll()) {
+            list.add(t.getTagName());
+        }
+        return list;
+    }
+
 }
