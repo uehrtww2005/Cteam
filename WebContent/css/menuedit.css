@@ -3,16 +3,72 @@ body {
   margin: 0;
   background-color: #111;
   color: #fff;
-  padding-top: 140px; /* header.html が外部にあるため多めに確保 */
   text-align: center;
+  box-sizing: border-box;
+}
+
+/* ========= ページ全体レイアウト ========= */
+.page-container {
+  display: flex;  /* サイドバーとメインを横並びに */
+}
+
+/* ========= 固定サイドバー ========= */
+.sidebar {
+  width: 220px;      /* サイドバー幅 */
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: #111;
+  color: #fff;
+  padding-top: 140px; /* ヘッダー分の余白 */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+  overflow-y: auto;
+  z-index: 1001;
+}
+
+.sidebar-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+  background-color: #222;
+  color: #FFD700;
+}
+
+.sidebar-plan {
+  margin-top: auto;
+  padding: 15px 20px;
+  background-color: #222;
+  border-top: 1px solid #333;
+  text-align: center;
+}
+
+.plan-text {
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+/* ========= メインコンテンツ ========= */
+.main-content {
+  margin-left: 220px;           /* サイドバー幅 */
+  width: calc(100% - 220px);    /* サイドバーを除いた幅 */
+  display: flex;
+  justify-content: center;       /* 残り幅で中央寄せ */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* ========= 見出し（h2） ========= */
 h2 {
+  font-size: 30px;
   color: #fff;
-  text-align: center;
-  margin-top: 20px;
-  font-size: 28px;
   letter-spacing: 0.05em;
   border-bottom: 2px solid #FFD700;
   display: inline-block;
@@ -31,11 +87,19 @@ h2 {
   font-weight: bold;
 }
 
-/* ========= フォーム全体 ========= */
+/* ========= フォームラッパー ========= */
+.form-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* フォームを水平中央 */
+}
+
+/* ========= フォーム本体 ========= */
 form {
   background-color: rgba(255, 255, 255, 0.05);
   padding: 30px 40px;
-  margin: 30px auto;
+  margin: 20px 0;
   border-radius: 12px;
   width: 420px;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
@@ -71,29 +135,51 @@ form input[type="file"] {
 }
 
 /* ========= 登録ボタン ========= */
-form button {
-    margin-top: 25px;
-    background-color: #FFD700 !important;
-    color: #ffffff !important;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 12px 0;
-    width: 100%;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    background: linear-gradient(145deg, #222, #111);
-    border:1px solid #666 !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
-    transition: 0.3s !important;
+.update-btn {
+  margin-top: 25px;
+  background-color: #FFD700 !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  padding: 12px 0;
+  width: 100%;
+  border: none !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  background: linear-gradient(145deg, #222, #111);
+  border:1px solid #666 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+  transition: 0.3s !important;
 }
 
-form button:hover {
-    background: linear-gradient(145deg, #333, #000) !important;
-    color: #FFD700 !important;
-    border-color: #FFD700 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
+.update-btn:hover {
+  background: linear-gradient(145deg, #333, #000) !important;
+  color: #FFD700 !important;
+  border-color: #FFD700 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
+}
+
+/* ========= 削除ボタン ========= */
+.delete-button {
+  margin-top: 15px;
+  background-color: #e74c3c; /* 赤 */
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 0;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* 濃い赤 */
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(231,76,60,0.5);
 }
 
 /* ========= 「Homeに戻る」リンク ========= */
@@ -150,14 +236,13 @@ p a:hover {
   box-shadow: 0 6px 14px rgba(255, 215, 0, 0.3);
 }
 
-/* ========= メニュー画像 ========= */
-/* 編集ページ用のメニュー画像（拡大版・中央寄せ・アスペクト比保持） */
+/* ========= メニュー画像（編集画面） ========= */
 .menu-image-section .menu-img {
-    width: 80%;          /* 親要素の幅の80% */
-    max-width: 600px;    /* 最大幅600px */
-    height: auto;        /* 高さは自動調整して比率維持 */
+    width: 80%;
+    max-width: 600px;
+    height: auto;
     display: block;
-    margin: 0 auto 30px; /* 上下余白と中央寄せ */
+    margin: 0 auto 30px;
     border-radius: 12px;
     border: 2px solid rgba(255, 215, 0, 0.3);
     box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
@@ -197,7 +282,7 @@ p a:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* ========= フォーム外リンク（テキストリンク） ========= */
+/* ========= フォーム外リンク ========= */
 .form-links {
     text-align: center;
     margin: 5px 0 200px 0;
