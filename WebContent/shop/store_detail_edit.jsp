@@ -14,7 +14,7 @@
     width: 14%;
     height: 60px;
     cursor: pointer;
-    white-space: pre-line;
+    white-space: pre-line;a
 }
 .calendar-table th { background-color: #f0f0f0; }
 
