@@ -27,6 +27,12 @@ public class GroupLoginAction extends Action {
             Group group = dao.login(leaderAddress, password);
 
             if (group != null) {
+
+            	if (group.getStatus() == 1){
+            		request.setAttribute("msg", "この団体アカウントは現在利用停止されています。管理者にお問い合わせください。");
+            		request.getRequestDispatcher("/user/group/login_group.jsp").forward(request, response);
+            	    return;
+            	}
                 session.setAttribute("group", group);
                 session.setAttribute("role", "group");
                 request.setAttribute("group", group);

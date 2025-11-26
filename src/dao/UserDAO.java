@@ -23,13 +23,15 @@ public class UserDAO extends DAO {
             if (resultSet.next()) {
                 user = new User();
                 user.setUserId(resultSet.getInt("user_id"));
-                user.setAddress(resultSet.getString("address")); // ←★これが抜けていた！
+                user.setAddress(resultSet.getString("address"));
                 user.setPassword(resultSet.getString("password"));
                 user.setUserName(resultSet.getString("user_name"));
                 user.setGender(resultSet.getInt("gender"));
                 user.setUserTel(resultSet.getString("user_tel"));
                 user.setRank(resultSet.getString("rank"));
                 user.setPrepaidAmount(resultSet.getInt("prepaid_amount"));
+                // ★追加: ステータスの取得
+                user.setStatus(resultSet.getInt("status"));
             }
         } finally {
             if (statement != null) statement.close();
@@ -55,6 +57,7 @@ public class UserDAO extends DAO {
         int count = 0;
 
         try {
+            // 新規登録時はデフォルト値(0)が使われるのでstatusのINSERTは不要
             statement = connection.prepareStatement(
                 "INSERT INTO users(address, password, user_name, gender, user_tel) VALUES(?,?,?,?,?)"
             );
@@ -94,6 +97,9 @@ public class UserDAO extends DAO {
                 user.setUserTel(rs.getString("user_tel"));
                 user.setRank(rs.getString("rank"));
                 user.setPrepaidAmount(rs.getInt("prepaid_amount"));
+                // ★追加: ステータスの取得
+                user.setStatus(rs.getInt("status"));
+
                 list.add(user);
             }
         }
@@ -103,7 +109,8 @@ public class UserDAO extends DAO {
 
     public void updateRank(int userId, String newRank) throws Exception {
         Connection con = getConnection();
-        String sql = "UPDATE user SET rank=? WHERE user_id=?";
+        // SQL文のテーブル名が間違っていたため修正 (user -> users)
+        String sql = "UPDATE users SET rank=? WHERE user_id=?";
         PreparedStatement st = con.prepareStatement(sql);
         st.setString(1, newRank);
         st.setInt(2, userId);
@@ -111,5 +118,4 @@ public class UserDAO extends DAO {
         st.close();
         con.close();
     }
-
 }
