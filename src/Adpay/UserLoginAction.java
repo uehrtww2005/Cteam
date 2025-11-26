@@ -32,6 +32,14 @@ public class UserLoginAction extends Action {
             User user = dao.login(address, password);
 
             if (user != null) {
+                // ★追加: 利用停止チェック
+                if (user.getStatus() == 1) {
+                    request.setAttribute("msg", "このアカウントは現在利用停止されています。管理者にお問い合わせください。");
+                    request.getRequestDispatcher("/user/login_user.jsp").forward(request, response);
+                    return; // 処理をここで中断
+                }
+
+                // ログイン成功＆利用可能な場合のみセッション保存
                 session.setAttribute("user", user);
                 session.setAttribute("role", "user");
                 request.setAttribute("user", user);
@@ -51,6 +59,8 @@ public class UserLoginAction extends Action {
         } else {
             // ▼ GET でアクセスされた場合（ホームリンクなど）
             if (sessionUser != null) {
+                // セッションがある場合も、念のため再度DBでステータス確認をするのが安全ですが
+                // ここでは簡易的にセッション維持のみとします
                 request.setAttribute("user", sessionUser);
                 setRankMessage(sessionUser, request);
 

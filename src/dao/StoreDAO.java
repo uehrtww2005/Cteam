@@ -35,6 +35,8 @@ public class StoreDAO extends DAO {
                     store.setPassword(rs.getString("password"));
                     store.setStoreName(rs.getString("store_name"));
                     store.setStoreTel(rs.getString("store_tel"));
+                    // ★追加: ステータスの取得
+                    store.setStatus(rs.getInt("status"));
                 }
             }
         }
@@ -49,7 +51,7 @@ public class StoreDAO extends DAO {
         return store;
     }
 
-    // 登録
+    // 登録 (変更なし)
     public boolean save(Store store) throws Exception {
         String sql = "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)";
         try (Connection conn = getConnection();
@@ -64,7 +66,7 @@ public class StoreDAO extends DAO {
         }
     }
 
-    // 登録して自動生成IDを返す
+    // 登録して自動生成IDを返す (変更なし)
     public int saveAndReturnId(Store store) throws Exception {
         int generatedId = -1;
         String sql = "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)";
@@ -100,6 +102,8 @@ public class StoreDAO extends DAO {
                 store.setPassword(rs.getString("password"));
                 store.setStoreName(rs.getString("store_name"));
                 store.setStoreTel(rs.getString("store_tel"));
+                // ★追加: ステータスの取得
+                store.setStatus(rs.getInt("status"));
                 list.add(store);
             }
         }
@@ -107,12 +111,12 @@ public class StoreDAO extends DAO {
         return list;
     }
 
-    // ★ 改善版：Store + StoreDetail + Seats + Calendar + Menu をまとめて取得
+    // ★ 改善版：Store + StoreDetail + Seats + Calendar + Menu をまとめて取得 (statusの取得を追加)
     public Store getStoreFull(int storeId) throws Exception {
         Store store = null;
 
         // まず stores + store_details
-        String sql = "SELECT s.store_id, s.store_name, s.store_address, s.store_tel, " +
+        String sql = "SELECT s.store_id, s.store_name, s.store_address, s.store_tel, s.status, " + // statusを追加
                      "d.detail_id, d.store_introduct " +
                      "FROM stores s " +
                      "LEFT JOIN store_details d ON s.store_id = d.store_id " +
@@ -129,6 +133,8 @@ public class StoreDAO extends DAO {
                     store.setStoreName(rs.getString("store_name"));
                     store.setStoreAddress(rs.getString("store_address"));
                     store.setStoreTel(rs.getString("store_tel"));
+                    // ★追加: ステータスの取得
+                    store.setStatus(rs.getInt("status"));
 
                     StoreDetail detail = new StoreDetail();
                     detail.setDetailId(rs.getInt("detail_id"));
@@ -138,6 +144,10 @@ public class StoreDAO extends DAO {
                 }
             }
         }
+
+        // ... (省略)
+        // 他のデータ取得ロジックは変更なし
+        // ...
 
         if (store != null) {
             // Seats 取得
@@ -207,5 +217,4 @@ public class StoreDAO extends DAO {
 
         return list;  // ← ここが List<Store>
     }
-
 }
