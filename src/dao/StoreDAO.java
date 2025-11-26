@@ -171,4 +171,41 @@ public class StoreDAO extends DAO {
 
         return store;
     }
+
+    public List<Store> search(String keyword) throws Exception {
+        List<Store> list = new ArrayList<>();
+
+        Connection con = getConnection();
+
+        String sql = "SELECT store_id, store_name, store_address, store_tel "
+                   + "FROM stores "
+                   + "WHERE store_name LIKE ? "
+                   + "OR store_address LIKE ? "
+                   + "OR store_tel LIKE ?";
+
+        PreparedStatement st = con.prepareStatement(sql);
+
+        String like = "%" + keyword + "%";
+        st.setString(1, like);
+        st.setString(2, like);
+        st.setString(3, like);
+
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Store s = new Store();
+            s.setStoreId(rs.getInt("store_id"));
+            s.setStoreName(rs.getString("store_name"));
+            s.setStoreAddress(rs.getString("store_address"));
+            s.setStoreTel(rs.getString("store_tel"));
+            list.add(s);
+        }
+
+        rs.close();
+        st.close();
+        con.close();
+
+        return list;  // ← ここが List<Store>
+    }
+
 }

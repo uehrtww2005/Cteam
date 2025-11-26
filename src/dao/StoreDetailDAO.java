@@ -160,7 +160,6 @@ public class StoreDetailDAO extends DAO {
         }
     }
 
-
     public void saveOrUpdateStoreDetail(StoreDetail detail) throws Exception {
         StoreDetail exist = getStoreDetailFull(detail.getStoreId());
         if (exist == null) {
@@ -170,6 +169,5 @@ public class StoreDetailDAO extends DAO {
             updateStoreDetail(detail);
         }
     }
-
 
 }

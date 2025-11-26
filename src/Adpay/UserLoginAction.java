@@ -1,10 +1,15 @@
 package Adpay;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Group;   // group 用
+import bean.Store;
 import bean.User;
+import dao.StoreDAO;
 import dao.UserDAO;
 import tool.Action;
 
@@ -14,6 +19,9 @@ public class UserLoginAction extends Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         User sessionUser = (User) session.getAttribute("user");
+        Group sessionGroup = (Group) session.getAttribute("group");
+
+        StoreDAO storeDao = new StoreDAO();
 
         if ("POST".equalsIgnoreCase(request.getMethod())) {
             // ▼ ログイン処理
@@ -30,6 +38,10 @@ public class UserLoginAction extends Action {
 
                 setRankMessage(user, request);
 
+                // ▼ 全店舗一覧を取得して request にセット
+                List<Store> stores = storeDao.search(""); // 空文字で全件
+                request.setAttribute("stores", stores);
+
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "メールアドレスまたはパスワードが間違っています");
@@ -37,13 +49,28 @@ public class UserLoginAction extends Action {
             }
 
         } else {
-            // ▼ GETでアクセスされた場合（ホームリンクなど）
+            // ▼ GET でアクセスされた場合（ホームリンクなど）
             if (sessionUser != null) {
                 request.setAttribute("user", sessionUser);
                 setRankMessage(sessionUser, request);
+
+                // ▼ 全店舗一覧を取得して request にセット
+                List<Store> stores = storeDao.search(""); // 空文字で全件
+                request.setAttribute("stores", stores);
+
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
+
+            } else if (sessionGroup != null) {
+                request.setAttribute("group", sessionGroup);
+
+                // ▼ group 用も同じく全店舗表示
+                List<Store> stores = storeDao.search("");
+                request.setAttribute("stores", stores);
+
+                request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
+
             } else {
-                // 未ログインならトップページにリダイレクト
+                // 未ログインならログインページへ
                 response.sendRedirect(request.getContextPath() + "/Adpay/login.jsp");
             }
         }
@@ -68,7 +95,10 @@ public class UserLoginAction extends Action {
                 rankMessage = "最高ランクです";
             }
         }
+
+        // request/session にセット
         request.setAttribute("rankMsg", rankMessage);
+        request.getSession().setAttribute("rankMsg", rankMessage);
     }
 
     // ▼ ランク判定
