@@ -35,8 +35,10 @@ public class StoreDAO extends DAO {
                     store.setPassword(rs.getString("password"));
                     store.setStoreName(rs.getString("store_name"));
                     store.setStoreTel(rs.getString("store_tel"));
-                    // ★追加: ステータスの取得
                     store.setStatus(rs.getInt("status"));
+
+                    // ★追加
+                    store.setImageExtension(rs.getString("image_extension"));
                 }
             }
         }
@@ -51,9 +53,10 @@ public class StoreDAO extends DAO {
         return store;
     }
 
-    // 登録 (変更なし)
+    // 保存（画像拡張子追加）
     public boolean save(Store store) throws Exception {
-        String sql = "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO stores(store_address, password, store_name, store_tel, image_extension) VALUES (?, ?, ?, ?, ?)";
+
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -61,15 +64,17 @@ public class StoreDAO extends DAO {
             ps.setString(2, store.getPassword());
             ps.setString(3, store.getStoreName());
             ps.setString(4, store.getStoreTel());
+            ps.setString(5, store.getImageExtension());
 
             return ps.executeUpdate() > 0;
         }
     }
 
-    // 登録して自動生成IDを返す (変更なし)
+    // 保存して store_id を返す（画像拡張子追加）
     public int saveAndReturnId(Store store) throws Exception {
         int generatedId = -1;
-        String sql = "INSERT INTO stores(store_address, password, store_name, store_tel) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO stores(store_address, password, store_name, store_tel, image_extension) VALUES (?, ?, ?, ?, ?)";
+
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -77,6 +82,8 @@ public class StoreDAO extends DAO {
             ps.setString(2, store.getPassword());
             ps.setString(3, store.getStoreName());
             ps.setString(4, store.getStoreTel());
+            ps.setString(5, store.getImageExtension());
+
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -102,8 +109,11 @@ public class StoreDAO extends DAO {
                 store.setPassword(rs.getString("password"));
                 store.setStoreName(rs.getString("store_name"));
                 store.setStoreTel(rs.getString("store_tel"));
-                // ★追加: ステータスの取得
                 store.setStatus(rs.getInt("status"));
+
+                // ★追加
+                store.setImageExtension(rs.getString("image_extension"));
+
                 list.add(store);
             }
         }
@@ -111,16 +121,16 @@ public class StoreDAO extends DAO {
         return list;
     }
 
-    // ★ 改善版：Store + StoreDetail + Seats + Calendar + Menu をまとめて取得 (statusの取得を追加)
+    // Store + Detail + Seat + Calendar + Menu 全部取得
     public Store getStoreFull(int storeId) throws Exception {
         Store store = null;
 
-        // まず stores + store_details
-        String sql = "SELECT s.store_id, s.store_name, s.store_address, s.store_tel, s.status, " + // statusを追加
-                     "d.detail_id, d.store_introduct " +
-                     "FROM stores s " +
-                     "LEFT JOIN store_details d ON s.store_id = d.store_id " +
-                     "WHERE s.store_id = ?";
+        String sql =
+                "SELECT s.store_id, s.store_name, s.store_address, s.store_tel, s.status, s.image_extension, "
+                + "d.detail_id, d.store_introduct "
+                + "FROM stores s "
+                + "LEFT JOIN store_details d ON s.store_id = d.store_id "
+                + "WHERE s.store_id = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -133,8 +143,8 @@ public class StoreDAO extends DAO {
                     store.setStoreName(rs.getString("store_name"));
                     store.setStoreAddress(rs.getString("store_address"));
                     store.setStoreTel(rs.getString("store_tel"));
-                    // ★追加: ステータスの取得
                     store.setStatus(rs.getInt("status"));
+                    store.setImageExtension(rs.getString("image_extension"));
 
                     StoreDetail detail = new StoreDetail();
                     detail.setDetailId(rs.getInt("detail_id"));
@@ -145,22 +155,16 @@ public class StoreDAO extends DAO {
             }
         }
 
-        // ... (省略)
-        // 他のデータ取得ロジックは変更なし
-        // ...
-
         if (store != null) {
-            // Seats 取得
             List<Seat> seats = seatDAO.getSeatsByStoreId(storeId);
             store.getStoreDetail().setSeats(seats);
 
-            // Calendar 取得
             List<StoreCalendar> calendars = calendarDAO.getCalendarsByStoreId(storeId);
             store.getStoreDetail().setCalendars(calendars);
 
-            // Menu 取得
             List<Menu> menuList = new ArrayList<>();
             String menuSql = "SELECT menu_id, menu_name, price FROM menu WHERE store_id = ?";
+
             try (Connection conn = getConnection();
                  PreparedStatement ps = conn.prepareStatement(menuSql)) {
 
@@ -187,11 +191,11 @@ public class StoreDAO extends DAO {
 
         Connection con = getConnection();
 
-        String sql = "SELECT store_id, store_name, store_address, store_tel "
-                   + "FROM stores "
-                   + "WHERE store_name LIKE ? "
-                   + "OR store_address LIKE ? "
-                   + "OR store_tel LIKE ?";
+        String sql = "SELECT store_id, store_name, store_address, store_tel, image_extension "
+                + "FROM stores "
+                + "WHERE store_name LIKE ? "
+                + "OR store_address LIKE ? "
+                + "OR store_tel LIKE ?";
 
         PreparedStatement st = con.prepareStatement(sql);
 
@@ -208,6 +212,10 @@ public class StoreDAO extends DAO {
             s.setStoreName(rs.getString("store_name"));
             s.setStoreAddress(rs.getString("store_address"));
             s.setStoreTel(rs.getString("store_tel"));
+
+            // ★追加
+            s.setImageExtension(rs.getString("image_extension"));
+
             list.add(s);
         }
 
@@ -215,6 +223,18 @@ public class StoreDAO extends DAO {
         st.close();
         con.close();
 
-        return list;  // ← ここが List<Store>
+        return list;
+    }
+
+    public void updateImageExtension(int storeId, String extension) throws Exception {
+        String sql = "UPDATE stores SET image_extension = ? WHERE store_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, extension);
+            ps.setInt(2, storeId);
+            ps.executeUpdate();
+        }
     }
 }
