@@ -87,12 +87,11 @@
 
 // 禁止記号を検出するパターン
 const disallowedPattern =
-    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶ一-龠\u3000 ＆&'’:：，-ー．・]/;
+    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶヴー一-龠\u3000&'，‐．・＜＞<>【】]/;
 
 const regInput = document.getElementById("regMenuName");
 const regError = document.getElementById("regMenuNameError");
 
-// 入力中の処理
 regInput.addEventListener("input", () => {
     const value = regInput.value;
 
@@ -101,21 +100,19 @@ regInput.addEventListener("input", () => {
         return;
     }
 
-    // 禁止記号が見つかったら赤エラー表示
     if (disallowedPattern.test(value)) {
         regError.textContent =
-            "使用できる記号は「＆ ' ， ‐ ． ・」のみです。";
+            "使用できる記号は「＆ ' ， ‐ ． ・ ＜＞ <> 【】」のみです。";
     } else {
         regError.textContent = "";
     }
 });
 
-// 送信時の最終チェック
 function validateMenuRegistForm() {
     const value = regInput.value;
 
     if (disallowedPattern.test(value)) {
-        alert("メニュー名に使用できない記号が含まれています。\n使用可能は　：　＆　'　,　‐　．　・");
+        alert("メニュー名に使用できない記号が含まれています。\n使用可能は：＆　'　，　‐　．　・　＜　＞　<　>　【　】　ー");
         return false;
     }
 

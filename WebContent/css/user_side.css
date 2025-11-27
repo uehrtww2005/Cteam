@@ -1,0 +1,59 @@
+/* ========================================
+   固定サイドバー専用スタイル
+   他の要素には影響なし
+======================================== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;               /* サイドバー幅 */
+    height: 100vh;
+    background-color: #111;     /* サイドバー背景色 */
+    color: #fff;
+    padding-top: 100px;         /* ヘッダー分の余白 */
+    box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+    overflow-y: auto;
+    z-index: 1001;
+}
+
+.sidebar-link {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #222; /* ホバー色 */
+    color: #FFD700;         /* ホバー文字色 */
+}
+
+.sidebar-plan {
+    margin-top: auto;
+    padding: 15px 20px;
+    background-color: #222;
+    border-top: 1px solid #333;
+    text-align: center;
+}
+
+.plan-text {
+    font-weight: bold;
+    line-height: 1.5;
+
+}
+
+/* スクロールバー調整（オプション） */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background-color: #111;
+}

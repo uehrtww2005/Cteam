@@ -34,7 +34,14 @@ public class StoreLoginAction extends Action {
         Store store = dao.login(storetel, password);
 
         if (store != null) {
-            // ログイン成功 → セッションにユーザー情報を保存
+            // ★追加: 利用停止チェック
+            if (store.getStatus() == 1) {
+                request.setAttribute("msg", "この店舗アカウントは現在利用停止されています。管理者にお問い合わせください。");
+                request.getRequestDispatcher("/shop/login_store.jsp").forward(request, response);
+                return; // 処理を中断
+            }
+
+            // ログイン成功＆利用可能な場合のみセッション保存
             session.setAttribute("store", store);
             session.setAttribute("role", "store");
             // JSP側でも使えるようにセット

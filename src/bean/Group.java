@@ -9,6 +9,10 @@ public class Group {
     private String leaderTel;
     private String rank;
     private int prepaidAmount;
+ // 例: User.java などに以下を追加
+    private int status;
+    public int getStatus() { return status; }
+    public void setStatus(int status) { this.status = status; }
 
     // ▼ getter / setter ▼
     public String getRank() {

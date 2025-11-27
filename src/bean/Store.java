@@ -13,6 +13,9 @@ public class Store {
     private StoreDetail storeDetail; // 1店舗に1つの詳細
     private List<Menu> menu;  		 // 1店舗に複数のメニュー
 
+    // 例: User.java などに以下を追加
+    private int status;
+
 	public int getStoreId() {
         return storeId;
     }
@@ -61,4 +64,7 @@ public class Store {
     public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
+
+    public int getStatus() { return status; }
+    public void setStatus(int status) { this.status = status; }
 }

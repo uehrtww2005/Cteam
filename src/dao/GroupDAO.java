@@ -30,6 +30,7 @@ public class GroupDAO extends DAO{
 	            group.setLeaderTel(resultSet.getString("leader_tel"));
 	            group.setRank(resultSet.getString("rank"));
 	            group.setPrepaidAmount(resultSet.getInt("prepaid_amount"));
+	            group.setStatus(resultSet.getInt("status"));
 
  	        }
 	    } finally {
@@ -117,6 +118,7 @@ public class GroupDAO extends DAO{
 	            group.setLeaderTel(rs.getString("leader_tel"));
 	            group.setRank(rs.getString("rank"));
 	            group.setPrepaidAmount(rs.getInt("prepaid_amount"));
+	            group.setStatus(rs.getInt("status"));
 	            list.add(group);
 	        }
 	    }

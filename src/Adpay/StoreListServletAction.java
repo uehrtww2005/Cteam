@@ -19,7 +19,7 @@ public class StoreListServletAction extends Action {
         List<Store> stores = dao.findAll();
 
         // リクエストスコープに保存
-        request.setAttribute("storeList", stores);
+        request.setAttribute("stores", stores);
 
         // JSPへフォワード
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/storeList.jsp");
