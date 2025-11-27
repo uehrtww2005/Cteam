@@ -23,7 +23,7 @@
             <%-- 利用状況の表示 --%>
             <td>
                 <c:choose>
-                    <c:when test="${store.status == 0}">利用中</c:when>
+                    <c:when test="${store.status == 0}"><span style="color:green;">利用中</span></c:when>
                     <c:otherwise><span style="color:red;">停止中</span></c:otherwise>
                 </c:choose>
             </td>
@@ -40,7 +40,7 @@
                             <input type="submit" value="利用停止" onclick="return confirm('本当に停止しますか？');">
                         </c:when>
                         <c:otherwise>
-                            <input type="submit" value="利用再開">
+                            <input type="submit" value="利用再開" onclick="return confirm('利用再開しますか？');">
                         </c:otherwise>
                     </c:choose>
                 </form>
