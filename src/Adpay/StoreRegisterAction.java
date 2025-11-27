@@ -37,12 +37,31 @@ public class StoreRegisterAction extends HttpServlet {
             return;
         }
 
+        // 拡張子準備
+        String extension = null;
+
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String originalFileName = imagePart.getSubmittedFileName();
+            int dot = originalFileName.lastIndexOf('.');
+            if (dot > 0) {
+                extension = originalFileName.substring(dot + 1).toLowerCase();
+            }
+
+            // 許可拡張子チェック
+            if (!("jpg".equals(extension) || "jpeg".equals(extension) || "png".equals(extension))) {
+                request.setAttribute("msg", "対応している画像形式は JPG / JPEG / PNG のみです。");
+                request.getRequestDispatcher("/shop/register_store.jsp").forward(request, response);
+                return;
+            }
+        }
+
         // --- DB登録 ---
         Store store = new Store();
         store.setStoreName(storeName);
         store.setPassword(password);
         store.setStoreAddress(storeAddress);
         store.setStoreTel(tel);
+        store.setImageExtension(extension);
 
         StoreDAO dao = new StoreDAO();
         int storeId = -1;
@@ -53,51 +72,28 @@ public class StoreRegisterAction extends HttpServlet {
             e.printStackTrace();
         }
 
-        // --- 画像保存処理 ---
-        if (storeId > 0 && imagePart != null && imagePart.getSize() > 0) {
+        // --- 画像保存 ---
+        if (storeId > 0 && extension != null) {
 
-            String uploadDir = "C:" + File.separator + "Users" + File.separator + "k_niwa" + File.separator +
+            String uploadDir = "C:" + File.separator + "Users" + File.separator + "sotu" + File.separator +
                                "git" + File.separator + "Cteam" + File.separator + "WebContent" +
                                File.separator + "shop" + File.separator + "store_images";
-
-            System.out.println("uploadDir (Gitリポジトリパス): " + uploadDir);
 
             File dir = new File(uploadDir);
             if (!dir.exists()) dir.mkdirs();
 
-            // 元のファイル名から拡張子取得
-            String originalFileName = imagePart.getSubmittedFileName();
-            String extension = "";
-            int dotIndex = originalFileName.lastIndexOf('.');
-            if (dotIndex > 0) {
-                extension = originalFileName.substring(dotIndex + 1).toLowerCase();
-            }
-
-            // ✅ 拡張子チェック（jpg, jpeg, png のみ許可）
-            if (!extension.equals("jpg") && !extension.equals("jpeg") && !extension.equals("png")) {
-                request.setAttribute("msg", "対応している画像形式は JPG, JPEG, PNG のみです。");
-                request.getRequestDispatcher("/shop/register_store.jsp").forward(request, response);
-                return;
-            }
-
-            // ファイル名を store_id + 拡張子 に設定
             String fileName = storeId + "." + extension;
             String filePath = uploadDir + File.separator + fileName;
 
-            System.out.println("保存ファイル名：" + fileName);
-            System.out.println("保存先フルパス：" + filePath);
-
             try {
                 imagePart.write(filePath);
-                System.out.println("画像保存完了！");
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("画像保存に失敗しました。");
             }
         }
 
-        // --- 結果表示 ---
-        String msg = (storeId > 0) ? "登録成功！画像も保存されました。" : "登録失敗";
+        // --- 完了ページ ---
+        String msg = (storeId > 0) ? "店舗登録に成功しました！" : "登録失敗";
         request.setAttribute("msg", msg);
         request.getRequestDispatcher("/shop/registerResult_store.jsp").forward(request, response);
     }
