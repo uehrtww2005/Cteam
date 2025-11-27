@@ -13,6 +13,6 @@
 
     <!-- プラン内容 -->
     <div class="sidebar-plan">
-        <span class="plan-text">ランク<br>ビギナー</span>
+        <span class="plan-text">ランク<br>${sessionScope.user.rank}</span>
     </div>
 </div>
