@@ -1,0 +1,95 @@
+/* ========================================
+   お問い合わせページ専用
+   サイドバーを考慮したメインコンテンツ
+======================================== */
+.inquiry-main {
+    /* サイドバー分の余白 */
+    margin-left: 220px; /* サイドバー幅に合わせる */
+    padding: 30px;
+
+    /* 中央寄せ */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    /* 背景と文字色 */
+    color: #fff;
+}
+
+/* 見出し */
+.inquiry-main h2 {
+    font-size: 28px;
+    color: #CC9900;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* フォーム全体 */
+.inquiry-main form {
+    width: 100%;
+    max-width: 500px; /* フォーム幅の最大値 */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* フォーム入力 */
+.inquiry-main input[type="text"],
+.inquiry-main textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+}
+
+/* ボタン */
+.inquiry-main button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFD700;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.inquiry-main button:hover {
+    background-color: #fff;
+}
+
+/* メッセージ表示 */
+.inquiry-main .msg {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* リンク */
+.inquiry-main .form-links {
+    margin-top: 20px;
+}
+
+.inquiry-main .form-links a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.inquiry-main .form-links a:hover {
+    text-decoration: underline;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+    .inquiry-main {
+        margin-left: 180px; /* サイドバー幅に合わせて調整 */
+        padding: 20px;
+    }
+
+    .inquiry-main form {
+        max-width: 100%;
+    }
+}
