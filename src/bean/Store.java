@@ -67,4 +67,14 @@ public class Store {
 
     public int getStatus() { return status; }
     public void setStatus(int status) { this.status = status; }
+
+ // ★追加
+    private String imageExtension;
+
+    public String getImageExtension() {
+        return imageExtension;
+    }
+    public void setImageExtension(String imageExtension) {
+        this.imageExtension = imageExtension;
+    }
 }
