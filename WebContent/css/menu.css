@@ -1,219 +1,228 @@
 /* ========= ページ全体設定 ========= */
 body {
-  margin: 0;
-  font-family: "Rounded Mplus 1c", "Meiryo", sans-serif;
-  background-color: #111;
-  color: #fff;
-  text-align: center;
-  /* padding-top 削除：サイドバーと衝突するため */
+  margin: 0;
+  font-family: "Rounded Mplus 1c", "Meiryo", sans-serif;
+  background-color: #111;
+  color: #fff;
+  text-align: center;
 }
 
-/* ========= 見出し（h2） ========= */
+/* ========= 見出し（h2/h3） ========= */
 .store-main h3 {
-  font-size: 30px;
-  color: #fff;
-  letter-spacing: 0.05em;
-  border-bottom: 2px solid #FFD700;
-  display: inline-block;
-  padding-bottom: 5px;
+  font-size: 30px;
+  color: #fff;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #FFD700;
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
 /* ========= メッセージ表示部分 ========= */
 .msg {
-  margin: 20px auto;
-  padding: 12px 20px;
-  background: rgba(255, 215, 0, 0.1);
-  border: 1px solid #FFD700;
-  color: #FFD700;
-  border-radius: 6px;
-  width: fit-content;
-  font-weight: bold;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid #FFD700;
+  color: #FFD700;
+  border-radius: 6px;
+  width: fit-content;
+  font-weight: bold;
 }
 
 /* ========= フォーム全体 ========= */
 form {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 30px 40px;
-  margin: 30px auto;
-  border-radius: 12px;
-  width: 420px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 30px 40px;
+  margin: 30px auto;
+  border-radius: 12px;
+  width: 420px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 /* ========= 入力フォームラベル ========= */
 form label {
-  display: block;
-  text-align: left;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #fff;
+  display: block;
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #fff;
 }
 
 /* ========= 入力フィールド ========= */
 form input[type="text"],
 form input[type="number"],
 form input[type="file"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #555;
-  border-radius: 8px;
-  background-color: #222;
-  color: #fff;
-  box-sizing: border-box;
-  font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  background-color: #222;
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
 form input[type="file"] {
-  border: none;
+  border: none;
 }
 
 /* ========= 登録ボタン ========= */
 form button {
-    margin-top: 25px;
-    background-color: #FFD700 !important;
-    color: #ffffff !important;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 12px 0;
-    width: 100%;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    background: linear-gradient(145deg, #222, #111);
-    border:1px solid #666 !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
-    transition: 0.3s !important;
+  margin-top: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 0;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #FFD700;
+  color: #000;
+  transition: 0.3s;
 }
 
 form button:hover {
-    background: linear-gradient(145deg, #333, #000) !important;
-    color: #FFD700 !important;
-    border-color: #FFD700 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
-}
-
-form button:hover {
-  background-color: #fff;
-  color: #FFD700;
-  transform: translateY(-2px);
+  background-color: #fff;
+  color: #FFD700;
+  transform: translateY(-2px);
 }
 
 /* ========= 「Homeに戻る」リンク ========= */
 p a {
-  color: #FFD700;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 p a:hover {
-  color: #fff;
-  text-decoration: underline;
+  color: #fff;
+  text-decoration: underline;
 }
 
 /* ========= メニュー一覧全体 ========= */
 .menu-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  margin: 40px auto 80px;
-  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin: 40px auto 80px;
+  max-width: 1200px;
 }
 
-/* ========= 各メニューカード ========= */
+/* ========= 各メニューカード (元の高さ) ========= */
 .menu-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-  transition: transform 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .menu-card {
-  background-color: #1a1a1a;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: 12px;
-  width: 220px;
-  padding: 15px;
-  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.15);
-  transition: 0.3s;
-  text-align: center;
+  width: 220px;          /* カード幅固定 */
+  height: 350px;         /* 元のカード高さに戻す */
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;      /* はみ出し防止 */
+  text-align: center;
 }
 
 .menu-card:hover {
-  transform: translateY(-5px);
-  border-color: #FFD700;
-  box-shadow: 0 6px 14px rgba(255, 215, 0, 0.3);
+  transform: translateY(-5px);
+  border-color: #FFD700;
+  box-shadow: 0 6px 14px rgba(255, 215, 0, 0.3);
 }
 
-/* ========= メニュー画像 ========= */
+/* ========= メニュー画像 (200x150固定・切り抜き) ========= */
 .menu-img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
+  width: 200px;          /* ★★★ 幅を200pxに固定 ★★★ */
+  height: 150px;         /* ★★★ 高さを150pxに固定 ★★★ */
+  object-fit: cover;     /* 縦横比を保ちつつ枠を完全に埋め、はみ出た部分は切り抜き */
+  background-color: #222; /* 余白部分を背景色で埋める */
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+
+  display: block;
+  flex-shrink: 0;
+  flex-grow: 0;
+  min-width: 0;
+  min-height: 0;
 }
 
 /* ========= メニュー名・価格 ========= */
 .menu-card strong {
-  font-size: 18px;
-  color: #fff;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .menu-card div:last-child {
-  color: #FFD700;
-  font-weight: bold;
-  margin-top: 5px;
+  color: #FFD700;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* カード内テキストが画像に影響しないようにする */
+.menu-card > div {
+  text-align: center;
+  word-wrap: break-word;
 }
 
 /* ========= 編集ボタン ========= */
 .menu-actions {
-  margin-top: 10px;
+  margin-top: 10px;
 }
 
 .menu-actions .btn-edit {
-  display: inline-block;
-  padding: 6px 12px;
-  background: linear-gradient(135deg, #8b0000, #4d0000);
-  color: #fff;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
-  transition: all 0.3s;
+  display: inline-block;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #8b0000, #4d0000);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s;
 }
 
 .menu-actions .btn-edit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 /* ========= 編集ページ用のメニュー画像 ========= */
 .menu-image-section .menu-img {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  margin-bottom: 20px;
-}
-/* ========= セクションを横線で区切る ========= */
-.section-divider {
-  border: none;               /* デフォルト線を消す */
-  border-top: 2px solid #FFD700;  /* ゴールドの線 */
-  margin: 40px 0;             /* 上下の余白 */
-  width: 80%;                 /* 線の幅を調整 */
-  margin-left: auto;
-  margin-right: auto;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  margin-bottom: 20px;
 }
 
+/* ========= セクションを横線で区切る ========= */
+.section-divider {
+  border: none;
+  border-top: 2px solid #FFD700;
+  margin: 40px 0;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ========= メインコンテンツマージン ========= */
 .main-content {
-    margin-left: 220px;   /* サイドバー幅と同じ値にする */
-    padding: 20px;
-    box-sizing: border-box;
+  margin-left: 220px;
+  padding: 20px;
+  box-sizing: border-box;
 }
