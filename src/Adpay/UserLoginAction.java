@@ -1,10 +1,14 @@
 package Adpay;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Store;
 import bean.User;
+import dao.StoreDAO;
 import dao.UserDAO;
 import tool.Action;
 
@@ -14,6 +18,7 @@ public class UserLoginAction extends Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         User sessionUser = (User) session.getAttribute("user");
+        StoreDAO storeDao = new StoreDAO();
 
         if ("POST".equalsIgnoreCase(request.getMethod())) {
             // ▼ ログイン処理
@@ -30,6 +35,10 @@ public class UserLoginAction extends Action {
 
                 setRankMessage(user, request);
 
+                // 全店舗一覧を取得
+                List<Store> stores = storeDao.search("");
+                request.setAttribute("stores", stores);
+
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "メールアドレスまたはパスワードが間違っています");
@@ -37,19 +46,22 @@ public class UserLoginAction extends Action {
             }
 
         } else {
-            // ▼ GETでアクセスされた場合（ホームリンクなど）
+            // GET でアクセスされた場合
             if (sessionUser != null) {
                 request.setAttribute("user", sessionUser);
                 setRankMessage(sessionUser, request);
+
+                // 全店舗一覧
+                List<Store> stores = storeDao.search("");
+                request.setAttribute("stores", stores);
+
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
             } else {
-                // 未ログインならトップページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/Adpay/login.jsp");
             }
         }
     }
 
-    // ▼ ランク判定とメッセージ設定
     private void setRankMessage(User user, HttpServletRequest request) throws Exception {
         UserDAO dao = new UserDAO();
         String oldRank = user.getRank();
@@ -68,10 +80,11 @@ public class UserLoginAction extends Action {
                 rankMessage = "最高ランクです";
             }
         }
+
         request.setAttribute("rankMsg", rankMessage);
+        request.getSession().setAttribute("rankMsg", rankMessage);
     }
 
-    // ▼ ランク判定
     private String judgeRank(int prepaidAmount) {
         if (prepaidAmount >= 40000) return "ゴールド";
         else if (prepaidAmount >= 15000) return "シルバー";
