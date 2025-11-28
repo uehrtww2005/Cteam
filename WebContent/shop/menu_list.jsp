@@ -1,124 +1,105 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../header.html" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/menu.css?ver=1.4">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
+	<%@ page contentType="text/html; charset=UTF-8" %>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ include file="../header.html" %>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/menu.css?ver=1.5">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
 
-<html>
-<head>
-  <title>メニュー登録</title>
-</head>
-<body>
+	<html>
+	<head>
+	  <title>メニュー登録</title>
+	</head>
+	<body>
 
-<div class="store-home-container">
+	<div class="store-home-container">
+	    <%@ include file="../store_side.jsp" %>
 
-    <%@ include file="../store_side.jsp" %>
+	    <div class="store-main">
 
-    <div class="store-main">
+	      <h3>メニュー登録フォーム</h3>
 
-      <h3>メニュー登録フォーム</h3>
+	      <c:if test="${not empty msg}">
+	        <div class="msg">${msg}</div>
+	      </c:if>
 
-      <c:if test="${not empty msg}">
-        <div class="msg">${msg}</div>
-      </c:if>
+	      <form action="<%=request.getContextPath()%>/Adpay/MenuRegist.action"
+	            method="post" enctype="multipart/form-data"
+	            onsubmit="return validateMenuRegistForm();">
 
-      <form action="<%=request.getContextPath()%>/Adpay/MenuRegist.action"
-            method="post" enctype="multipart/form-data"
-            onsubmit="return validateMenuRegistForm();">
+	        <input type="hidden" name="store_id" value="${store_id}">
 
-        <input type="hidden" name="store_id" value="${store_id}">
+	        <label>メニュー名：</label>
+	        <input type="text" id="regMenuName" name="menu_name" required placeholder="メニュー名を入力してください">
 
-        <label>メニュー名：</label>
-        <input type="text" id="regMenuName" name="menu_name" required placeholder="メニュー名を入力してください">
+	        <div id="regMenuNameError" style="color:red; font-size:14px; height:18px; margin-bottom:8px;"></div>
 
-        <!-- フィールドエラーメッセージ -->
-        <div id="regMenuNameError" style="color:red; font-size:14px; height:18px; margin-bottom:8px;"></div>
+	        <label>価格</label>
+	        <input type="number" name="price" min="0" required placeholder="価格を入力してください"><br>
 
-        <label>価格</label>
-		<input type="number" name="price" min="0" required placeholder="価格を入力してください"><br>
+	        <label>画像：</label>
+	        <input type="file" name="menu_image" accept="image/*" required><br>
 
-        <label>画像：</label>
-        <input type="file" name="menu_image" accept="image/*" required><br>
+	        <button type="submit">登録</button>
+	      </form>
 
-        <button type="submit">登録</button>
-      </form>
+	      <hr class="section-divider">
 
-      <hr class="section-divider">
+	      <h3>登録済みメニュー一覧</h3>
 
-      <h3>登録済みメニュー一覧</h3>
+	      <div class="menu-list">
+	        <c:forEach var="menu" items="${menuList}">
+	          <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}" class="menu-card-link">
+	            <div class="menu-card">
+	              <c:if test="${not empty menu.imageExtension}">
+	                <img class="menu-img"
+	                     src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
+	                     alt="メニュー画像">
+	              </c:if>
+	              <c:if test="${empty menu.imageExtension}">
+	                <p>（画像が登録されていません）</p>
+	              </c:if>
+	              <div><strong>${menu.menuName}</strong></div>
+	              <div>${menu.price}円</div>
+	            </div>
+	          </a>
+	        </c:forEach>
+	      </div>
 
-      <div class="menu-list">
-        <c:forEach var="menu" items="${menuList}">
-          <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}" class="menu-card-link">
-            <div class="menu-card">
-              <c:if test="${not empty menu.imageExtension}">
-                <img class="menu-img"
-                     src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
-                     alt="メニュー画像">
-              </c:if>
-              <c:if test="${empty menu.imageExtension}">
-                <p>（画像が登録されていません）</p>
-              </c:if>
-              <div><strong>${menu.menuName}</strong></div>
-              <div>${menu.price}円</div>
-            </div>
-          </a>
-        </c:forEach>
-      </div>
+	    </div>
+	</div>
 
-    </div>
-</div>
+	<%@ include file="../footer.html" %>
 
-<%@ include file="../footer.html" %>
+	<script>
+	const disallowedPattern =
+	    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶヴー一-龠\u3000&'，‐．・＜＞<>【】]/;
 
-<!-- ★ メニュー名バリデーション（禁止記号→削除 & 赤メッセージ表示） -->
-<script>
-// ------------------------------------------
-// 使用可能な文字
-// ・半角英数字 a-zA-Z0-9
-// ・全角英数字 ａ-ｚＡ-Ｚ０-９
-// ・ひらがな ぁ-ん
-// ・カタカナ ァ-ヶ ン（自然に含む）
-// ・漢字 一-龠
-// ・全角スペース \u3000
-// ・許可記号：＆ ' ， ‐ ． ・
-// ------------------------------------------
+	const regInput = document.getElementById("regMenuName");
+	const regError = document.getElementById("regMenuNameError");
 
-// 禁止記号を検出するパターン
-const disallowedPattern =
-    /[^a-zA-Z0-9ａ-ｚＡ-Ｚ０-９ぁ-んァ-ヶヴー一-龠\u3000&'，‐．・＜＞<>【】]/;
+	regInput.addEventListener("input", () => {
+	    const value = regInput.value;
+	    if (value === "") {
+	        regError.textContent = "";
+	        return;
+	    }
+	    if (disallowedPattern.test(value)) {
+	        regError.textContent =
+	            "使用できる記号は「＆ ' ， ‐ ． ・ ＜＞ <> 【】」のみです。";
+	    } else {
+	        regError.textContent = "";
+	    }
+	});
 
-const regInput = document.getElementById("regMenuName");
-const regError = document.getElementById("regMenuNameError");
+	function validateMenuRegistForm() {
+	    const value = regInput.value;
+	    if (disallowedPattern.test(value)) {
+	        alert("メニュー名に使用できない記号が含まれています。\n使用可能は：＆　'　，　‐　．　・　＜　＞　<　>　【　】　ー");
+	        return false;
+	    }
+	    return true;
+	}
+	</script>
 
-regInput.addEventListener("input", () => {
-    const value = regInput.value;
-
-    if (value === "") {
-        regError.textContent = "";
-        return;
-    }
-
-    if (disallowedPattern.test(value)) {
-        regError.textContent =
-            "使用できる記号は「＆ ' ， ‐ ． ・ ＜＞ <> 【】」のみです。";
-    } else {
-        regError.textContent = "";
-    }
-});
-
-function validateMenuRegistForm() {
-    const value = regInput.value;
-
-    if (disallowedPattern.test(value)) {
-        alert("メニュー名に使用できない記号が含まれています。\n使用可能は：＆　'　，　‐　．　・　＜　＞　<　>　【　】　ー");
-        return false;
-    }
-
-    return true;
-}
-</script>
-
-</body>
-</html>
+	</body>
+	</html>
