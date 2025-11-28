@@ -2,72 +2,47 @@ package bean;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
-/**
- * StoreCalendar Bean
- *
- * store_calendar テーブルに対応するクラス。
- * 日付ごとの営業日・営業時間情報を保持。
- */
 public class StoreCalendar {
 
-    private int storeId;      // 店舗ID
-    private Date date;        // 日付
-    private boolean isOpen;   // 営業日かどうか
-    private Time openTime;    // 開店時間
-    private Time closeTime;   // 閉店時間
+    private int storeId;
+    private Date date;
+    private boolean isOpen;
+    private Time openTime;
+    private Time closeTime;
 
-    // 追加：HH:mm形式の文字列（JSP表示用）
+    // JSP表示用文字列
     private String openTimeStr;
     private String closeTimeStr;
+    private String dateStr;
 
     // getter / setter
-    public int getStoreId() {
-        return storeId;
-    }
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
+    public int getStoreId() { return storeId; }
+    public void setStoreId(int storeId) { this.storeId = storeId; }
 
-    public Date getDate() {
-        return date;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
 
-    public boolean isOpen() {
-        return isOpen;
-    }
-    public void setOpen(boolean isOpen) {
-        this.isOpen = isOpen;
-    }
+    public boolean isOpen() { return isOpen; }
+    public void setOpen(boolean isOpen) { this.isOpen = isOpen; }
 
-    public Time getOpenTime() {
-        return openTime;
-    }
-    public void setOpenTime(Time openTime) {
-        this.openTime = openTime;
-    }
+    public Time getOpenTime() { return openTime; }
+    public void setOpenTime(Time openTime) { this.openTime = openTime; }
 
-    public Time getCloseTime() {
-        return closeTime;
-    }
-    public void setCloseTime(Time closeTime) {
-        this.closeTime = closeTime;
-    }
+    public Time getCloseTime() { return closeTime; }
+    public void setCloseTime(Time closeTime) { this.closeTime = closeTime; }
 
-    public String getOpenTimeStr() {
-        return openTimeStr;
-    }
-    public void setOpenTimeStr(String openTimeStr) {
-        this.openTimeStr = openTimeStr;
-    }
+    public String getOpenTimeStr() { return openTimeStr; }
+    public void setOpenTimeStr(String openTimeStr) { this.openTimeStr = openTimeStr; }
 
-    public String getCloseTimeStr() {
-        return closeTimeStr;
+    public String getCloseTimeStr() { return closeTimeStr; }
+    public void setCloseTimeStr(String closeTimeStr) { this.closeTimeStr = closeTimeStr; }
+
+    public String getDateStr() {
+        if(dateStr != null) return dateStr;
+        if(date != null) return new SimpleDateFormat("yyyy-MM-dd").format(date);
+        return "";
     }
-    public void setCloseTimeStr(String closeTimeStr) {
-        this.closeTimeStr = closeTimeStr;
-    }
+    public void setDateStr(String dateStr) { this.dateStr = dateStr; }
 }

@@ -79,6 +79,8 @@ public class UserLoginAction extends Action {
             }
         }
         request.setAttribute("rankMsg", rankMessage);
+        HttpSession session = request.getSession();
+        session.setAttribute("rankMsg", rankMessage);
     }
 
     // ▼ ランク判定
