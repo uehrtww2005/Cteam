@@ -1,10 +1,14 @@
 package Adpay;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Store;
 import bean.User;
+import dao.StoreDAO;
 import dao.UserDAO;
 import tool.Action;
 
@@ -28,15 +32,20 @@ public class UserLoginAction extends Action {
                 if (user.getStatus() == 1) {
                     request.setAttribute("msg", "このアカウントは現在利用停止されています。管理者にお問い合わせください。");
                     request.getRequestDispatcher("/user/login_user.jsp").forward(request, response);
-                    return; // 処理をここで中断
+                    return;
                 }
 
-                // ログイン成功＆利用可能な場合のみセッション保存
+                // ログイン成功
                 session.setAttribute("user", user);
                 session.setAttribute("role", "user");
                 request.setAttribute("user", user);
 
                 setRankMessage(user, request);
+
+                // ★★★ ここが重要：stores を最初から読み込む
+                StoreDAO sdao = new StoreDAO();
+                List<Store> stores = sdao.findAll();
+                session.setAttribute("stores", stores);
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
             } else {
@@ -45,21 +54,24 @@ public class UserLoginAction extends Action {
             }
 
         } else {
-            // ▼ GETでアクセスされた場合（ホームリンクなど）
+            // ▼ GETアクセス
             if (sessionUser != null) {
-                // セッションがある場合も、念のため再度DBでステータス確認をするのが安全ですが
-                // ここでは簡易的にセッション維持のみとします
                 request.setAttribute("user", sessionUser);
                 setRankMessage(sessionUser, request);
+
+                // ★★★ ここも追加（セッション切れ対策）
+                if (session.getAttribute("stores") == null) {
+                    StoreDAO sdao = new StoreDAO();
+                    session.setAttribute("stores", sdao.findAll());
+                }
+
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
             } else {
-                // 未ログインならトップページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/Adpay/login.jsp");
             }
         }
     }
 
-    // ▼ ランク判定とメッセージ設定
     private void setRankMessage(User user, HttpServletRequest request) throws Exception {
         UserDAO dao = new UserDAO();
         String oldRank = user.getRank();
@@ -79,11 +91,9 @@ public class UserLoginAction extends Action {
             }
         }
         request.setAttribute("rankMsg", rankMessage);
-        HttpSession session = request.getSession();
-        session.setAttribute("rankMsg", rankMessage);
+        request.getSession().setAttribute("rankMsg", rankMessage);
     }
 
-    // ▼ ランク判定
     private String judgeRank(int prepaidAmount) {
         if (prepaidAmount >= 40000) return "ゴールド";
         else if (prepaidAmount >= 15000) return "シルバー";
