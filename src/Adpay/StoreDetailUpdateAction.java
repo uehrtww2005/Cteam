@@ -111,6 +111,10 @@ public class StoreDetailUpdateAction extends Action {
             calDao.insertCalendar(storeId, c);
         }
 
+        StoreCalendarDAO calDAO = new StoreCalendarDAO();
+        calDAO.deletePastCalendars(); // 今日より前のデータを自動削除
+
+
         // 編集画面にリダイレクト
         res.sendRedirect("StoreDetailEdit.action?store_id=" + storeId);
     }
