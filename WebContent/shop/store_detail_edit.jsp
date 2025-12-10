@@ -149,6 +149,20 @@ td.past {
 </div>
 
 <script>
+function addSeat() {
+    const div = document.createElement("div");
+    div.className = "seatItem";
+
+    div.innerHTML = `
+        <input type="text" name="seatName" placeholder="席名">
+        <input type="text" name="seatType" placeholder="タイプ">
+        <input type="number" name="minPeople" placeholder="最低人数">
+    `;
+
+    document.getElementById("seatList").appendChild(div);
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
     const today = new Date();
     today.setHours(0,0,0,0);
@@ -185,6 +199,8 @@ document.addEventListener("DOMContentLoaded", function() {
             td.addEventListener("click", ()=>{ openCalendarModal(dateStr); }); // 今日以降はクリック可
         }
     });
+
+
 
     // モーダル制御
     let currentEditingDate = null;
