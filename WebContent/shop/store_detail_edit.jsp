@@ -131,7 +131,7 @@ td.past {
 		        <option value="ブロンズ">ブロンズ</option>
 		    </select><br>
 
-		    <label>説明：</label>
+		    <label>クーポン名：</label>
 		    <textarea name="new_coupon_introduct"></textarea><br>
 
     		<button type="submit">追加する</button>
