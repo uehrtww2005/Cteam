@@ -24,7 +24,7 @@
     top:20%;
     left:30%;
     width:40%;
-    background:#fff;
+    background:#222;
     border:1px solid #000;
     padding:20px;
     z-index:1000;
@@ -81,7 +81,7 @@ td.past {
             let calendarData = {};
             <c:if test="${not empty detail.calendars}">
                 <c:forEach var="c" items="${detail.calendars}">
-                    calendarData["${c.date}"] = {
+                		calendarData["${c.dateStr}"] = {
                         isClosed: ${!c.open},
                         openTime: "${c.openTimeStr}",
                         closeTime: "${c.closeTimeStr}"
@@ -136,116 +136,67 @@ td.past {
 </div>
 
 <script>
-// 全ての DOM 依存処理はここ（DOMContentLoaded）で行う
 document.addEventListener("DOMContentLoaded", function() {
-    // デバッグ用（コンソールに出力して JS が動いているか確認）
-    console.log("store_detail_edit.js initialized");
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
-    //----------------------------------------
-    // ヘルパー：日付フォーマット YYYY-MM-DD を作る
-    //----------------------------------------
-    function todayString() {
-        const t = new Date();
-        const y = t.getFullYear();
-        const m = ("0" + (t.getMonth() + 1)).slice(-2);
-        const d = ("0" + t.getDate()).slice(-2);
-        return `${y}-${m}-${d}`;
-    }
-
-    //----------------------------------------
-    // DOM 要素取得（ここなら null にならない）
-    //----------------------------------------
-    const prevBtn = document.getElementById("prev-month");
-    const nextBtn = document.getElementById("next-month");
     const calendarNodes = Array.from(document.querySelectorAll(".calendar"));
     const storeForm = document.getElementById("storeForm");
     const hiddenBox = document.getElementById("calendarHiddenInputs");
 
-    //----------------------------------------
-    // カレンダー描画 / セル初期化
-    //----------------------------------------
     let currentMonth = 0;
     function showMonth(index){
-        calendarNodes.forEach((cal, i) => {
-            cal.style.display = i === index ? "block" : "none";
-        });
+        calendarNodes.forEach((cal,i)=>cal.style.display = i===index?"block":"none");
     }
 
-    // 各 td[data-date] を初期化：過去日はグレー、それ以外にクリックイベントを設定
-    const todayStr = todayString();
-    document.querySelectorAll("td[data-date]").forEach(td => {
-        const date = td.getAttribute("data-date");
-        if (!date) return;
-
-        if (date < todayStr) {
-            td.classList.add("past");
-        } else {
-            // 安全にクリックハンドラを追加（クロージャで date を固定）
-            td.addEventListener("click", function() { openCalendarModal(date); });
-        }
-
-        // 初期表示内容（DBデータがあれば上書き）
-        updateCalendarCell(date);
-    });
-
-    // prev/next ボタン（存在を確認してから）
-    if (prevBtn) prevBtn.addEventListener("click", ()=>{ if(currentMonth>0) currentMonth--; showMonth(currentMonth); });
-    if (nextBtn) nextBtn.addEventListener("click", ()=>{ if(currentMonth<calendarNodes.length-1) currentMonth++; showMonth(currentMonth); });
-
+    const prevBtn = document.getElementById("prev-month");
+    const nextBtn = document.getElementById("next-month");
+    if(prevBtn) prevBtn.addEventListener("click", ()=>{ if(currentMonth>0) currentMonth--; showMonth(currentMonth); });
+    if(nextBtn) nextBtn.addEventListener("click", ()=>{ if(currentMonth<calendarNodes.length-1) currentMonth++; showMonth(currentMonth); });
     showMonth(currentMonth);
 
-    //----------------------------------------
-    // 席追加ボタン（外側にあった onclick をここへ）
-    //----------------------------------------
-    window.addSeat = function() {
-        const div = document.createElement("div");
-        div.className = "seatItem";
-        div.innerHTML = `
-            <input type="text" name="seatName" placeholder="席名" />
-            <input type="text" name="seatType" placeholder="タイプ" />
-            <input type="number" name="minPeople" placeholder="最低人数" />
-        `;
-        document.getElementById("seatList").appendChild(div);
-    };
+    // カレンダー初期化
+    document.querySelectorAll("td[data-date]").forEach(td=>{
+        const dateStr = td.getAttribute("data-date");
+        if(!dateStr) return;
 
-    //----------------------------------------
-    // モーダル制御系関数（グローバルで使うため window に割当）
-    //----------------------------------------
-    let currentEditingDate = null;
+        // まずセルにDBデータを反映
+        updateCalendarCell(dateStr);
 
-    window.openCalendarModal = function(date) {
-        // 過去日チェック（YYYY-MM-DD 文字列比較で OK）
-        if (date < todayStr) {
-            alert("過去の日付は入力できません");
-            return;
+        // 過去日判定
+        const cellDate = new Date(dateStr);
+        cellDate.setHours(0,0,0,0);
+        if(cellDate < today){
+            td.classList.add("past");  // 過去日はグレーでクリック不可
+        } else {
+            td.addEventListener("click", ()=>{ openCalendarModal(dateStr); }); // 今日以降はクリック可
         }
+    });
 
-        currentEditingDate = date;
-        document.getElementById("modalDate").innerText = date;
-
-        const data = calendarData[date] || {isClosed:false, openTime:"", closeTime:""};
+    // モーダル制御
+    let currentEditingDate = null;
+    window.openCalendarModal = function(dateStr){
+        currentEditingDate = dateStr;
+        const data = calendarData[dateStr] || {isClosed:false, openTime:"", closeTime:""};
+        document.getElementById("modalDate").innerText = dateStr;
         document.getElementById("isClosed").checked = data.isClosed;
         document.getElementById("openTime").value = data.openTime;
         document.getElementById("closeTime").value = data.closeTime;
         document.getElementById("openTime").disabled = data.isClosed;
         document.getElementById("closeTime").disabled = data.isClosed;
-
         document.getElementById("calendarModal").style.display = "block";
     };
-
-    window.closeCalendarModal = function() {
-        document.getElementById("calendarModal").style.display = "none";
-    };
-
-    window.onClosedChange = function() {
+    window.closeCalendarModal = function(){ document.getElementById("calendarModal").style.display="none"; };
+    window.onClosedChange = function(){
         const c = document.getElementById("isClosed").checked;
         document.getElementById("openTime").disabled = c;
         document.getElementById("closeTime").disabled = c;
         updateCalendarData();
     };
 
-    window.updateCalendarData = function() {
-        if (!currentEditingDate) return;
+    // データ更新とセル更新
+    window.updateCalendarData = function(){
+        if(!currentEditingDate) return;
         calendarData[currentEditingDate] = {
             isClosed: document.getElementById("isClosed").checked,
             openTime: document.getElementById("openTime").value,
@@ -254,37 +205,30 @@ document.addEventListener("DOMContentLoaded", function() {
         updateCalendarCell(currentEditingDate);
     };
 
-    function updateCalendarCell(date) {
-        const td = document.querySelector("td[data-date='" + date + "']");
-        if (!td) return;
-        const d = date.split("-")[2];
-        const data = calendarData[date];
+    function updateCalendarCell(dateStr){
+        const td = document.querySelector("td[data-date='"+dateStr+"']");
+        if(!td) return;
+        const d = parseInt(dateStr.split("-")[2],10);
+        const data = calendarData[dateStr] || {isClosed:false, openTime:"", closeTime:""};
 
-        if (!data) {
-            td.innerHTML = parseInt(d) + "<br>未入力";
-            return;
-        }
-        if (data.isClosed) {
-            td.innerHTML = parseInt(d) + "<br><span style='color:red;'>×</span>";
-            return;
-        }
-        if (data.openTime && data.closeTime) {
-            td.innerHTML = parseInt(d) + "<br>" + data.openTime + "～" + data.closeTime;
-            return;
-        }
-        td.innerHTML = parseInt(d) + "<br>未入力";
+        if(data.isClosed) td.innerHTML = d+"<br><span style='color:red;'>×</span>";
+        else if(data.openTime && data.closeTime) td.innerHTML = d+"<br>"+data.openTime+"～"+data.closeTime;
+        else td.innerHTML = d+"<br>未入力";
+
+        // 過去日判定：更新後もグレー維持
+        const cellDate = new Date(dateStr);
+        cellDate.setHours(0,0,0,0);
+        if(cellDate < today) td.classList.add("past");
     }
 
-    //----------------------------------------
-    // フォーム submit 前に hidden を作る
-    //----------------------------------------
-    if (storeForm) {
-        storeForm.onsubmit = function() {
-            if (!hiddenBox) return true;
-            hiddenBox.innerHTML = "";
-            for (var date in calendarData) {
-                if (!calendarData.hasOwnProperty(date)) continue;
-                var d = calendarData[date];
+    // submit前 hidden生成
+    if(storeForm){
+        storeForm.onsubmit = function(){
+            if(!hiddenBox) return true;
+            hiddenBox.innerHTML="";
+            for(let date in calendarData){
+                if(!calendarData.hasOwnProperty(date)) continue;
+                const d = calendarData[date];
                 hiddenBox.innerHTML += '<input type="hidden" name="date[]" value="'+date+'">';
                 hiddenBox.innerHTML += '<input type="hidden" name="isClosed[]" value="'+d.isClosed+'">';
                 hiddenBox.innerHTML += '<input type="hidden" name="openTime[]" value="'+(d.isClosed?"":d.openTime)+'">';
@@ -293,8 +237,8 @@ document.addEventListener("DOMContentLoaded", function() {
             return true;
         };
     }
-
-}); // DOMContentLoaded end
+});
 </script>
+
 
 <%@include file="../footer.html" %>
