@@ -9,9 +9,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Coupon;
 import bean.Seat;
 import bean.StoreCalendar;
 import bean.StoreDetail;
+import dao.CouponDAO;
 import dao.SeatDAO;
 import dao.StoreCalendarDAO;
 import dao.StoreDetailDAO;
@@ -114,6 +116,22 @@ public class StoreDetailUpdateAction extends Action {
         StoreCalendarDAO calDAO = new StoreCalendarDAO();
         calDAO.deletePastCalendars(); // 今日より前のデータを自動削除
 
+        String newRank = req.getParameter("new_coupon_rank");
+        String newIntro = req.getParameter("new_coupon_introduct");
+
+        if (newRank != null && !newRank.isEmpty() &&
+            newIntro != null && !newIntro.isEmpty()) {
+
+            Coupon coupon = new Coupon();
+            coupon.setStoreId(storeId);
+            coupon.setCouponRank(newRank);
+            coupon.setCouponIntroduct(newIntro);
+
+            CouponDAO dao = new CouponDAO();
+            dao.insert(coupon, storeId);
+
+            System.out.println("クーポン追加完了: " + newRank);
+        }
 
         // 編集画面にリダイレクト
         res.sendRedirect("StoreDetailEdit.action?store_id=" + storeId);

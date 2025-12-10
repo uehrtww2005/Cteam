@@ -120,8 +120,21 @@ td.past {
                 </table>
             </div>
         </c:forEach>
-    </div>
 
+         <h3>クーポン追加</h3>
+
+		    <label>ランク：</label>
+		    <select name="new_coupon_rank">
+		        <option value="">選択してください</option>
+		        <option value="ゴールド">ゴールド</option>
+		        <option value="シルバー">シルバー</option>
+		        <option value="ブロンズ">ブロンズ</option>
+		    </select><br>
+
+		    <label>説明：</label>
+		    <textarea name="new_coupon_introduct"></textarea><br>
+
+    		<button type="submit">追加する</button>
     <div id="calendarHiddenInputs"></div>
     <button type="submit">保存</button>
 </form>
