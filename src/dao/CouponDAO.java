@@ -24,6 +24,7 @@ public class CouponDAO extends DAO{
             Coupon coupon = new Coupon();
             coupon.setCouponId(rs.getInt("coupon_id"));
             coupon.setStoreId(rs.getInt("store_id"));
+            coupon.setCouponName(rs.getString("coupon_name"));
             coupon.setCouponIntroduct(rs.getString("coupon_introduct"));
             coupon.setCouponRank(rs.getString("coupon_rank"));
             list.add(coupon);
@@ -41,11 +42,13 @@ public class CouponDAO extends DAO{
         Connection con = getConnection();
 
         PreparedStatement st = con.prepareStatement(
-                "INSERT INTO coupon (store_id, coupon_introduct, coupon_rank) VALUES (?, ?, ?)"
+        		"INSERT INTO coupon (store_id, coupon_name, coupon_introduct, coupon_rank) VALUES (?, ?, ?, ?)"
+
         );
         st.setInt(1, storeId);
-        st.setString(2, coupon.getCouponIntroduct());
-        st.setString(3, coupon.getCouponRank());
+        st.setString(2, coupon.getCouponName());
+        st.setString(3, coupon.getCouponIntroduct());
+        st.setString(4, coupon.getCouponRank());
 
         int line = st.executeUpdate();
 

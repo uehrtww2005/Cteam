@@ -4,6 +4,7 @@ public class Coupon {
 
 	private int couponId;
 	private int storeId;  //storeIdは外部キー
+	private String couponName;
 	private String couponIntroduct;
 	private String couponRank;
 
@@ -19,6 +20,12 @@ public class Coupon {
 	}
 	public void setStoreId(int storeId) {
 		this.storeId = storeId;
+	}
+	public String getCouponName() {
+		return couponName;
+	}
+	public void setCouponName(String couponName) {
+		this.couponName = couponName;
 	}
 	public String getCouponIntroduct() {
 		return couponIntroduct;

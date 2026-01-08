@@ -6,6 +6,7 @@
     <a href="#" class="sidebar-link">お知らせ</a>
     <a href="<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store.storeId}" class="sidebar-link">メニュー表</a>
     <a href="<%=request.getContextPath()%>/Adpay/StoreDetailEdit.action?store_id=${store.storeId}" class="sidebar-link">店舗情報</a>
+    <a href="<%=request.getContextPath()%>/Adpay/CouponPage.action?store_id=${store.storeId}" class="sidebar-link">クーポン情報</a>
     <a href="<%=request.getContextPath()%>/Adpay/Inquiry.action" class="sidebar-link">お問い合わせ</a>
 
 
