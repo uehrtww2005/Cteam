@@ -1,0 +1,218 @@
+/* ========================================
+   カレンダー / 店舗詳細フォーム用
+   サイドバー分を考慮
+======================================== */
+.store-detail-main {
+  margin-left: 220px; /* サイドバー幅分右にずらす */
+  padding: 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ★★★ これで子要素（フォーム等）を中央寄せ ★★★ */
+  min-height: 100vh;   /* フッターまで高さ確保 */
+}
+
+/* 見出し */
+.store-detail-main h1,
+.store-detail-main h3 {
+  color: #FFD700;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%; /* 見出しも幅いっぱい確保してテキストを中央へ */
+}
+
+/* フォーム全体 */
+.store-detail-main form {
+  width: 100%;
+  max-width: 900px; /* 最大幅 */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+/* テキストエリア・インプット */
+.store-detail-main textarea,
+.store-detail-main input[type="text"],
+.store-detail-main input[type="number"],
+.store-detail-main select,
+.store-detail-main input[type="time"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #222;
+  color: #fff;
+  box-sizing: border-box; /* パディングを含めた幅計算にする */
+}
+
+/* 席情報 */
+.seatItem {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* ボタン */
+.store-detail-main button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD700;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.store-detail-main button:hover {
+  background-color: #fff;
+}
+
+/* カレンダーラッパー */
+#calendar-wrapper {
+  width: 100%;
+  max-width: 740px; /* ★★★ カレンダーに合わせて最大幅を設定 ★★★ */
+  margin: 0 auto 20px; /* ★★★ 中央配置 + 下マージン20px ★★★ */
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* prev/next ボタン */
+#calendar-wrapper button {
+  margin: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #FFD700;
+  color: #000;
+  cursor: pointer;
+}
+
+#calendar-wrapper button:hover {
+  background-color: #fff;
+}
+
+/* カレンダー全体 */
+.calendar {
+  width: 90%;
+  max-width: 700px;
+  background-color: #222;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* カレンダー見出し */
+.calendar h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* カレンダーテーブル */
+.calendar-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* 曜日ヘッダー */
+.calendar-table th {
+  background-color: #555;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  border: 1px solid #444;
+  color: #f5f5f5;
+}
+
+/* 日曜赤、土曜青 */
+.calendar-table th:first-child { color: #ff6666; }
+.calendar-table th:last-child { color: #6699ff; }
+
+.calendar-table td {
+  border: 1.5px solid #444;
+  padding: 8px;
+  text-align: center;
+  width: 14%;
+  height: 60px;
+  cursor: pointer;
+  color: #fff;
+  vertical-align: top;
+}
+
+.calendar-table td.past {
+  background-color: #111;
+  color: #666;
+  cursor: default;
+}
+
+.calendar-table td span {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #000000;
+}
+
+/* モーダル */
+.modal {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 20px;
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+.modal input[type="time"],
+.modal input[type="checkbox"] {
+  margin-top: 5px;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+  .store-detail-main {
+    margin-left: 180px; /* サイドバーが狭くなる場合 */
+    padding: 15px;
+  }
+
+  .calendar {
+    max-width: 100%;
+  }
+}
+
+/* カレンダーヘッダー（前月・タイトル・次月）を横並び中央揃え */
+.calendar-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* 中央寄せ */
+  align-items: center;
+  gap: 20px; /* ボタンとタイトルの間隔 */
+  margin-bottom: 10px;
+}
+
+/* 前月／次月ボタン */
+.calendar-nav-btn {
+  padding: 6px 12px;
+  background-color: #FFD700;
+  width: 40px;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.calendar-nav-btn:hover {
+  background-color: #fff;
+}

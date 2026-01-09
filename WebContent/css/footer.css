@@ -1,14 +1,14 @@
 /* ======== フッター全体 ======== */
 footer {
-  background-color: #000;  /* 完全黒 */
+  background-color: #000;
   border-top: 1px solid #333;
   color: #ccc;
   padding: 40px 60px 20px 60px;
   text-align: center;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
-  position: relative;
-  z-index: 1000; /* 背景画像より前面 */
-  margin-top: auto;
+
+  position: static;
+  z-index: auto;
 }
 
 /* ======== コンテナ ======== */
@@ -42,14 +42,14 @@ footer {
 }
 
 .footer-right ul li a {
-  color: #fff;           /* 白文字 */
-  text-decoration: none; /* アンダーラインなし */
+  color: #fff;
+  text-decoration: none;
   font-size: 15px;
   transition: color 0.3s ease;
 }
 
 .footer-right ul li a:hover {
-  color: gold;           /* ホバーでゴールド */
+  color: gold;
 }
 
 /* 下部コピーライト */
