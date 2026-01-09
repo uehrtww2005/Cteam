@@ -116,16 +116,19 @@ public class StoreDetailUpdateAction extends Action {
         StoreCalendarDAO calDAO = new StoreCalendarDAO();
         calDAO.deletePastCalendars(); // 今日より前のデータを自動削除
 
+        String newName = req.getParameter("new_coupon_name");
         String newRank = req.getParameter("new_coupon_rank");
         String newIntro = req.getParameter("new_coupon_introduct");
 
         if (newRank != null && !newRank.isEmpty() &&
-            newIntro != null && !newIntro.isEmpty()) {
+            newIntro != null && !newIntro.isEmpty() &&
+            newName != null && !newName.isEmpty()) {
 
             Coupon coupon = new Coupon();
             coupon.setStoreId(storeId);
             coupon.setCouponRank(newRank);
             coupon.setCouponIntroduct(newIntro);
+            coupon.setCouponName(newName);
 
             CouponDAO dao = new CouponDAO();
             dao.insert(coupon, storeId);
