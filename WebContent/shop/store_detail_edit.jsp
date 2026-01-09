@@ -3,7 +3,7 @@
 <%@include file="../header.html" %>
 <%@ include file="../store_side.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/header.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_side.css">
 
 <style>
 .calendar-table { border-collapse: collapse; margin-bottom: 30px; width: 100%; }
@@ -99,19 +99,59 @@ td.past {
     pointer-events: none;
     cursor: default;
 }
+.month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.month-nav button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    font-size: 1.4rem;
+    border-radius: 6px;
+    cursor: pointer;
+	position: relative;
+    top: -10px;
+}
+
+.month-nav button:hover {
+    background: #555;
+}
+
+#current-month-label {
+    font-size: 1.4rem;
+    font-weight: bold;
+    min-width: 180px;
+    text-align: center;
+}
+
+.store-main h3 {
+    font-size: 18px;        /* ← 元に近いサイズ */
+    font-weight: bold;
+    letter-spacing: normal;
+    border-bottom: none;    /* ← 黄色い下線を消す */
+    padding-bottom: 0;
+}
+
 </style>
 </head>
 
 <body>
+<div class="store-main">
 <h1>店舗詳細編集</h1>
 
 <form id="storeForm" action="StoreDetailUpdate.action" method="post">
 <input type="hidden" name="store_id" value="${detail.storeId}">
 
-    <h3>店舗紹介文</h3>
+    <h3>店舗紹介文</h3><br>
 <textarea name="storeIntroduct" rows="4" cols="50">${detail.storeIntroduct}</textarea>
-
-    <h3>タグ選択</h3>
+<br>
+    <h3>タグ選択</h3><br>
 <select name="tag">
 <option value="">選択してください</option>
 <c:forEach var="t" items="${allTags}">
@@ -135,8 +175,11 @@ td.past {
     <hr>
 <h3>営業カレンダー（今月から1年）</h3>
 <div id="calendar-wrapper">
-<button type="button" id="prev-month">&lt;</button>
-<button type="button" id="next-month">&gt;</button>
+<div class="month-nav">
+    <button type="button" id="prev-month">＜</button>
+    <span id="current-month-label"></span>
+    <button type="button" id="next-month">＞</button>
+</div>
 
         <!-- サーバのカレンダーデータを JS に変換 -->
 <script>
@@ -152,13 +195,12 @@ td.past {
 </c:if>
 </script>
 
-        <c:forEach var="y" items="${years}" varStatus="loop">
+<c:forEach var="y" items="${years}" varStatus="loop">
 <c:set var="m" value="${months[loop.index]}" />
 <c:set var="start" value="${startDays[loop.index]}" />
 <c:set var="end" value="${lastDays[loop.index]}" />
 
-            <div class="calendar" data-month="${y}-${m}" style="display:none;">
-<h2>${y}年 ${m}月</h2>
+<div class="calendar" data-month="${y}-${m}" style="display:none;">
 <table class="calendar-table">
 <tr>
 <th style="color:red;">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th style="color:blue;">土</th>
@@ -187,7 +229,7 @@ td.past {
 <div id="calendarHiddenInputs"></div>
 <button type="submit">保存</button>
 </form>
-
+</div>
 <!-- モーダル -->
 <div id="calendarModal" class="modal">
 <h3 id="modalDate"></h3>
@@ -231,8 +273,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function showMonth(index){
 
-        calendarNodes.forEach((cal,i)=>cal.style.display = i===index?"block":"none");
+        // カレンダー表示制御
+        for (let i = 0; i < calendarNodes.length; i++) {
+            calendarNodes[i].style.display = (i === index) ? "block" : "none";
+        }
 
+        // 年月表示
+        const label = document.getElementById("current-month-label");
+        if (!label) return;
+
+        const cal = calendarNodes[index];
+        if (!cal) return;
+
+        const ym = cal.getAttribute("data-month");
+        if (!ym) return;
+
+        const arr = ym.split("-");
+        if (arr.length !== 2) return;
+
+        label.textContent = arr[0] + "年 " + parseInt(arr[1], 10) + "月";
     }
 
     const prevBtn = document.getElementById("prev-month");
