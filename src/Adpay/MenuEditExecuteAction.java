@@ -14,10 +14,10 @@ public class MenuEditExecuteAction extends Action {
 
         request.setCharacterEncoding("UTF-8");
 
-        // --- パラメータ取得 ---
         String menuIdStr = request.getParameter("menu_id");
-        String menuName = request.getParameter("menu_name");
-        String priceStr = request.getParameter("price");
+        String menuName  = request.getParameter("menu_name");
+        String info      = request.getParameter("info"); // ★ 追加
+        String priceStr  = request.getParameter("price");
 
         if (menuIdStr == null || menuIdStr.isEmpty()) {
             request.setAttribute("msg", "メニューIDが指定されていません。");
@@ -26,8 +26,8 @@ public class MenuEditExecuteAction extends Action {
         }
 
         int menuId = Integer.parseInt(menuIdStr);
-        int price = 0;
 
+        int price;
         try {
             price = Integer.parseInt(priceStr);
             if (price < 0) {
@@ -41,38 +41,30 @@ public class MenuEditExecuteAction extends Action {
             return;
         }
 
+        MenuDAO dao = new MenuDAO();
+        Menu menu = dao.getMenuById(menuId);
 
-        // --- DAOで更新 ---
-        try {
-            MenuDAO dao = new MenuDAO();
-            Menu menu = dao.getMenuById(menuId);
-
-            if (menu == null) {
-                request.setAttribute("msg", "該当メニューが存在しません。");
-                request.getRequestDispatcher("/shop/menu_list.jsp").forward(request, response);
-                return;
-            }
-
-            // 更新内容セット
-            menu.setMenuName(menuName);
-            menu.setPrice(price);
-
-            dao.update(menu);
-
-            // メッセージ作成
-            request.setAttribute("msg", "メニュー「" + menuName + "」を更新しました！");
-
-            // 店舗IDを渡して一覧を再取得
-            int storeId = menu.getStoreId();
-            request.setAttribute("store_id", storeId);
-            request.setAttribute("menuList", dao.findByStoreId(storeId));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("msg", "メニュー更新に失敗しました。");
+        if (menu == null) {
+            request.setAttribute("msg", "該当メニューが存在しません。");
+            request.getRequestDispatcher("/shop/menu_list.jsp").forward(request, response);
+            return;
         }
 
-        // --- 完了後は一覧ページに戻す ---
-        request.getRequestDispatcher("/shop/menu_list.jsp").forward(request, response);
+        // --- 更新内容 ---
+        menu.setMenuName(menuName);
+        menu.setPrice(price);
+        menu.setInfo(info); // ★ ここ重要
+
+        dao.update(menu);
+
+        // --- 完了画面用 ---
+        int storeId = menu.getStoreId();
+        request.setAttribute("msg", "メニュー「" + menuName + "」を更新しました！");
+        request.setAttribute("store_id", storeId);
+        request.setAttribute("menuList", dao.findByStoreId(storeId));
+
+        // ★ 統一
+        request.getRequestDispatcher("/shop/menu_complete.jsp")
+               .forward(request, response);
     }
 }

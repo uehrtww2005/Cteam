@@ -30,6 +30,12 @@
       <label>価格：</label>
       <input type="number" name="price" value="${menu.price}" min="0" required><br>
 
+      <label>メニュー詳細：</label>
+	  <textarea name="info"
+          		rows="5"
+          		style="width:100%; max-width:500px; padding:8px;"
+          		placeholder="メニューの説明・注意事項など">${menu.info}</textarea>
+
       <div class="btn-area">
         <button type="submit" class="update-btn">更新</button>
       </div>

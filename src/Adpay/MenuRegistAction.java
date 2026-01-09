@@ -21,15 +21,20 @@ import dao.MenuDAO;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 public class MenuRegistAction extends HttpServlet {
 
+    // --------------------
+    // 一覧表示（既存のまま）
+    // --------------------
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String storeIdStr = request.getParameter("store_id");
 
+        String storeIdStr = request.getParameter("store_id");
         if (storeIdStr == null || storeIdStr.isEmpty()) {
             request.setAttribute("msg", "店舗情報が見つかりません。");
-            request.getRequestDispatcher("/shop/store_home.jsp").forward(request, response);
+            request.getRequestDispatcher("/shop/store_home.jsp")
+                   .forward(request, response);
             return;
         }
 
@@ -45,15 +50,21 @@ public class MenuRegistAction extends HttpServlet {
             request.setAttribute("msg", "メニュー一覧の取得に失敗しました。");
         }
 
-        request.getRequestDispatcher("/shop/menu_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/shop/menu_list.jsp")
+               .forward(request, response);
     }
 
+    // --------------------
+    // 登録処理（info追加）
+    // --------------------
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
 
         String menuName = request.getParameter("menu_name");
+        String info = request.getParameter("info"); // ★ 追加
         String priceStr = request.getParameter("price");
         Part imagePart = request.getPart("menu_image");
         int storeId = Integer.parseInt(request.getParameter("store_id"));
@@ -72,7 +83,6 @@ public class MenuRegistAction extends HttpServlet {
             return;
         }
 
-        // ★ ここを追加（マイナス値を禁止）
         if (price < 0) {
             forwardToComplete(request, response, "価格は0円以上で入力してください。", storeId);
             return;
@@ -92,7 +102,8 @@ public class MenuRegistAction extends HttpServlet {
         }
 
         if (!extension.equals("jpg") && !extension.equals("jpeg") && !extension.equals("png")) {
-            forwardToComplete(request, response, "アップロードできる画像は jpg / jpeg / png のみです。", storeId);
+            forwardToComplete(request, response,
+                    "アップロードできる画像は jpg / jpeg / png のみです。", storeId);
             return;
         }
 
@@ -100,6 +111,7 @@ public class MenuRegistAction extends HttpServlet {
         Menu menu = new Menu();
         menu.setStoreId(storeId);
         menu.setMenuName(menuName);
+        menu.setInfo(info);          // ★ 追加
         menu.setPrice(price);
         menu.setImageExtension(extension);
 
@@ -112,15 +124,19 @@ public class MenuRegistAction extends HttpServlet {
             msg = "メニュー「" + menuName + "」を登録しました！";
         } catch (Exception e) {
             e.printStackTrace();
-            forwardToComplete(request, response, "メニュー登録中にエラーが発生しました。", storeId);
+            forwardToComplete(request, response,
+                    "メニュー登録中にエラーが発生しました。", storeId);
             return;
         }
 
         // --- 画像ファイル保存 ---
         if (menuId > 0 && imagePart.getSize() > 0) {
-            String uploadDir = "C:" + File.separator + "Users" + File.separator + "sotu" + File.separator +
-                    "git" + File.separator + "Cteam" + File.separator + "WebContent" +
-                    File.separator + "shop" + File.separator + "store_menu_images";
+
+            String uploadDir =
+                    "C:" + File.separator + "Users" + File.separator + "sotu"
+                  + File.separator + "git" + File.separator + "Cteam"
+                  + File.separator + "WebContent" + File.separator + "shop"
+                  + File.separator + "store_menu_images";
 
             File dir = new File(uploadDir);
             if (!dir.exists()) dir.mkdirs();
@@ -129,7 +145,9 @@ public class MenuRegistAction extends HttpServlet {
             File filePath = new File(dir, fileName);
 
             try {
-                Files.copy(imagePart.getInputStream(), filePath.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(imagePart.getInputStream(),
+                           filePath.toPath(),
+                           StandardCopyOption.REPLACE_EXISTING);
                 msg += " 画像も保存しました！";
             } catch (IOException e) {
                 e.printStackTrace();
@@ -137,9 +155,10 @@ public class MenuRegistAction extends HttpServlet {
             }
         }
 
-        // --- メニュー一覧を再取得 ---
+        // --- 一覧再取得 & 完了画面 ---
         request.setAttribute("msg", msg);
         request.setAttribute("store_id", storeId);
+
         try {
             List<Menu> menuList = dao.findByStoreId(storeId);
             request.setAttribute("menuList", menuList);
@@ -148,13 +167,23 @@ public class MenuRegistAction extends HttpServlet {
             request.setAttribute("msg", msg + "（一覧再取得に失敗）");
         }
 
-        request.getRequestDispatcher("/shop/menu_complete.jsp").forward(request, response);
+        // ★ forward先は必ずここ
+        request.getRequestDispatcher("/shop/menu_complete.jsp")
+               .forward(request, response);
     }
 
-    private void forwardToComplete(HttpServletRequest request, HttpServletResponse response, String msg, int storeId)
+    // --------------------
+    // 共通 forward
+    // --------------------
+    private void forwardToComplete(HttpServletRequest request,
+                                   HttpServletResponse response,
+                                   String msg,
+                                   int storeId)
             throws ServletException, IOException {
+
         request.setAttribute("msg", msg);
         request.setAttribute("store_id", storeId);
+
         try {
             MenuDAO dao = new MenuDAO();
             List<Menu> menuList = dao.findByStoreId(storeId);
@@ -162,6 +191,9 @@ public class MenuRegistAction extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.getRequestDispatcher("/shop/menu_complete.jsp").forward(request, response);
+
+        // ★ 統一
+        request.getRequestDispatcher("/shop/menu_complete.jsp")
+               .forward(request, response);
     }
 }
