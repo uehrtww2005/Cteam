@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.time.*" %>
 <%@ include file="../header.html" %>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_detail.css">
@@ -7,94 +8,163 @@
 <h1>${store.storeName}</h1>
 
 <div class="store-detail-wrap">
-    <!-- 左：画像と紹介文 -->
+
+    <!-- 左：画像・紹介文 -->
     <div class="store-left">
         <c:choose>
-		    <c:when test="${not empty store}">
-		        <img src="${pageContext.request.contextPath}/shop/store_images/${store.storeId}.${store.imageExtension}"
-		             alt="店舗画像" class="store-main-image">
-		    </c:when>
-		    <c:otherwise>
-		        <div class="no-image">画像なし</div>
-		    </c:otherwise>
-		</c:choose>
-
+            <c:when test="${not empty store}">
+                <img src="${pageContext.request.contextPath}/shop/store_images/${store.storeId}.${store.imageExtension}"
+                     class="store-main-image">
+            </c:when>
+            <c:otherwise>
+                <div class="no-image">画像なし</div>
+            </c:otherwise>
+        </c:choose>
 
         <h2>店舗紹介</h2>
-        <p><c:out value="${detail.storeIntroduct}" default="（店舗紹介が登録されていません）"/></p>
+        <p>
+            <c:out value="${detail.storeIntroduct}"
+                   default="（店舗紹介が登録されていません）"/>
+        </p>
     </div>
 
     <!-- 右：営業カレンダー -->
     <div class="store-right">
-        <h2>営業カレンダー</h2>
+        <h2>${year}年 ${month}月 営業カレンダー</h2>
 
-        <c:if test="${empty calendars}">
-            <p>カレンダーデータがありません。</p>
-        </c:if>
+        <div style="margin-bottom:10px;">
+            <a href="?store_id=${store.storeId}&year=${year}&month=${month-1}">◀ 前月</a>
+            |
+            <a href="?store_id=${store.storeId}&year=${year}&month=${month+1}">次月 ▶</a>
+        </div>
 
-        <c:if test="${not empty calendars}">
-            <table class="calendar-table">
+        <table class="calendar-table">
+            <tr>
+                <th>日</th><th>月</th><th>火</th>
+                <th>水</th><th>木</th><th>金</th><th>土</th>
+            </tr>
+
+            <%-- 表示開始日（その月の週の先頭・日曜） --%>
+            <c:set var="date"
+                   value="${firstDay.minusDays(firstDay.dayOfWeek.value % 7)}"/>
+
+            <c:forEach var="week" begin="1" end="6">
                 <tr>
-                    <th style="color:red;">日</th>
-                    <th>月</th>
-                    <th>火</th>
-                    <th>水</th>
-                    <th>木</th>
-                    <th>金</th>
-                    <th style="color:blue;">土</th>
+                    <c:forEach var="d" begin="1" end="7">
+
+                        <c:set var="sc" value="${calendarMap[date]}"/>
+
+                        <td>
+						    <c:if test="${date.monthValue == month}">
+
+						        <!-- 日付 -->
+						        <div class="calendar-day">
+						            ${date.dayOfMonth}
+						        </div>
+
+						        <!-- 時間 or × -->
+						        <c:choose>
+						            <c:when test="${not empty sc && sc.open}">
+								    <a href="${pageContext.request.contextPath}/Adpay/ReserveInput.action?store_id=${store.storeId}&date=${date}"class="calendar-link">
+
+								        <div class="calendar-time">
+								            ${sc.openTimeStr}〜${sc.closeTimeStr}
+								        </div>
+								    </a>
+								</c:when>
+
+						            <c:when test="${not empty sc}">
+						                <div class="calendar-time closed">×</div>
+						            </c:when>
+						        </c:choose>
+
+						    </c:if>
+						</td>
+
+
+                        <c:set var="date" value="${date.plusDays(1)}"/>
+                    </c:forEach>
                 </tr>
-
-                <c:set var="dayCounter" value="1" />
-                <c:set var="lastDay" value="${calendars[calendars.size()-1].date.day}" />
-
-                <c:forEach var="week" begin="1" end="6">
-                    <tr>
-                        <c:forEach var="i" begin="1" end="7">
-                            <c:choose>
-                                <c:when test="${dayCounter <= calendars.size()}">
-                                    <c:set var="sc" value="${calendars[dayCounter-1]}" />
-                                    <c:set var="cls" value="" />
-                                    <c:choose>
-                                        <c:when test="${sc.dateStr lt todayStr}"> <c:set var="cls" value="past"/> </c:when>
-                                        <c:when test="${(i == 1)}"> <c:set var="cls" value="sunday"/> </c:when>
-                                        <c:when test="${(i == 7)}"> <c:set var="cls" value="saturday"/> </c:when>
-                                    </c:choose>
-                                    <td class="${cls}">
-                                        ${sc.dateStr.substring(8,10)}<br/>
-                                        <c:choose>
-                                            <c:when test="${sc.open}">
-                                                ${sc.openTimeStr}〜${sc.closeTimeStr}
-                                            </c:when>
-                                            <c:otherwise>×</c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <c:set var="dayCounter" value="${dayCounter+1}" />
-                                </c:when>
-                                <c:otherwise>
-                                    <td></td>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:if>
+            </c:forEach>
+        </table>
     </div>
 </div>
 
 <style>
-.store-detail-wrap { display:flex; gap:30px; align-items:flex-start; margin:20px 0; }
-.store-left { width:48%; }
-.store-right { width:48%; }
+.store-detail-wrap { display:flex; gap:30px; margin:20px 0; }
+.store-left, .store-right { width:48%; }
 
-.store-main-image { width:100%; max-width:420px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
-.no-image { width:100%; height:220px; background:#f1f1f1; display:flex; align-items:center; justify-content:center; color:#888; }
+.calendar-link,
+.calendar-link:visited,
+.calendar-link:hover,
+.calendar-link:active {
+    text-decoration: none;
+    color: inherit;
+}
 
-.calendar-table { border-collapse: collapse; width:100%; }
-.calendar-table th, .calendar-table td { border:1px solid #ddd; padding:6px; text-align:center; width:14%; height:60px; }
-.calendar-table .past { background:#eee; color:#999; }
-.calendar-table .sunday { background:#ffecec; }
-.calendar-table .saturday { background:#ecf0ff; }
+
+.store-right h2 {
+    margin-top: -60px;
+}
+
+.store-main-image {
+    width:100%;
+    max-width:420px;
+    border-radius:6px;
+}
+.no-image {
+    height:220px;
+    background:#f1f1f1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.calendar-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.calendar-table th,
+.calendar-table td {
+    border: 1px solid #ddd;
+    height: 70px;
+    font-size: 13px;
+    vertical-align: top;
+    text-align: center;
+    padding: 6px 4px;
+}
+
+/* 日付 */
+.calendar-day {
+    font-weight: bold;
+}
+
+/* 時間・×（日付の下） */
+.calendar-time {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: #333;
+}
+
+/* × のとき */
+.calendar-time.closed {
+    color: #999;
+}
+
+.calendar-time {
+    color: #fff;
+}
+
+.calendar-time.closed {
+    font-weight: bold;      /* ← 太字 */
+    font-size: 13px;        /* ← 少し大きく（任意） */
+}
+
+
 </style>
 
 <%@ include file="../footer.html" %>

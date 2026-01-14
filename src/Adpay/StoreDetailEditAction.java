@@ -1,5 +1,6 @@
 package Adpay;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.StoreCalendar; // カレンダー用Bean
+import bean.StoreCalendar;
 import bean.StoreDetail;
 import bean.Tag;
 import dao.StoreDetailDAO;
@@ -22,26 +23,25 @@ public class StoreDetailEditAction extends Action {
         int storeId = 0;
         try {
             storeId = Integer.parseInt(req.getParameter("store_id"));
-        } catch (Exception e) { }
+        } catch (Exception e) {}
 
         StoreDetailDAO dao = new StoreDetailDAO();
         StoreDetail detail = dao.getStoreDetailFullWithTags(storeId);
 
-        // 新規登録時は detail を空で初期化
+        // 新規時
         if (detail == null) {
             detail = new StoreDetail();
             detail.setStoreId(storeId);
-            detail.setCalendars(new ArrayList<StoreCalendar>()); // カレンダーリスト初期化
-            detail.setSeats(new ArrayList<>());                  // 席リスト初期化
-            // 文字列系フィールドは null のままで JSP で空表示される
+            detail.setCalendars(new ArrayList<>());
+            detail.setSeats(new ArrayList<>());
         }
 
-        // ▼ タグ一覧を取得
+        // タグ一覧
         TagDAO tagDao = new TagDAO();
         List<Tag> tagList = tagDao.findAll();
         req.setAttribute("allTags", tagList);
 
-        // ▼ 今日から12ヶ月分のカレンダー情報を作成
+        // カレンダー表示用（12ヶ月）
         Calendar base = Calendar.getInstance();
         List<Integer> years = new ArrayList<>();
         List<Integer> months = new ArrayList<>();
@@ -68,23 +68,33 @@ public class StoreDetailEditAction extends Action {
         req.setAttribute("startDays", startDays);
         req.setAttribute("lastDays", lastDays);
 
-        // ▼ カレンダーの時間を HH:mm 文字列に変換（空リストでも安全）
+        // ===== ★ここが一番重要 =====
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
         for (StoreCalendar c : detail.getCalendars()) {
+
+            // 日付（ゼロ埋め保証）
+            if (c.getDate() != null) {
+                c.setDateStr(df.format(c.getDate()));
+            }
+
+            // 時間
             String openStr = "";
             String closeStr = "";
+
             if (c.getOpenTime() != null) {
-                openStr = c.getOpenTime().toString().substring(0,5);
+                openStr = c.getOpenTime().toString().substring(0, 5);
             }
             if (c.getCloseTime() != null) {
-                closeStr = c.getCloseTime().toString().substring(0,5);
+                closeStr = c.getCloseTime().toString().substring(0, 5);
             }
+
             c.setOpenTimeStr(openStr);
             c.setCloseTimeStr(closeStr);
         }
+        // ===== ここまで =====
 
-        // ▼ 店舗詳細データを JSP に渡す
         req.setAttribute("detail", detail);
-
         req.getRequestDispatcher("/shop/store_detail_edit.jsp").forward(req, res);
     }
 }
