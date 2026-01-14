@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/store_side.css">
 
 <div class="sidebar">
-    <a href="<%=request.getContextPath()%>/Adpay/StoreLogin.action" class="sidebar-link">トップ</a>
-    <a href="#" class="sidebar-link">お知らせ</a>
+    <a href="<%=request.getContextPath()%>/Adpay/StoreHome.action" class="sidebar-link">トップ</a>
+    <a href="<%=request.getContextPath()%>/Adpay/StorePrepayment.action" class="sidebar-link">先払い率設定</a>
     <a href="<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store.storeId}" class="sidebar-link">メニュー表</a>
     <a href="<%=request.getContextPath()%>/Adpay/StoreDetailEdit.action?store_id=${store.storeId}" class="sidebar-link">店舗情報</a>
     <a href="<%=request.getContextPath()%>/Adpay/CouponPage.action?store_id=${store.storeId}" class="sidebar-link">クーポン情報</a>

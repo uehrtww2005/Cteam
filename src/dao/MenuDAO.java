@@ -58,20 +58,24 @@ public class MenuDAO extends DAO {
 
     // 更新処理
     public boolean update(Menu menu) throws Exception {
+
         Connection con = getConnection();
         PreparedStatement ps = null;
         boolean result = false;
 
         try {
-            String sql = "UPDATE menu SET menu_name = ?, price = ? WHERE menu_id = ?";
+            String sql =
+                "UPDATE menu SET menu_name = ?, info = ?, price = ? WHERE menu_id = ?";
+
             ps = con.prepareStatement(sql);
             ps.setString(1, menu.getMenuName());
-            ps.setInt(2, menu.getPrice());
-            ps.setInt(3, menu.getMenuId());
+            ps.setString(2, menu.getInfo());   // ★ 追加
+            ps.setInt(3, menu.getPrice());
+            ps.setInt(4, menu.getMenuId());
 
             int updated = ps.executeUpdate();
             if (updated > 0) {
-                result = true; // 更新成功
+                result = true;
             }
 
         } catch (Exception e) {
@@ -83,6 +87,7 @@ public class MenuDAO extends DAO {
 
         return result;
     }
+
 
     // 全件取得
     public List<Menu> findAll() throws Exception {
@@ -175,17 +180,19 @@ public class MenuDAO extends DAO {
     }
 
     // メニュー登録（拡張子も保存）してIDを返す
+ // メニュー登録（拡張子・詳細含む）してIDを返す
     public int saveAndReturnId(Menu menu, int storeId) throws Exception {
         Connection con = getConnection();
         PreparedStatement st = con.prepareStatement(
-            "INSERT INTO menu (store_id, menu_name, price, image_extension) VALUES (?, ?, ?, ?)",
-            Statement.RETURN_GENERATED_KEYS  // ←★ここで使うためにimportが必要！
+            "INSERT INTO menu (store_id, menu_name, price, image_extension, info) VALUES (?, ?, ?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS
         );
 
         st.setInt(1, storeId);
         st.setString(2, menu.getMenuName());
         st.setInt(3, menu.getPrice());
         st.setString(4, menu.getImageExtension());
+        st.setString(5, menu.getInfo()); // ★追加
 
         st.executeUpdate();
 
@@ -201,10 +208,14 @@ public class MenuDAO extends DAO {
         return id;
     }
 
+
+
     public Menu getMenuById(int menuId) throws Exception {
         Menu menu = null;
+
         try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT * FROM menu WHERE menu_id = ?")) {
+             PreparedStatement ps =
+                 con.prepareStatement("SELECT * FROM menu WHERE menu_id = ?")) {
 
             ps.setInt(1, menuId);
             ResultSet rs = ps.executeQuery();
@@ -216,9 +227,13 @@ public class MenuDAO extends DAO {
                 menu.setMenuName(rs.getString("menu_name"));
                 menu.setPrice(rs.getInt("price"));
                 menu.setImageExtension(rs.getString("image_extension"));
+
+                // ★ これが必要
+                menu.setInfo(rs.getString("info"));
             }
         }
         return menu;
     }
+
 
 }
