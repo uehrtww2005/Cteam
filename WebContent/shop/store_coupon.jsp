@@ -8,98 +8,151 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
 
 <style>
-.calendar-table {
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    width: 100%;
+/* =============================
+   メインレイアウト
+============================= */
+.store-main {
+    margin-left: 220px;
+    max-width: 900px;
+    margin-right: auto;
+    padding: 30px;
+
 }
-.calendar-table th,
-.calendar-table td {
+
+/* =============================
+   フォーム共通
+============================= */
+.store-main form {
+    margin-top: 20px;
+    max-width: 500px;
+}
+
+.store-main label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.store-main input[type="text"],
+.store-main textarea {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+    margin-bottom: 14px;
+}
+
+.store-main button {
+    padding: 8px 20px;
+}
+/* 送信ボタン */
+form button {
+    margin-top: 25px;
+    background-color: #FFD700 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background: linear-gradient(145deg, #222, #111) !important;
+    border:1px solid #666 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: 0.3s !important;
+}
+
+form button:hover {
+    background: linear-gradient(145deg, #333, #000) !important;
+    color: #FFD700 !important;
+    border-color: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
+}
+
+/* =============================
+   テーブル
+============================= */
+.store-main table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.store-main th,
+.store-main td {
     border: 1px solid #aaa;
     padding: 8px;
     text-align: center;
-    width: 14%;
-    height: 60px;
-    cursor: pointer;
-    white-space: pre-line;
+    font-size: 13px;
 }
-.calendar-table th {
-    background-color: #f0f0f0;
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    top: 20%;
-    left: 30%;
-    width: 40%;
-    background: #fff;
-    border: 1px solid #000;
-    padding: 20px;
-    z-index: 1000;
+.store-main th {
+    background-color: #111;
 }
 
-/* 過去日は見た目上無効化 */
-td.past {
-    background-color: #eee;
-    color: #aaa;
-    pointer-events: none;
-    cursor: default;
+.store-main h1 {
+    color: #fff;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #FFD700; /* 下線 */
+    display: inline-block;
 }
 </style>
 
-<h1>クーポン追加</h1>
+<div class="store-main">
 
-<!-- エラーメッセージ表示 -->
-<c:if test="${not empty error}">
-    <p style="color:red;">${error}</p>
-</c:if>
+    <h1>クーポン追加</h1>
 
-<form action="CouponInsert.action" method="post">
+    <!-- エラーメッセージ -->
+    <c:if test="${not empty error}">
+        <p style="color:red;">${error}</p>
+    </c:if>
 
-    <!-- 店舗ID -->
-    <input type="hidden" name="store_id" value="${storeId}">
+    <!-- クーポン追加フォーム -->
+    <form action="CouponInsert.action" method="post">
+        <input type="hidden" name="store_id" value="${storeId}">
 
+        <label for="couponName">クーポン名</label>
+        <input type="text" id="couponName" name="new_coupon_name"placeholder="例：クーポン名を入力してください" required>
 
-    <!-- クーポン名 -->
-    <label>クーポン名：</label><br>
-    <input type="text" name="new_coupon_name" required><br><br>
+        <label for="couponRank">ランク</label>
+        <input type="text" id="couponRank" name="new_coupon_rank" placeholder="例：ゴールド" required>
 
-    <!-- ランク -->
-    <label>ランク：</label><br>
-    <input type="text" name="new_coupon_rank" placeholder="例：ゴールド" required><br><br>
+        <label for="couponIntro">説明</label>
+        <textarea id="couponIntro" name="new_coupon_introduct" rows="3" placeholder="例：飲み放題付きのクーポンです。" required></textarea>
 
-    <!-- 説明 -->
-    <label>説明：</label><br>
-    <textarea name="new_coupon_introduct" rows="3" cols="40" required></textarea><br><br>
+        <button type="submit">追加する</button>
+    </form>
 
-    <button type="submit">追加する</button>
-</form>
+    <hr>
 
-<hr>
+    <h2>クーポン一覧</h2>
 
-<h2>クーポン一覧</h2>
+    <c:if test="${empty couponList}">
+        <p>登録されているクーポンはありません</p>
+    </c:if>
 
-<c:if test="${empty couponList}">
-    <p>登録されているクーポンはありません</p>
-</c:if>
-
-<c:if test="${not empty couponList}">
-    <table border="1" width="100%" cellpadding="5">
-        <tr>
-            <th>ID</th>
-            <th>クーポン名</th>
-            <th>ランク</th>
-            <th>説明</th>
-        </tr>
-
-        <c:forEach var="c" items="${couponList}">
+    <c:if test="${not empty couponList}">
+        <table>
             <tr>
-                <td>${c.couponId}</td>
-                <td>${c.couponName}</td>
-                <td>${c.couponRank}</td>
-                <td>${c.couponIntroduct}</td>
+                <th>ID</th>
+                <th>クーポン名</th>
+                <th>ランク</th>
+                <th>説明</th>
             </tr>
-        </c:forEach>
-    </table>
-</c:if>
+
+            <c:forEach var="c" items="${couponList}">
+                <tr>
+                    <td>${c.couponId}</td>
+                    <td>${c.couponName}</td>
+                    <td>${c.couponRank}</td>
+                    <td>${c.couponIntroduct}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+
+</div>
+
+<%@ include file="../footer.html" %>

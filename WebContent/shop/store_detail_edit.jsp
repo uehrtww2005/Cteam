@@ -138,6 +138,14 @@ td.past {
     padding-bottom: 0;
 }
 
+.store-main h1 {
+    color: #fff;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #FFD700; /* 下線 */
+    display: inline-block;
+}
+
 </style>
 </head>
 
