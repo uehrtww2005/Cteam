@@ -51,7 +51,7 @@
 
 
 </table>
-
+<p><a href="<%=request.getContextPath()%>/Adpay/AdminLogin.action">管理トップに戻る</a></p>
 </body>
 </html>
 <%@ include file="../footer.html" %>

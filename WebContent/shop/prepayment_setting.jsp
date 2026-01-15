@@ -16,10 +16,11 @@
 
     <label>先払い率：</label><br>
 
+
     <select name="prepayment_rate" required>
         <option value="">-- 選択してください --</option>
 
-        <c:forEach var="i" begin="3" end="10">
+        <c:forEach var="i" begin="1" end="5">
             <option value="${i}"
                 <c:if test="${setting != null && setting.prepaymentRate == i}">
                     selected

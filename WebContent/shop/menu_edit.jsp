@@ -7,7 +7,7 @@
 
 <div class="main-content">
   <div class="form-wrapper">
-    <h2>メニュー編集</h2>
+    <h2>コースメニュー編集</h2>
 
     <form action="<%=request.getContextPath()%>/Adpay/MenuEditExecute.action"
           method="post"
@@ -23,18 +23,18 @@
           </c:if>
       </div>
 
-      <label>メニュー名：</label>
+      <label>コース名：</label>
       <input type="text" id="menuNameInput" name="menu_name" value="${menu.menuName}" required>
       <div id="menuNameError" style="color:red; font-size:14px; height:18px; margin-bottom:8px;"></div>
 
       <label>価格：</label>
       <input type="number" name="price" value="${menu.price}" min="0" required><br>
 
-      <label>メニュー詳細：</label>
+      <label>コース詳細：</label>
 	  <textarea name="info"
           		rows="5"
           		style="width:100%; max-width:500px; padding:8px;"
-          		placeholder="メニューの説明・注意事項など">${menu.info}</textarea>
+          		placeholder="コースの説明・注意事項など">${menu.info}</textarea>
 
       <div class="btn-area">
         <button type="submit" class="update-btn">更新</button>
@@ -50,7 +50,7 @@
     </form>
 
     <div class="form-links">
-        <a href="javascript:history.back();" class="back-link">MENU一覧へ戻る</a>
+        <a href="javascript:history.back();" class="back-link">コース一覧へ戻る</a>
     </div>
   </div>
 </div>

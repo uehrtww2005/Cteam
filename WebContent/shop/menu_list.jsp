@@ -16,7 +16,7 @@
 
     <div class="store-main">
 
-      <h3>メニュー登録フォーム</h3>
+      <h3>コースメニュー登録フォーム</h3>
 
       <c:if test="${not empty msg}">
         <div class="msg">${msg}</div>
@@ -30,12 +30,12 @@
         <input type="hidden" name="store_id" value="${store_id}">
 
         <!-- メニュー名 -->
-        <label>メニュー名：</label>
+        <label>コース名：</label>
         <input type="text"
                id="regMenuName"
                name="menu_name"
                required
-               placeholder="メニュー名を入力してください">
+               placeholder="コース名を入力してください">
 
         <div id="regMenuNameError"
              style="color:red; font-size:14px; height:18px; margin-bottom:10px;"></div>
@@ -49,16 +49,16 @@
                placeholder="価格を入力してください"><br>
 
         <!-- ★ メニュー詳細 -->
-        <label>メニュー詳細：</label>
+        <label>コース詳細：</label>
         <textarea name="info"
                   rows="5"
-                  placeholder="メニューの説明・特徴・注意事項など"
+                  placeholder="コースの説明・特徴・注意事項など"
                   style="width:100%; max-width:500px; padding:8px;"></textarea>
 
         <br>
 
         <!-- 画像 -->
-        <label>画像：</label>
+        <label>コース画像：</label>
         <input type="file"
                name="menu_image"
                accept="image/*"
@@ -69,7 +69,7 @@
 
       <hr class="section-divider">
 
-      <h3>登録済みメニュー一覧</h3>
+      <h3>登録済みコースメニュー一覧</h3>
 
       <div class="menu-list">
         <c:forEach var="menu" items="${menuList}">
