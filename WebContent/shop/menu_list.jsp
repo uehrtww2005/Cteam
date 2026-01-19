@@ -41,7 +41,7 @@
              style="color:red; font-size:14px; height:18px; margin-bottom:10px;"></div>
 
         <!-- 価格 -->
-        <label>価格：</label>
+        <label>価格：(税抜)</label>
         <input type="number"
                name="price"
                min="0"
@@ -71,31 +71,42 @@
 
       <h3>登録済みコースメニュー一覧</h3>
 
-      <div class="menu-list">
-        <c:forEach var="menu" items="${menuList}">
-          <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}"
-             class="menu-card-link">
-            <div class="menu-card">
+	<div class="menu-list-wrapper">
+		  <div class="menu-list">
+		    <c:forEach var="menu" items="${menuList}">
+		      <a href="<%=request.getContextPath()%>/Adpay/MenuEditForm.action?menu_id=${menu.menuId}"
+		         class="menu-card-link">
 
-              <c:if test="${not empty menu.imageExtension}">
-                <img class="menu-img"
-                     src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
-                     alt="メニュー画像">
-              </c:if>
+		        <div class="menu-card">
 
-              <c:if test="${empty menu.imageExtension}">
-                <p>（画像が登録されていません）</p>
-              </c:if>
+		          <c:if test="${not empty menu.imageExtension}">
+		            <img class="menu-img"
+		                 src="<%=request.getContextPath()%>/shop/store_menu_images/${menu.storeId}_${menu.menuId}.${menu.imageExtension}?t=${System.currentTimeMillis()}"
+		                 alt="メニュー画像">
+		          </c:if>
 
-              <div><strong>${menu.menuName}</strong></div>
-              <div>${menu.price}円</div>
+		          <c:if test="${empty menu.imageExtension}">
+		            <p>（画像が登録されていません）</p>
+		          </c:if>
 
-            </div>
-          </a>
-        </c:forEach>
-      </div>
+		          <strong>${menu.menuName}</strong>
+		          <div>${menu.price}円</div>
 
+		        </div>
+		      </a>
+		    </c:forEach>
+		  </div>
+		</div>
     </div>
+</div>
+
+<!-- ▼ ページネーション -->
+<div class="pagination">
+  <a href="?page=1" class="page prev">«</a>
+  <a href="?page=1" class="page active">1</a>
+  <a href="?page=2" class="page">2</a>
+  <a href="?page=3" class="page">3</a>
+  <a href="?page=2" class="page next">»</a>
 </div>
 
 <%@ include file="../footer.html" %>
