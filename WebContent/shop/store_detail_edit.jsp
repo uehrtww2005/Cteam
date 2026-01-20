@@ -74,22 +74,30 @@
     font-size: 1rem;
 }
 
-/* 閉じるボタン */
-.modal button {
-    margin-top: 20px;
+/* 送信ボタン */
+form button {
+    margin-top: 25px;
+    background-color: #FFD700 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
     width: 100%;
-    padding: 12px;
-    background: #ffd700;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    color: #black;
-    cursor: pointer;
-    transition: 0.2s;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background: linear-gradient(145deg, #222, #111) !important;
+    border:1px solid #666 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: 0.3s !important;
 }
 
-.modal button:hover {
-    background: #daa520;
+form button:hover {
+    background: linear-gradient(145deg, #333, #000) !important;
+    color: #FFD700 !important;
+    border-color: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
 }
 
 /* 過去日は見た目上無効化 */
@@ -146,6 +154,15 @@ td.past {
     display: inline-block;
 }
 
+/* タグ選択用 select のサイズ */
+.tag-select {
+  width: 320px;      /* 横幅 */
+  height: 48px;      /* 高さ */
+  font-size: 18px;   /* 文字サイズ */
+  padding: 6px 12px; /* 内側余白 */
+  border-radius: 8px;
+}
+
 </style>
 </head>
 
@@ -159,12 +176,15 @@ td.past {
     <h3>店舗紹介文</h3><br>
 <textarea name="storeIntroduct" rows="4" cols="50">${detail.storeIntroduct}</textarea>
 <br>
-    <h3>タグ選択</h3><br>
-<select name="tag">
-<option value="">選択してください</option>
-<c:forEach var="t" items="${allTags}">
-<option value="${t.tagName}" <c:if test="${detail.tag == t.tagName}">selected</c:if>>${t.tagName}</option>
-</c:forEach>
+<h3>タグ選択</h3><br>
+<select name="tag" class="tag-select">
+  <option value="">選択してください</option>
+  <c:forEach var="t" items="${allTags}">
+    <option value="${t.tagName}"
+      <c:if test="${detail.tag == t.tagName}">selected</c:if>>
+      ${t.tagName}
+    </option>
+  </c:forEach>
 </select>
 
     <hr>
