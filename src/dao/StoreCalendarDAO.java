@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,5 +81,37 @@ public class StoreCalendarDAO extends DAO {
             ps.executeUpdate();
         }
     }
+
+    public StoreCalendar findByStoreAndDate(int storeId, LocalDate date) throws Exception {
+
+        StoreCalendar sc = null;
+        Connection con = getConnection();
+
+        String sql =
+            "SELECT * FROM store_calendar " +
+            "WHERE store_id = ? AND date = ?";
+
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, storeId);
+        st.setDate(2, java.sql.Date.valueOf(date));
+
+        ResultSet rs = st.executeQuery();
+
+        if (rs.next()) {
+            sc = new StoreCalendar();
+            sc.setStoreId(storeId);
+            sc.setDate(rs.getDate("date"));
+            sc.setOpen(rs.getBoolean("is_open"));
+            sc.setOpenTime(rs.getTime("open_time"));
+            sc.setCloseTime(rs.getTime("close_time"));
+        }
+
+        rs.close();
+        st.close();
+        con.close();
+
+        return sc;
+    }
+
 
 }

@@ -143,4 +143,17 @@ public class GroupDAO extends DAO{
         }
     }
 
+ // 先払い額更新
+    public void updatePrepaidAmount(int groupId, int newAmount) throws Exception {
+        Connection con = getConnection();
+        String sql = "UPDATE groups SET prepaid_amount=? WHERE group_id=?";
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, newAmount);
+        st.setInt(2, groupId);
+        st.executeUpdate();
+        st.close();
+        con.close();
+    }
+
+
 }

@@ -32,7 +32,7 @@
     </c:if>
 
     <!-- ★ 検索フォーム（共通） -->
-    <form action="<%=request.getContextPath()%>/Adpay/StoreSearch.action" method="post" class="search-form">
+    <form action="<%=request.getContextPath()%>/Adpay/UserStoreSearch.action" method="post" class="search-form">
         <input type="text" name="keyword" placeholder="検索">
         <button type="submit">検索</button>
     </form>

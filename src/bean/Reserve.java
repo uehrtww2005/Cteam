@@ -7,16 +7,16 @@ public class Reserve {
 
 	private Integer reservationId;
     private Integer storeId;
+    private Integer seatId;
     private Integer userId;
     private Integer groupId;
-    private LocalDateTime reservedAt;  // ← DATETIME
+    private LocalDateTime reservedAt;
     private String customerName;
     private String customerTel;
     private Integer numPeople;
     private Integer advancePay;
     private Integer totalPay;
-    private Timestamp createdAt;   // ★追加
-
+    private Timestamp createdAt;
 
 
 	public Integer getReservationId() {
@@ -106,5 +106,12 @@ public class Reserve {
 	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public Integer getSeatId() {
+        return seatId;
+    }
+    public void setSeatId(Integer seatId) {
+        this.seatId = seatId;
+    }
 
 }

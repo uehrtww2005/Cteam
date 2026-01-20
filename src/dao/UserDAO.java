@@ -118,4 +118,17 @@ public class UserDAO extends DAO {
         st.close();
         con.close();
     }
+
+ // 先払い額更新
+    public void updatePrepaidAmount(int userId, int newAmount) throws Exception {
+        Connection con = getConnection();
+        String sql = "UPDATE users SET prepaid_amount=? WHERE user_id=?";
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, newAmount);
+        st.setInt(2, userId);
+        st.executeUpdate();
+        st.close();
+        con.close();
+    }
+
 }

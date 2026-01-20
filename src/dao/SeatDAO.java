@@ -82,26 +82,23 @@ public class SeatDAO extends DAO {
     // 単一の席を取得
     public Seat getSeatById(int seatId) throws Exception {
         Seat seat = null;
-        String sql = "SELECT * FROM seats WHERE seat_id = ?";
-
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, seatId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    seat = new Seat();
-                    seat.setSeatId(rs.getInt("seat_id"));
-                    seat.setStoreId(rs.getInt("store_id"));
-                    seat.setSeatType(rs.getString("seat_type"));
-                    seat.setSeatName(rs.getString("seat_name"));
-                    seat.setMinPeople(rs.getInt("min_people"));
-                }
-            }
+        Connection con = getConnection();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM seats WHERE seat_id = ?");
+        ps.setInt(1, seatId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            seat = new Seat();
+            seat.setSeatId(rs.getInt("seat_id"));
+            seat.setSeatName(rs.getString("seat_name"));
+            seat.setSeatType(rs.getString("seat_type"));
+            seat.setStoreId(rs.getInt("store_id"));
         }
-
+        rs.close();
+        ps.close();
+        con.close();
         return seat;
     }
+
 
     public void deleteSeatsByStoreId(int storeId) throws Exception {
         String sql = "DELETE FROM seats WHERE store_id=?";

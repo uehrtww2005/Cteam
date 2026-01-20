@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,42 +13,39 @@ import bean.Reserve;
 
 public abstract class ReserveDAO extends DAO {
 
+    // 新規予約登録
     public int insert(Reserve r) throws Exception {
         Connection con = getConnection();
 
         String sql =
-            "INSERT INTO reservations " +
-            "(store_id, user_id, group_id, reserved_at, customer_name, customer_tel, num_people, advance_pay, total_pay) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO reserve " +
+            "(store_id, seat_id, user_id, group_id, reserved_at, " +
+            " customer_name, customer_tel, num_people, advance_pay, total_pay) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement st = con.prepareStatement(sql);
 
-        // 1 store_id
         st.setInt(1, r.getStoreId());
+        st.setInt(2, r.getSeatId());
 
-        // 2 user_id（NULL可）
         if (r.getUserId() != null) {
-            st.setInt(2, r.getUserId());
-        } else {
-            st.setNull(2, java.sql.Types.INTEGER);
-        }
-
-        // 3 group_id（NULL可）
-        if (r.getGroupId() != null) {
-            st.setInt(3, r.getGroupId());
+            st.setInt(3, r.getUserId());
         } else {
             st.setNull(3, java.sql.Types.INTEGER);
         }
 
-        // 4 reserved_at（LocalDateTime → Timestamp）
-        st.setTimestamp(4, Timestamp.valueOf(r.getReservedAt()));
+        if (r.getGroupId() != null) {
+            st.setInt(4, r.getGroupId());
+        } else {
+            st.setNull(4, java.sql.Types.INTEGER);
+        }
 
-        // 5〜9 その他
-        st.setString(5, r.getCustomerName());
-        st.setString(6, r.getCustomerTel());
-        st.setInt(7, r.getNumPeople());
-        st.setInt(8, r.getAdvancePay());
-        st.setInt(9, r.getTotalPay());
+        st.setTimestamp(5, Timestamp.valueOf(r.getReservedAt()));
+        st.setString(6, r.getCustomerName());
+        st.setString(7, r.getCustomerTel());
+        st.setInt(8, r.getNumPeople());
+        st.setInt(9, r.getAdvancePay());
+        st.setInt(10, r.getTotalPay());
 
         int line = st.executeUpdate();
 
@@ -56,12 +55,13 @@ public abstract class ReserveDAO extends DAO {
         return line;
     }
 
+    // 店舗の全予約を取得
     public List<Reserve> findByStoreId(int storeId) throws Exception {
         List<Reserve> list = new ArrayList<>();
         Connection con = getConnection();
 
         PreparedStatement st = con.prepareStatement(
-            "SELECT * FROM reservations WHERE store_id = ? ORDER BY reserved_at"
+            "SELECT * FROM reserve WHERE store_id = ? ORDER BY reserved_at"
         );
         st.setInt(1, storeId);
 
@@ -71,6 +71,7 @@ public abstract class ReserveDAO extends DAO {
             Reserve r = new Reserve();
             r.setReservationId(rs.getInt("reservation_id"));
             r.setStoreId(rs.getInt("store_id"));
+            r.setSeatId(rs.getInt("seat_id"));
             r.setReservedAt(rs.getTimestamp("reserved_at").toLocalDateTime());
             r.setCustomerName(rs.getString("customer_name"));
             r.setCustomerTel(rs.getString("customer_tel"));
@@ -84,11 +85,12 @@ public abstract class ReserveDAO extends DAO {
         return list;
     }
 
+    // 予約削除
     public int delete(int reservationId) throws Exception {
         Connection con = getConnection();
 
         PreparedStatement st = con.prepareStatement(
-            "DELETE FROM reservations WHERE reservation_id = ?"
+            "DELETE FROM reserve WHERE reservation_id = ?"
         );
         st.setInt(1, reservationId);
 
@@ -99,6 +101,7 @@ public abstract class ReserveDAO extends DAO {
         return line;
     }
 
+    // 予約更新
     public boolean update(Reserve r) throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = null;
@@ -106,11 +109,10 @@ public abstract class ReserveDAO extends DAO {
 
         try {
             String sql =
-                "UPDATE reservations SET reserved_at = ?, num_people = ?, advance_pay = ?, total_pay = ? " +
+                "UPDATE reserve SET reserved_at = ?, num_people = ?, advance_pay = ?, total_pay = ? " +
                 "WHERE reservation_id = ?";
             ps = con.prepareStatement(sql);
 
-            // LocalDateTime → Timestamp に変換
             ps.setTimestamp(1, Timestamp.valueOf(r.getReservedAt()));
             ps.setInt(2, r.getNumPeople());
             ps.setInt(3, r.getAdvancePay());
@@ -127,7 +129,76 @@ public abstract class ReserveDAO extends DAO {
         return result;
     }
 
+    // 店舗＋日付で予約取得
+    public List<Reserve> findByStoreAndDate(int storeId, LocalDate date) throws Exception {
+        List<Reserve> list = new ArrayList<>();
+        Connection con = getConnection();
 
+        String sql =
+            "SELECT * FROM reserve WHERE store_id = ? AND DATE(reserved_at) = ?";
 
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, storeId);
+        ps.setDate(2, java.sql.Date.valueOf(date));
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Reserve r = new Reserve();
+            r.setReservationId(rs.getInt("reservation_id"));
+            r.setStoreId(rs.getInt("store_id"));
+            r.setSeatId(rs.getInt("seat_id"));
+            r.setReservedAt(rs.getTimestamp("reserved_at").toLocalDateTime());
+            r.setNumPeople(rs.getInt("num_people"));
+            list.add(r);
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return list;
+    }
+
+    // 席＋時間で満席判定
+    public boolean isSeatReserved(int seatId, LocalDateTime time) throws Exception {
+        Connection con = getConnection();
+        String sql =
+            "SELECT COUNT(*) FROM reserve WHERE seat_id = ? AND reserved_at = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, seatId);
+        ps.setTimestamp(2, Timestamp.valueOf(time));
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        boolean reserved = rs.getInt(1) > 0;
+
+        rs.close();
+        ps.close();
+        con.close();
+        return reserved;
+    }
+
+    // 指定日の予約済み席ID一覧
+    public List<Integer> findReservedSeatIds(int storeId, LocalDate date) throws Exception {
+        List<Integer> list = new ArrayList<>();
+        String sql = "SELECT seat_id FROM reserve WHERE store_id=? AND DATE(reserved_at)=?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, storeId);
+            ps.setDate(2, java.sql.Date.valueOf(date));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(rs.getInt("seat_id"));
+                }
+            }
+        }
+        return list;
+    }
 
 }

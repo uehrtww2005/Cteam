@@ -134,6 +134,7 @@ public class MenuDAO extends DAO {
     }
 
     // 店舗ごとの一覧
+ // 店舗ごとの一覧
     public List<Menu> findByStoreId(int storeId) throws Exception {
         List<Menu> list = new ArrayList<>();
         Connection con = getConnection();
@@ -151,6 +152,7 @@ public class MenuDAO extends DAO {
             menu.setMenuName(rs.getString("menu_name"));
             menu.setPrice(rs.getInt("price"));
             menu.setImageExtension(rs.getString("image_extension"));
+            menu.setInfo(rs.getString("info"));
             list.add(menu);
         }
 
@@ -159,6 +161,7 @@ public class MenuDAO extends DAO {
         con.close();
         return list;
     }
+
 
     public int getLastInsertedMenuId(int storeId) throws Exception {
         Connection con = getConnection();
