@@ -201,4 +201,38 @@ public abstract class ReserveDAO extends DAO {
         return list;
     }
 
+    public List<Reserve> ReserveByStoreId(int storeId) throws Exception {
+
+        List<Reserve> list = new ArrayList<>();
+        Connection con = getConnection();
+
+        String sql = " SELECT * FROM reserve WHERE store_id = ? ORDER BY reserved_at DESC ";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, storeId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Reserve r = new Reserve();
+            r.setReservationId(rs.getInt("reservation_id"));
+            r.setStoreId(rs.getInt("store_id"));
+            r.setSeatId(rs.getInt("seat_id"));
+            r.setCustomerName(rs.getString("customer_name"));
+            r.setCustomerTel(rs.getString("customer_tel"));
+            r.setNumPeople(rs.getInt("num_people"));
+            r.setTotalPay(rs.getInt("total_pay"));
+            r.setAdvancePay(rs.getInt("advance_pay"));
+            r.setReservedAt(rs.getTimestamp("reserved_at").toLocalDateTime());
+
+            list.add(r);
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return list;
+    }
+
+
 }

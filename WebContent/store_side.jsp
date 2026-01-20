@@ -10,7 +10,13 @@
     <a href="<%=request.getContextPath()%>/Adpay/StoreInquiry.action" class="sidebar-link">お問い合わせ</a>
 
 
-    <a href="#" class="sidebar-link">月額プラン</a>
+    <a href="<%=request.getContextPath()%>/Adpay/StoreReserveList.action?store_id=${store.storeId}"
+	   class="sidebar-link">
+	  予約者一覧
+	</a>
+
+
+
 
     <!-- プラン内容 -->
     <div class="sidebar-plan">

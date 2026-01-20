@@ -99,13 +99,15 @@ public class ReserveCompleteAction extends Action {
         }
 
         // JSPに渡す値
-        request.setAttribute("totalAmount", totalAmount);
-        request.setAttribute("prepaymentAmount", prepaymentAmount);
-        request.setAttribute("perPersonPrepaid", perPersonPrepaid);
-        request.setAttribute("customerName", customerName);
-        request.setAttribute("date", date);
-        request.setAttribute("time", time);
-        request.setAttribute("storeId", storeId);
+
+        session.setAttribute("totalAmount", totalAmount);
+        session.setAttribute("prepaymentAmount", prepaymentAmount);
+        session.setAttribute("perPersonPrepaid", perPersonPrepaid);
+        session.setAttribute("customerName", customerName);
+        session.setAttribute("date", date);
+        session.setAttribute("time", time);
+        session.setAttribute("storeId", storeId);
+
 
         // 完了画面へ
         request.getRequestDispatcher("/shop/reserve_complete.jsp").forward(request, response);
