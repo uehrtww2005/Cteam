@@ -117,13 +117,21 @@ form button:hover {
         <input type="text" id="couponName" name="new_coupon_name"placeholder="例：クーポン名を入力してください" required>
 
         <label for="couponRank">ランク</label>
-        <input type="text" id="couponRank" name="new_coupon_rank" placeholder="例：ゴールド" required>
+		<select id="couponRank" name="new_coupon_rank" required>
+		    <option value="" disabled selected>ランクを選択してください</option>
+		    <option value="ビギナー">ビギナー</option>
+		    <option value="ブロンズ">ブロンズ</option>
+		    <option value="シルバー">シルバー</option>
+		    <option value="ゴールド">ゴールド</option>
+		</select>
+
 
         <label for="couponIntro">説明</label>
         <textarea id="couponIntro" name="new_coupon_introduct" rows="3" placeholder="例：飲み放題付きのクーポンです。" required></textarea>
 
         <button type="submit">追加する</button>
     </form>
+
 
     <hr>
 
@@ -136,7 +144,6 @@ form button:hover {
     <c:if test="${not empty couponList}">
         <table>
             <tr>
-                <th>ID</th>
                 <th>クーポン名</th>
                 <th>ランク</th>
                 <th>説明</th>
@@ -144,14 +151,20 @@ form button:hover {
 
             <c:forEach var="c" items="${couponList}">
                 <tr>
-                    <td>${c.couponId}</td>
                     <td>${c.couponName}</td>
                     <td>${c.couponRank}</td>
                     <td>${c.couponIntroduct}</td>
+                   	<td>
+
+                   	</td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
+
+    <form action="CouponDelete.action" method="post">
+       <button type="submit">削除する</button>
+    </form>
 
 </div>
 
