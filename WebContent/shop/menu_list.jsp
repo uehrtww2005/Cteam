@@ -100,14 +100,7 @@
     </div>
 </div>
 
-<!-- ▼ ページネーション -->
-<div class="pagination">
-  <a href="?page=1" class="page prev">«</a>
-  <a href="?page=1" class="page active">1</a>
-  <a href="?page=2" class="page">2</a>
-  <a href="?page=3" class="page">3</a>
-  <a href="?page=2" class="page next">»</a>
-</div>
+
 
 <%@ include file="../footer.html" %>
 
