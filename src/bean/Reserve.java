@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Reserve {
 
-	private Integer reservationId;
+    private Integer reservationId;
     private Integer storeId;
     private Integer seatId;
     private Integer userId;
@@ -18,100 +18,115 @@ public class Reserve {
     private Integer totalPay;
     private Timestamp createdAt;
 
+    // ★ 追加：表示用日時（例：1/3（金）12:30）
+    private String displayDateTime;
 
-	public Integer getReservationId() {
-		return reservationId;
-	}
+    // =====================
+    // getter / setter
+    // =====================
 
-	public void setReservationId(Integer reservationId) {
-		this.reservationId = reservationId;
-	}
+    public Integer getReservationId() {
+        return reservationId;
+    }
 
-	public Integer getStoreId() {
-		return storeId;
-	}
+    public void setReservationId(Integer reservationId) {
+        this.reservationId = reservationId;
+    }
 
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
-	}
+    public Integer getStoreId() {
+        return storeId;
+    }
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
-	public LocalDateTime getReservedAt() {
-		return reservedAt;
-	}
-
-	public void setReservedAt(LocalDateTime reservedAt) {
-		this.reservedAt = reservedAt;
-	}
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public String getCustomerTel() {
-		return customerTel;
-	}
-
-	public void setCustomerTel(String customerTel) {
-		this.customerTel = customerTel;
-	}
-
-	public Integer getNumPeople() {
-		return numPeople;
-	}
-
-	public void setNumPeople(Integer numPeople) {
-		this.numPeople = numPeople;
-	}
-
-	public Integer getAdvancePay() {
-		return advancePay;
-	}
-
-	public void setAdvancePay(Integer advancePay) {
-		this.advancePay = advancePay;
-	}
-
-	public Integer getTotalPay() {
-		return totalPay;
-	}
-
-	public void setTotalPay(Integer totalPay) {
-		this.totalPay = totalPay;
-	}
-
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Integer getSeatId() {
+    public Integer getSeatId() {
         return seatId;
     }
+
     public void setSeatId(Integer seatId) {
         this.seatId = seatId;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public LocalDateTime getReservedAt() {
+        return reservedAt;
+    }
+
+    public void setReservedAt(LocalDateTime reservedAt) {
+        this.reservedAt = reservedAt;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerTel() {
+        return customerTel;
+    }
+
+    public void setCustomerTel(String customerTel) {
+        this.customerTel = customerTel;
+    }
+
+    public Integer getNumPeople() {
+        return numPeople;
+    }
+
+    public void setNumPeople(Integer numPeople) {
+        this.numPeople = numPeople;
+    }
+
+    public Integer getAdvancePay() {
+        return advancePay;
+    }
+
+    public void setAdvancePay(Integer advancePay) {
+        this.advancePay = advancePay;
+    }
+
+    public Integer getTotalPay() {
+        return totalPay;
+    }
+
+    public void setTotalPay(Integer totalPay) {
+        this.totalPay = totalPay;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    // ★ 追加分
+    public String getDisplayDateTime() {
+        return displayDateTime;
+    }
+
+    public void setDisplayDateTime(String displayDateTime) {
+        this.displayDateTime = displayDateTime;
+    }
 }
