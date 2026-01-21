@@ -156,11 +156,69 @@ td.past {
 
 /* タグ選択用 select のサイズ */
 .tag-select {
-  width: 320px;      /* 横幅 */
-  height: 48px;      /* 高さ */
-  font-size: 18px;   /* 文字サイズ */
-  padding: 6px 12px; /* 内側余白 */
+  width: 320px;
+  height: 48px;
+  font-size: 18px;
+  padding: 6px 12px;
+  box-sizing: border-box;
+
+  /* 背景になじませる */
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+
+  border: 1px solid #666;
   border-radius: 8px;
+
+  outline: none;
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* フォーカス時（クリック時） */
+.tag-select:focus {
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
+}
+
+/* option の背景（重要） */
+.tag-select option {
+  background: #111;
+  color: #fff;
+}
+
+textarea[name="storeIntroduct"] {
+  width: 100%;
+  max-width: 600px;
+  min-height: 120px;
+
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+
+  border: 1px solid #666;
+  border-radius: 8px;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  resize: vertical;
+  outline: none;
+}
+
+/* フォーカス時 */
+textarea[name="storeIntroduct"]:focus {
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
+}
+
+/* プレースホルダー色（もし使うなら） */
+textarea[name="storeIntroduct"]::placeholder {
+  color: #aaa;
 }
 
 </style>
