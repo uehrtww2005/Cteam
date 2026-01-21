@@ -1,6 +1,8 @@
 package Adpay;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,14 +27,14 @@ public class ReserveCompleteAction extends Action {
 
         // 予約基本情報
         int storeId = Integer.parseInt(request.getParameter("store_id"));
-        String date = request.getParameter("date");
+        String date = request.getParameter("date");   // 2026-01-03
+        String time = request.getParameter("time");   // 12:30
         int seatId = Integer.parseInt(request.getParameter("seat_id"));
-        String time = request.getParameter("time");
         int numPeople = Integer.parseInt(request.getParameter("num_people"));
         String customerName = request.getParameter("customerName");
         String customerTel = request.getParameter("customerTel");
 
-        // メニュー情報を hidden input から取得
+        // ===== メニュー情報 =====
         Map<Integer, Integer> menuMap = new LinkedHashMap<>();
         for (String key : request.getParameterMap().keySet()) {
             if (key.startsWith("menu_")) {
@@ -57,18 +59,23 @@ public class ReserveCompleteAction extends Action {
             prepaymentAmount = totalAmount * rate * 10 / 100;
         }
 
-        // Reserveオブジェクトにセット
+        // ===== 予約日時を作成（★重要） =====
+        LocalDate reserveDate = LocalDate.parse(date);
+        LocalTime reserveTime = LocalTime.parse(time);
+        LocalDateTime reservedAt = LocalDateTime.of(reserveDate, reserveTime);
+
+        // Reserveオブジェクト
         Reserve r = new Reserve();
         r.setStoreId(storeId);
         r.setSeatId(seatId);
         r.setCustomerName(customerName);
         r.setCustomerTel(customerTel);
         r.setNumPeople(numPeople);
-        r.setReservedAt(LocalDateTime.now());
+        r.setReservedAt(reservedAt);   // ★ 修正点
         r.setAdvancePay(prepaymentAmount);
         r.setTotalPay(totalAmount);
 
-        // ★ userId / groupId をセット
+        // user / group
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Group group = (Group) session.getAttribute("group");
@@ -79,27 +86,24 @@ public class ReserveCompleteAction extends Action {
             r.setGroupId(group.getGroupId());
         }
 
-        // DAOで保存
+        // 保存
         ReserveDAO reserveDao = new ReserveDAO() {};
         reserveDao.insert(r);
 
-        // ===== 先払いを User / Group に加算（人数で割った分を加算） =====
+        // ===== 先払い反映 =====
         int perPersonPrepaid = numPeople > 0 ? prepaymentAmount / numPeople : 0;
 
         if (user != null) {
             int newAmount = user.getPrepaidAmount() + perPersonPrepaid;
             user.setPrepaidAmount(newAmount);
-            UserDAO userDao = new UserDAO();
-            userDao.updatePrepaidAmount(user.getUserId(), newAmount);
+            new UserDAO().updatePrepaidAmount(user.getUserId(), newAmount);
         } else if (group != null) {
             int newAmount = group.getPrepaidAmount() + perPersonPrepaid;
             group.setPrepaidAmount(newAmount);
-            GroupDAO groupDao = new GroupDAO();
-            groupDao.updatePrepaidAmount(group.getGroupId(), newAmount);
+            new GroupDAO().updatePrepaidAmount(group.getGroupId(), newAmount);
         }
 
-        // JSPに渡す値
-
+        // 完了画面用
         session.setAttribute("totalAmount", totalAmount);
         session.setAttribute("prepaymentAmount", prepaymentAmount);
         session.setAttribute("perPersonPrepaid", perPersonPrepaid);
@@ -108,8 +112,7 @@ public class ReserveCompleteAction extends Action {
         session.setAttribute("time", time);
         session.setAttribute("storeId", storeId);
 
-
-        // 完了画面へ
-        request.getRequestDispatcher("/shop/reserve_complete.jsp").forward(request, response);
+        request.getRequestDispatcher("/shop/reserve_complete.jsp")
+               .forward(request, response);
     }
 }

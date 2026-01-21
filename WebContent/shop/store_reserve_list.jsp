@@ -12,12 +12,14 @@
         <th>人数</th>
         <th>合計金額</th>
         <th>先払い金額</th>
-        <th>残り金額</th> <!-- ★追加 -->
+        <th>残り金額</th>
     </tr>
 
     <c:forEach var="r" items="${reserveList}">
         <tr>
-            <td>${r.reservedAt}</td>
+            <!-- ★ここだけ変更 -->
+            <td>${r.displayDateTime}</td>
+
             <td>${r.customerName}</td>
             <td>${r.customerTel}</td>
             <td>${r.numPeople}</td>
