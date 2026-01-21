@@ -4,25 +4,43 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Coupon;
+import bean.Store;
 import dao.CouponDAO;
 import tool.Action;
 
 public class CouponPageAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-	    int storeId = Integer.parseInt(req.getParameter("store_id"));
-	    req.setAttribute("storeId", storeId);
+        HttpSession session = req.getSession();
+        Store store = (Store) session.getAttribute("store");
 
-	    CouponDAO dao = new CouponDAO();
-	    List<Coupon> couponList = dao.findByStoreId(storeId);
+        // 未ログイン対策
+        if (store == null) {
+            res.sendRedirect("login_store.jsp");
+            return;
+        }
 
-	    req.setAttribute("couponList", couponList);
+        int storeId = store.getStoreId();
 
-	    req.getRequestDispatcher("/shop/store_coupon.jsp").forward(req, res);
-	}
+        // クーポン一覧取得
+        CouponDAO dao = new CouponDAO();
+        List<Coupon> couponList = dao.findByStoreId(storeId);
+        req.setAttribute("couponList", couponList);
 
+        // フラッシュメッセージ処理
+        Object message = session.getAttribute("message");
+        if (message != null) {
+            req.setAttribute("message", message);
+            session.removeAttribute("message");
+        }
+
+
+
+        req.getRequestDispatcher("/shop/store_coupon.jsp").forward(req, res);
+    }
 }

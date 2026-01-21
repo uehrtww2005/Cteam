@@ -2,6 +2,7 @@ package Adpay;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Coupon;
 import dao.CouponDAO;
@@ -9,46 +10,49 @@ import tool.Action;
 
 public class CouponInsertAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-	    req.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
 
-	    String storeIdStr = req.getParameter("store_id");
-	    int storeId = Integer.parseInt(storeIdStr);
+        HttpSession session = req.getSession(); // ★ 追加
 
-	    String name = req.getParameter("new_coupon_name");
-	    String rank = req.getParameter("new_coupon_rank");
-	    String intro = req.getParameter("new_coupon_introduct");
+        String storeIdStr = req.getParameter("store_id");
+        int storeId = Integer.parseInt(storeIdStr);
 
-	    // バリデーション
-	    if (name == null || name.isEmpty()
-	     || rank == null || rank.isEmpty()
-	     || intro == null || intro.isEmpty()) {
+        String name = req.getParameter("new_coupon_name");
+        String rank = req.getParameter("new_coupon_rank");
+        String intro = req.getParameter("new_coupon_introduct");
 
-	        req.setAttribute("error", "未入力項目があります");
+        // バリデーション
+        if (name == null || name.isEmpty()
+         || rank == null || rank.isEmpty()
+         || intro == null || intro.isEmpty()) {
 
-	        // 表示用Actionに戻す
-	        req.getRequestDispatcher(
-	            "CouponPage.action?store_id=" + storeId
-	        ).forward(req, res);
-	        return; // ★ 必須
-	    }
+            // ★ session に入れる
+            session.setAttribute("message", "未入力項目があります");
 
-	    Coupon coupon = new Coupon();
-	    coupon.setStoreId(storeId);
-	    coupon.setCouponName(name);
-	    coupon.setCouponRank(rank);
-	    coupon.setCouponIntroduct(intro);
+            res.sendRedirect(
+                "CouponPage.action?store_id=" + storeId
+            );
+            return;
+        }
 
-	    CouponDAO dao = new CouponDAO();
-	    dao.insert(coupon, storeId);
+        Coupon coupon = new Coupon();
+        coupon.setStoreId(storeId);
+        coupon.setCouponName(name);
+        coupon.setCouponRank(rank);
+        coupon.setCouponIntroduct(intro);
 
-	    System.out.println("クーポン追加完了: " + name);
+        CouponDAO dao = new CouponDAO();
+        dao.insert(coupon, storeId);
 
-	    // ★ ここが最大のポイント
-	    res.sendRedirect(
-	        "CouponPage.action?store_id=" + storeId
-	    );
-	}
+        // ★ 成功メッセージ
+        session.setAttribute("message", "クーポンを追加しました");
+
+        // 一覧再表示
+        res.sendRedirect(
+            "CouponPage.action?store_id=" + storeId
+        );
+    }
 }

@@ -57,21 +57,34 @@ public class CouponDAO extends DAO{
         return line;
     }
 
-    // ★ 削除処理
-    public int delete(int couponId, int storeId) throws Exception {
+ // クーポンを完全削除（user_coupon → coupon の順）
+    public int deleteCompletely(int couponId, int storeId) throws Exception {
+
         Connection con = getConnection();
+        PreparedStatement ps = null;
+        int count = 0;
 
-        PreparedStatement st = con.prepareStatement(
-            "DELETE FROM coupon WHERE coupon_id = ? AND store_id = ?"
-        );
-        st.setInt(1, couponId);
-        st.setInt(2, storeId);
+        try {
+            // ① user_coupon を先に削除
+            String sql1 = "DELETE FROM user_coupon WHERE coupon_id = ?";
+            ps = con.prepareStatement(sql1);
+            ps.setInt(1, couponId);
+            ps.executeUpdate();
+            ps.close();
 
-        int line = st.executeUpdate();
+            // ② coupon を削除
+            String sql2 = "DELETE FROM coupon WHERE coupon_id = ? AND store_id = ?";
+            ps = con.prepareStatement(sql2);
+            ps.setInt(1, couponId);
+            ps.setInt(2, storeId);
+            count = ps.executeUpdate();
 
-        st.close();
-        con.close();
+        } finally {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        }
 
-        return line;
+        return count;
     }
+
 }

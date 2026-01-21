@@ -8,20 +8,13 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/side.css">
 
 <style>
-/* =============================
-   メインレイアウト
-============================= */
 .store-main {
     margin-left: 220px;
     max-width: 900px;
     margin-right: auto;
     padding: 30px;
-
 }
 
-/* =============================
-   フォーム共通
-============================= */
 .store-main form {
     margin-top: 20px;
     max-width: 500px;
@@ -34,48 +27,31 @@
 }
 
 .store-main input[type="text"],
-.store-main textarea {
+.store-main textarea,
+.store-main select {
     width: 100%;
     padding: 6px;
     box-sizing: border-box;
     margin-bottom: 14px;
 }
 
-.store-main button {
-    padding: 8px 20px;
-}
-/* 送信ボタン */
-form button {
-    margin-top: 25px;
-    background-color: #FFD700 !important;
-    color: #ffffff !important;
+button {
+    margin-top: 15px;
+    background-color: #FFD700;
+    color: #fff;
     font-weight: bold;
-    font-size: 16px;
-    padding: 12px 0;
+    font-size: 14px;
+    padding: 10px 0;
     width: 100%;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    background: linear-gradient(145deg, #222, #111) !important;
-    border:1px solid #666 !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
-    transition: 0.3s !important;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-form button:hover {
-    background: linear-gradient(145deg, #333, #000) !important;
-    color: #FFD700 !important;
-    border-color: #FFD700 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
-}
-
-/* =============================
-   テーブル
-============================= */
 .store-main table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .store-main th,
@@ -85,87 +61,138 @@ form button:hover {
     text-align: center;
     font-size: 13px;
 }
-}
 
 .store-main th {
     background-color: #111;
+    color: #fff;
 }
 
-.store-main h1 {
-    color: #fff;
-    margin-bottom: 20px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #FFD700; /* 下線 */
-    display: inline-block;
+.action-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
 }
 </style>
 
 <div class="store-main">
 
-    <h1>クーポン追加</h1>
+    <h1>クーポン管理</h1>
 
-    <!-- エラーメッセージ -->
-    <c:if test="${not empty error}">
-        <p style="color:red;">${error}</p>
+    <!-- メッセージ -->
+    <c:if test="${not empty message}">
+        <p style="color:green;">${message}</p>
     </c:if>
 
-    <!-- クーポン追加フォーム -->
+    <!-- ======================
+         クーポン追加
+    ======================= -->
+    <h2>クーポン追加</h2>
+
     <form action="CouponInsert.action" method="post">
-        <input type="hidden" name="store_id" value="${storeId}">
+        <input type="hidden" name="store_id" value="${store.storeId}">
 
-        <label for="couponName">クーポン名</label>
-        <input type="text" id="couponName" name="new_coupon_name"placeholder="例：クーポン名を入力してください" required>
+        <label>クーポン名</label>
+        <input type="text" name="new_coupon_name" required>
 
-        <label for="couponRank">ランク</label>
-		<select id="couponRank" name="new_coupon_rank" required>
-		    <option value="" disabled selected>ランクを選択してください</option>
-		    <option value="ビギナー">ビギナー</option>
-		    <option value="ブロンズ">ブロンズ</option>
-		    <option value="シルバー">シルバー</option>
-		    <option value="ゴールド">ゴールド</option>
-		</select>
+        <label>ランク</label>
+        <select name="new_coupon_rank" required>
+            <option value="" disabled selected>選択してください</option>
+            <option value="ビギナー">ビギナー</option>
+            <option value="ブロンズ">ブロンズ</option>
+            <option value="シルバー">シルバー</option>
+            <option value="ゴールド">ゴールド</option>
+        </select>
 
-
-        <label for="couponIntro">説明</label>
-        <textarea id="couponIntro" name="new_coupon_introduct" rows="3" placeholder="例：飲み放題付きのクーポンです。" required></textarea>
+        <label>説明</label>
+        <textarea name="new_coupon_introduct" rows="3" required></textarea>
 
         <button type="submit">追加する</button>
     </form>
 
-
     <hr>
 
-    <h2>クーポン一覧</h2>
+    <!-- ======================
+         クーポン一覧 & 一括操作
+    ======================= -->
+    <h2>登録済みクーポン一覧</h2>
 
     <c:if test="${empty couponList}">
-        <p>登録されているクーポンはありません</p>
+        <p>登録されているクーポンはありません。</p>
     </c:if>
 
     <c:if test="${not empty couponList}">
-        <table>
-            <tr>
-                <th>クーポン名</th>
-                <th>ランク</th>
-                <th>説明</th>
-            </tr>
+        <form id="couponForm" method="post">
 
-            <c:forEach var="c" items="${couponList}">
+            <table>
                 <tr>
-                    <td>${c.couponName}</td>
-                    <td>${c.couponRank}</td>
-                    <td>${c.couponIntroduct}</td>
-                   	<td>
-
-                   	</td>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th>クーポン名</th>
+                    <th>ランク</th>
+                    <th>説明</th>
                 </tr>
-            </c:forEach>
-        </table>
+
+                <c:forEach var="c" items="${couponList}">
+                    <tr>
+                        <td>
+                            <input type="checkbox"
+                                   name="couponIds"
+                                   value="${c.couponId}">
+                        </td>
+                        <td>${c.couponName}</td>
+                        <td>${c.couponRank}</td>
+                        <td>${c.couponIntroduct}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+
+            <div class="action-buttons">
+                <button type="submit" onclick="return sendCoupons();">
+                    選択したクーポンを配布
+                </button>
+
+                <button type="submit" onclick="return deleteCoupons();">
+                    選択したクーポンを削除
+                </button>
+            </div>
+        </form>
     </c:if>
 
-    <form action="CouponDelete.action" method="post">
-       <button type="submit">削除する</button>
-    </form>
-
 </div>
+
+<script>
+/* 全選択 */
+document.getElementById("checkAll")?.addEventListener("change", function () {
+    const checks = document.querySelectorAll("input[name='couponIds']");
+    checks.forEach(c => c.checked = this.checked);
+});
+
+function checkedAny() {
+    return document.querySelectorAll("input[name='couponIds']:checked").length > 0;
+}
+
+function sendCoupons() {
+    if (!checkedAny()) {
+        alert("クーポンを選択してください");
+        return false;
+    }
+    if (!confirm("選択したクーポンをすべてのユーザー（個人・団体）に配布しますか？")) {
+        return false;
+    }
+    document.getElementById("couponForm").action = "CouponSendAll.action";
+    return true;
+}
+
+function deleteCoupons() {
+    if (!checkedAny()) {
+        alert("削除するクーポンを選択してください");
+        return false;
+    }
+    if (!confirm("選択したクーポンを削除しますか？")) {
+        return false;
+    }
+    document.getElementById("couponForm").action = "CouponBulkDelete.action";
+    return true;
+}
+</script>
 
 <%@ include file="../footer.html" %>
