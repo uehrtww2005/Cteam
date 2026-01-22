@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../header.html" %>
-
+<%@ include file="../store_side.jsp" %>
 
 <h2>本日の予約一覧</h2>
 
