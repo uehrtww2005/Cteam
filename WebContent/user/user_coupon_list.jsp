@@ -101,7 +101,7 @@ function confirmUse(name, id) {
     if (!confirm("このクーポンを使用しますか？\n\n" + name)) {
         return false;
     }
-    alert("クーポン使用完了\n\nID：" + id + "\n名前：" + name);
+    alert("クーポン使用完了\n" + "\n名前：" + name);
     return true;
 }
 </script>
