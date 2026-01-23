@@ -6,6 +6,11 @@ public class Seat {
     private String seatType;
     private String seatName;
     private int minPeople;
+    private boolean isActive;
+
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean isActive) { this.isActive = isActive; }
+
 
     // コンストラクタ
     public Seat() {}

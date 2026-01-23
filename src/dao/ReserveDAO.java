@@ -147,46 +147,57 @@ public abstract class ReserveDAO extends DAO {
         return result;
     }
 
-    // =====================
-    // 店舗＋日付で予約取得
-    // =====================
-    public List<Reserve> findByStoreAndDate(int storeId, LocalDate date) throws Exception {
-        List<Reserve> list = new ArrayList<>();
-        Connection con = getConnection();
+	 // =====================
+	 // 店舗＋日付で予約取得（完成版）
+	 // =====================
+	 public List<Reserve> findByStoreAndDate(int storeId, LocalDate date) throws Exception {
 
-        String sql =
-            "SELECT * FROM reserve WHERE store_id = ? AND DATE(reserved_at) = ?";
+	     List<Reserve> list = new ArrayList<>();
+	     Connection con = getConnection();
 
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, storeId);
-        ps.setDate(2, java.sql.Date.valueOf(date));
+	     String sql =
+	         "SELECT * FROM reserve WHERE store_id = ? AND DATE(reserved_at) = ? ORDER BY reserved_at";
 
-        ResultSet rs = ps.executeQuery();
+	     PreparedStatement ps = con.prepareStatement(sql);
+	     ps.setInt(1, storeId);
+	     ps.setDate(2, java.sql.Date.valueOf(date));
 
-        DateTimeFormatter fmt =
-            DateTimeFormatter.ofPattern("M/d（E）HH:mm", Locale.JAPAN);
+	     ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Reserve r = new Reserve();
-            r.setReservationId(rs.getInt("reservation_id"));
-            r.setStoreId(rs.getInt("store_id"));
-            r.setSeatId(rs.getInt("seat_id"));
+	     DateTimeFormatter fmt =
+	         DateTimeFormatter.ofPattern("M/d（E）HH:mm", Locale.JAPAN);
 
-            LocalDateTime ldt =
-                rs.getTimestamp("reserved_at").toLocalDateTime();
-            r.setReservedAt(ldt);
-            r.setDisplayDateTime(ldt.format(fmt));
+	     while (rs.next()) {
+	         Reserve r = new Reserve();
+	         r.setReservationId(rs.getInt("reservation_id"));
+	         r.setStoreId(rs.getInt("store_id"));
+	         r.setSeatId(rs.getInt("seat_id"));
 
-            r.setNumPeople(rs.getInt("num_people"));
-            list.add(r);
-        }
+	         // ★★★ これが足りなかった ★★★
+	         r.setCustomerName(rs.getString("customer_name"));
+	         r.setCustomerTel(rs.getString("customer_tel"));
 
-        rs.close();
-        ps.close();
-        con.close();
+	         r.setUserId(rs.getInt("user_id"));
+	         r.setGroupId(rs.getInt("group_id"));
+	         r.setNumPeople(rs.getInt("num_people"));
+	         r.setAdvancePay(rs.getInt("advance_pay"));
+	         r.setTotalPay(rs.getInt("total_pay"));
 
-        return list;
-    }
+	         LocalDateTime ldt =
+	             rs.getTimestamp("reserved_at").toLocalDateTime();
+	         r.setReservedAt(ldt);
+	         r.setDisplayDateTime(ldt.format(fmt));
+
+	         list.add(r);
+	     }
+
+	     rs.close();
+	     ps.close();
+	     con.close();
+
+	     return list;
+	 }
+
 
     // =====================
     // 席＋時間で満席判定
@@ -274,6 +285,62 @@ public abstract class ReserveDAO extends DAO {
         ps.close();
         con.close();
 
+        return list;
+    }
+
+    // ユーザー＋日付
+    public List<Reserve> findByUserIdAndDate(int userId, LocalDate date) throws Exception {
+        List<Reserve> list = new ArrayList<>();
+        Connection con = getConnection();
+        PreparedStatement ps = con.prepareStatement(
+            "SELECT * FROM reserve WHERE user_id=? AND DATE(reserved_at)=? ORDER BY reserved_at DESC"
+        );
+        ps.setInt(1, userId);
+        ps.setString(2, date.toString());
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Reserve r = new Reserve();
+            r.setReservationId(rs.getInt("reservation_id"));
+            r.setStoreId(rs.getInt("store_id"));
+            r.setNumPeople(rs.getInt("num_people"));
+            r.setTotalPay(rs.getInt("total_pay"));
+            r.setAdvancePay(rs.getInt("advance_pay"));
+            r.setReservedAt(rs.getTimestamp("reserved_at").toLocalDateTime());
+            list.add(r);
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+        return list;
+    }
+
+    // グループ＋日付
+    public List<Reserve> findByGroupIdAndDate(int groupId, LocalDate date) throws Exception {
+        List<Reserve> list = new ArrayList<>();
+        Connection con = getConnection();
+        PreparedStatement ps = con.prepareStatement(
+            "SELECT * FROM reserve WHERE group_id=? AND DATE(reserved_at)=? ORDER BY reserved_at DESC"
+        );
+        ps.setInt(1, groupId);
+        ps.setString(2, date.toString());
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Reserve r = new Reserve();
+            r.setReservationId(rs.getInt("reservation_id"));
+            r.setStoreId(rs.getInt("store_id"));
+            r.setNumPeople(rs.getInt("num_people"));
+            r.setTotalPay(rs.getInt("total_pay"));
+            r.setAdvancePay(rs.getInt("advance_pay"));
+            r.setReservedAt(rs.getTimestamp("reserved_at").toLocalDateTime());
+            list.add(r);
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
         return list;
     }
 }

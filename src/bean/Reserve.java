@@ -18,8 +18,11 @@ public class Reserve {
     private Integer totalPay;
     private Timestamp createdAt;
 
-    // ★ 追加：表示用日時（例：1/3（金）12:30）
+    // 表示用
     private String displayDateTime;
+
+    // ★ 追加：店側一覧で使う「予約者名」
+    private String reserveName;
 
     // =====================
     // getter / setter
@@ -121,12 +124,20 @@ public class Reserve {
         this.createdAt = createdAt;
     }
 
-    // ★ 追加分
     public String getDisplayDateTime() {
         return displayDateTime;
     }
 
     public void setDisplayDateTime(String displayDateTime) {
         this.displayDateTime = displayDateTime;
+    }
+
+    // ★ 追加分
+    public String getReserveName() {
+        return reserveName;
+    }
+
+    public void setReserveName(String reserveName) {
+        this.reserveName = reserveName;
     }
 }
