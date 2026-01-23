@@ -304,12 +304,31 @@ textarea[name="storeIntroduct"]::placeholder {
 </div>
 <!-- モーダル -->
 <div id="calendarModal" class="modal">
-<h3 id="modalDate"></h3>
-<label><input type="checkbox" id="isClosed" onchange="onClosedChange();"> 定休日</label><br><br>
-<label>開店時間: <input type="time" id="openTime" onchange="updateCalendarData();"></label><br>
-<label>閉店時間: <input type="time" id="closeTime" onchange="updateCalendarData();"></label><br><br>
-<button type="button" onclick="closeCalendarModal()">閉じる</button>
+    <h3 id="modalDate"></h3>
+
+    <label>
+        <input type="checkbox" id="isClosed" onchange="onClosedChange();">
+        定休日
+    </label>
+    <br><br>
+
+    <label>開店時間:
+        <select id="openTime" onchange="updateCalendarData();">
+            <option value="">--</option>
+        </select>
+    </label>
+    <br>
+
+    <label>閉店時間:
+        <select id="closeTime" onchange="updateCalendarData();">
+            <option value="">--</option>
+        </select>
+    </label>
+    <br><br>
+
+    <button type="button" onclick="closeCalendarModal()">閉じる</button>
 </div>
+
 
 <script>
 function pad(n) { return n.toString().padStart(2, '0'); }
@@ -460,9 +479,44 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 });
+
+function buildTimeOptions() {
+    const openSel = document.getElementById("openTime");
+    const closeSel = document.getElementById("closeTime");
+
+    for (let h = 0; h < 24; h++) {
+        for (let m of [0, 30]) {
+            const time = String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+
+            const o1 = document.createElement("option");
+            o1.value = time;
+            o1.textContent = time;
+            openSel.appendChild(o1);
+
+            const o2 = document.createElement("option");
+            o2.value = time;
+            o2.textContent = time;
+            closeSel.appendChild(o2);
+        }
+    }
+}
+
+function onClosedChange() {
+    const closed = document.getElementById("isClosed").checked;
+    document.getElementById("openTime").disabled = closed;
+    document.getElementById("closeTime").disabled = closed;
+
+    if (closed) {
+        document.getElementById("openTime").value = "";
+        document.getElementById("closeTime").value = "";
+    }
+    updateCalendarData();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    buildTimeOptions();
+});
 </script>
-
-
 
 
 <%@include file="../footer.html" %>

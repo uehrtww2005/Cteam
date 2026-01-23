@@ -36,7 +36,7 @@ public class StoreCalendarDAO extends DAO {
         return list;
     }
 
-    // 店舗IDに紐づくカレンダーを全削除
+    // 店舗IDに紐づくカレンダーを全削除（更新前用）
     public void deleteCalendarsByStoreId(int storeId) throws Exception {
         String sql = "DELETE FROM store_calendar WHERE store_id=?";
 
@@ -48,7 +48,7 @@ public class StoreCalendarDAO extends DAO {
         }
     }
 
-    // ✅【上書き保存対応】INSERT or UPDATE（UPSERT）
+    // INSERT or UPDATE（UPSERT）
     public void insertCalendar(int storeId, StoreCalendar cal) throws Exception {
 
         String sql =
@@ -69,15 +69,20 @@ public class StoreCalendarDAO extends DAO {
             ps.setTime(4, cal.getOpenTime());
             ps.setTime(5, cal.getCloseTime());
 
-            ps.executeUpdate(); // ← 新規でも上書きでもOK
+            ps.executeUpdate();
         }
     }
 
-    public void deletePastCalendars() throws Exception {
-        String sql = "DELETE FROM store_calendar WHERE date < CURRENT_DATE";
+    // ✅【追加】店舗単位で過去日付を削除
+    public void deletePastCalendarsByStoreId(int storeId) throws Exception {
+        String sql =
+            "DELETE FROM store_calendar " +
+            "WHERE store_id = ? AND date < CURRENT_DATE";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, storeId);
             ps.executeUpdate();
         }
     }
@@ -112,6 +117,4 @@ public class StoreCalendarDAO extends DAO {
 
         return sc;
     }
-
-
 }
