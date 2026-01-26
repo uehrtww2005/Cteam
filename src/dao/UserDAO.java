@@ -107,6 +107,37 @@ public class UserDAO extends DAO {
         return list;
     }
 
+
+    public void update(User user) throws Exception {
+        Connection con = getConnection();
+
+        String sql;
+        PreparedStatement st;
+
+        if (user.getPassword() != null) {
+            sql = "UPDATE users SET user_name=?, address=?, user_tel=?, password=? WHERE user_id=?";
+            st = con.prepareStatement(sql);
+            st.setString(1, user.getUserName());
+            st.setString(2, user.getAddress());
+            st.setString(3, user.getUserTel());
+            st.setString(4, user.getPassword());
+            st.setInt(5, user.getUserId());
+        } else {
+            sql = "UPDATE users SET user_name=?, address=?, user_tel=? WHERE user_id=?";
+            st = con.prepareStatement(sql);
+            st.setString(1, user.getUserName());
+            st.setString(2, user.getAddress());
+            st.setString(3, user.getUserTel());
+            st.setInt(4, user.getUserId());
+        }
+
+        st.executeUpdate();
+        st.close();
+        con.close();
+    }
+
+
+
     public void updateRank(int userId, String newRank) throws Exception {
         Connection con = getConnection();
         // SQL文のテーブル名が間違っていたため修正 (user -> users)

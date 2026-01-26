@@ -156,4 +156,47 @@ public class GroupDAO extends DAO{
     }
 
 
+    public void update(Group group) throws Exception {
+
+        Connection con = getConnection();
+        PreparedStatement st = null;
+
+        try {
+            // パスワード変更あり／なしでSQLを分岐
+            if (group.getPassword() != null && !group.getPassword().isEmpty()) {
+
+                String sql = "UPDATE groups "
+                           + "SET leader_name = ?, leader_address = ?, leader_tel = ?, password = ? "
+                           + "WHERE group_id = ?";
+
+                st = con.prepareStatement(sql);
+                st.setString(1, group.getLeaderName());
+                st.setString(2, group.getLeaderAddress());
+                st.setString(3, group.getLeaderTel());
+                st.setString(4, group.getPassword());
+                st.setInt(5, group.getGroupId());
+
+            } else {
+
+                String sql = "UPDATE groups "
+                           + "SET leader_name = ?, leader_address = ?, leader_tel = ? "
+                           + "WHERE group_id = ?";
+
+                st = con.prepareStatement(sql);
+                st.setString(1, group.getLeaderName());
+                st.setString(2, group.getLeaderAddress());
+                st.setString(3, group.getLeaderTel());
+                st.setInt(4, group.getGroupId());
+            }
+
+            st.executeUpdate();
+
+        } finally {
+            if (st != null) st.close();
+            if (con != null) con.close();
+        }
+    }
+
+
+
 }

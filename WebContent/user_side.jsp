@@ -4,7 +4,7 @@
 <div class="sidebar">
     <a href="<%=request.getContextPath()%>/Adpay/UserLogin.action" class="sidebar-link">トップ</a>
     <a href="<%=request.getContextPath()%>/Adpay/UserCouponList.action" class="sidebar-link">クーポン</a>
-    <a href="#" class="sidebar-link">ユーザー情報</a>
+    <a href="<%=request.getContextPath()%>/Adpay/UserEdit.action" class="sidebar-link">ユーザー情報</a>
     <a href="<%=request.getContextPath()%>/Adpay/UserInquiry.action" class="sidebar-link">お問い合わせ</a>
     <a href="#" class="sidebar-link">月額プラン</a>
 

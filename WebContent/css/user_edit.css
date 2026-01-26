@@ -1,0 +1,106 @@
+/* ===== 共通リセット ===== */
+* {
+    box-sizing: border-box;
+}
+
+/* ===== 全体 ===== */
+.store-main {
+    max-width: 520px;
+    margin: 40px auto;
+    padding: 32px;
+    background-color: #f2f2f2; /* グレー基調 */
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    color: #222;
+    font-family: "Meiryo", sans-serif;
+}
+
+/* ===== タイトル ===== */
+.store-main h1 {
+    text-align: center;
+    margin-bottom: 28px;
+    color: #222;
+    border-bottom: 2px solid #999;
+    padding-bottom: 10px;
+}
+
+/* ===== ラベル ===== */
+.store-main label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* ===== 入力欄 共通 ===== */
+.store-main input[type="text"],
+.store-main input[type="email"],
+.store-main input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000;
+    font-size: 14px;
+}
+
+/* ===== フォーカス ===== */
+.store-main input:focus {
+    outline: none;
+    border-color: #888;
+    background-color: #fafafa;
+}
+
+/* ===== チェックボックス ===== */
+.store-main input[type="checkbox"] {
+    margin-right: 6px;
+    transform: scale(1.1);
+}
+
+/* ===== 区切り線 ===== */
+.store-main hr {
+    margin: 26px 0;
+    border: none;
+    border-top: 1px solid #bbb;
+}
+
+/* ===== パスワードエリア ===== */
+#passwordArea {
+    margin-top: 16px;
+    padding: 16px;
+    background-color: #e6e6e6;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+}
+
+/* パスワード入力欄（はみ出し防止済） */
+#passwordArea input[type="password"] {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* ===== ボタン ===== */
+.store-main button {
+    width: 100%;
+    margin-top: 26px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #666; /* グレー */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.store-main button:hover {
+    background-color: #555;
+}
+
+/* ===== メッセージ ===== */
+.store-main p {
+    text-align: center;
+    font-weight: bold;
+}
