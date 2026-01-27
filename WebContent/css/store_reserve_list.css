@@ -1,0 +1,80 @@
+/* ========================================
+   予約一覧ページ用（サイドバー対応）
+======================================== */
+
+/* メインコンテンツ全体 */
+.reserve-main {
+    margin-left: 220px; /* サイドバー幅 */
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* 見出し */
+.reserve-main h1 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #FFD700;
+    display: inline-block;
+    padding-bottom: 6px;
+}
+
+/* ========================================
+   テーブル
+======================================== */
+.reserve-main table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* ヘッダー */
+.reserve-main th {
+    background-color: #222;
+    color: #FFD700;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+/* セル */
+.reserve-main td {
+    padding: 12px;
+    text-align: center;
+    color: #fff;
+    border-bottom: 1px solid #333;
+}
+
+/* 行ホバー */
+.reserve-main tr:hover {
+    background-color: rgba(255, 215, 0, 0.08);
+}
+
+/* 金額系を少し目立たせる */
+.reserve-main td:last-child {
+    font-weight: bold;
+    color: #FFD700;
+}
+
+/* ========================================
+   戻るリンク
+======================================== */
+.reserve-main a {
+    display: inline-block;
+    margin-top: 25px;
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.reserve-main a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
