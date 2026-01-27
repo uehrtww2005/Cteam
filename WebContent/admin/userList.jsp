@@ -9,7 +9,7 @@
     <tr>
         <th>ID</th>
         <th>名前</th>
-        <th>住所</th>
+        <th>メールアドレス</th>
         <th>電話番号</th>
         <th>利用状況</th>
         <th>操作</th>
