@@ -34,6 +34,7 @@ public class GroupLoginAction extends Action {
 
             if (group != null) {
 
+                // ★ 団体利用停止チェック
                 if (group.getStatus() == 1){
                     request.setAttribute("msg", "この団体アカウントは現在利用停止されています。管理者にお問い合わせください。");
                     request.getRequestDispatcher("/user/group/login_group.jsp").forward(request, response);
@@ -46,10 +47,10 @@ public class GroupLoginAction extends Action {
 
                 setRankMessage(group, request);
 
-                // ▼ 全店舗一覧を取得して request と session にセット（修正）
-                List<Store> stores = storeDao.search("");
+                // ▼ ★ ユーザー用：利用中店舗のみ取得
+                List<Store> stores = storeDao.findAllActive(); // ← 変更
                 request.setAttribute("stores", stores);
-                session.setAttribute("stores", stores); // ★ 追加
+                session.setAttribute("stores", stores);
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
 
@@ -66,10 +67,12 @@ public class GroupLoginAction extends Action {
 
                 setRankMessage(sessionGroup, request);
 
-                // ▼ 全店舗一覧を取得して request と session にセット（修正）
-                List<Store> stores = storeDao.search("");
-                request.setAttribute("stores", stores);
-                session.setAttribute("stores", stores); // ★ 追加
+                // ▼ ★ ユーザー用：利用中店舗のみ取得（セッション切れ対策）
+                if (session.getAttribute("stores") == null) {
+                    List<Store> stores = storeDao.findAllActive(); // ← 変更
+                    request.setAttribute("stores", stores);
+                    session.setAttribute("stores", stores);
+                }
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
 

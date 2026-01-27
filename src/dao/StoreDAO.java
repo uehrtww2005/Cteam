@@ -36,8 +36,6 @@ public class StoreDAO extends DAO {
                     store.setStoreName(rs.getString("store_name"));
                     store.setStoreTel(rs.getString("store_tel"));
                     store.setStatus(rs.getInt("status"));
-
-                    // ★追加
                     store.setImageExtension(rs.getString("image_extension"));
                 }
             }
@@ -93,7 +91,7 @@ public class StoreDAO extends DAO {
         return generatedId;
     }
 
-    // 全店舗取得
+    // 全店舗取得（管理者用）
     public List<Store> findAll() throws Exception {
         List<Store> list = new ArrayList<>();
         String sql = "SELECT * FROM stores ORDER BY store_id";
@@ -110,8 +108,32 @@ public class StoreDAO extends DAO {
                 store.setStoreName(rs.getString("store_name"));
                 store.setStoreTel(rs.getString("store_tel"));
                 store.setStatus(rs.getInt("status"));
+                store.setImageExtension(rs.getString("image_extension"));
 
-                // ★追加
+                list.add(store);
+            }
+        }
+
+        return list;
+    }
+
+    // ★ ユーザー用：利用中店舗のみ取得
+    public List<Store> findAllActive() throws Exception {
+        List<Store> list = new ArrayList<>();
+        String sql = "SELECT * FROM stores WHERE status = 0 ORDER BY store_id";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Store store = new Store();
+                store.setStoreId(rs.getInt("store_id"));
+                store.setStoreAddress(rs.getString("store_address"));
+                store.setPassword(rs.getString("password"));
+                store.setStoreName(rs.getString("store_name"));
+                store.setStoreTel(rs.getString("store_tel"));
+                store.setStatus(rs.getInt("status"));
                 store.setImageExtension(rs.getString("image_extension"));
 
                 list.add(store);
@@ -186,6 +208,7 @@ public class StoreDAO extends DAO {
         return store;
     }
 
+    // キーワード検索（管理者用）
     public List<Store> search(String keyword) throws Exception {
         List<Store> list = new ArrayList<>();
 
@@ -212,8 +235,6 @@ public class StoreDAO extends DAO {
             s.setStoreName(rs.getString("store_name"));
             s.setStoreAddress(rs.getString("store_address"));
             s.setStoreTel(rs.getString("store_tel"));
-
-            // ★追加
             s.setImageExtension(rs.getString("image_extension"));
 
             list.add(s);
@@ -226,8 +247,41 @@ public class StoreDAO extends DAO {
         return list;
     }
 
+    // ★ ユーザー用検索：利用中店舗のみ
+    public List<Store> searchActive(String keyword) throws Exception {
+        List<Store> list = new ArrayList<>();
+
+        String sql = "SELECT store_id, store_name, store_address, store_tel, image_extension "
+                   + "FROM stores "
+                   + "WHERE status = 0 AND (store_name LIKE ? OR store_address LIKE ? OR store_tel LIKE ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+
+            String like = "%" + keyword + "%";
+            st.setString(1, like);
+            st.setString(2, like);
+            st.setString(3, like);
+
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Store s = new Store();
+                    s.setStoreId(rs.getInt("store_id"));
+                    s.setStoreName(rs.getString("store_name"));
+                    s.setStoreAddress(rs.getString("store_address"));
+                    s.setStoreTel(rs.getString("store_tel"));
+                    s.setImageExtension(rs.getString("image_extension"));
+
+                    list.add(s);
+                }
+            }
+        }
+
+        return list;
+    }
+
     public void updateImageExtension(int storeId, String extension) throws Exception {
-        String sql = "UPDATE stores SET image_extension = ? WHERE store_id = ?";
+        String sql = "UPDATE stores SET image_extension = ? WHERE store_id ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
