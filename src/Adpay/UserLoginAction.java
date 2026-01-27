@@ -28,7 +28,7 @@ public class UserLoginAction extends Action {
             User user = dao.login(address, password);
 
             if (user != null) {
-                // ★追加: 利用停止チェック
+                // ★ユーザー利用停止チェック
                 if (user.getStatus() == 1) {
                     request.setAttribute("msg", "このアカウントは現在利用停止されています。管理者にお問い合わせください。");
                     request.getRequestDispatcher("/user/login_user.jsp").forward(request, response);
@@ -42,9 +42,9 @@ public class UserLoginAction extends Action {
 
                 setRankMessage(user, request);
 
-                // ★★★ ここが重要：stores を最初から読み込む
+                // ★ユーザー用：利用中店舗のみ取得
                 StoreDAO sdao = new StoreDAO();
-                List<Store> stores = sdao.findAll();
+                List<Store> stores = sdao.findAllActive(); // ← ここを変更
                 session.setAttribute("stores", stores);
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
@@ -59,10 +59,10 @@ public class UserLoginAction extends Action {
                 request.setAttribute("user", sessionUser);
                 setRankMessage(sessionUser, request);
 
-                // ★★★ ここも追加（セッション切れ対策）
+                // ★ユーザー用：利用中店舗のみ取得（セッション切れ対策）
                 if (session.getAttribute("stores") == null) {
                     StoreDAO sdao = new StoreDAO();
-                    session.setAttribute("stores", sdao.findAll());
+                    session.setAttribute("stores", sdao.findAllActive()); // ← ここも変更
                 }
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
