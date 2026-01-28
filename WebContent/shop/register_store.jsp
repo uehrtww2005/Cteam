@@ -30,7 +30,7 @@
         <p>住所</p>
         <input type="text" name="store_address" maxlength="30" required
                pattern="^[^<>]{10,30}$"
-               title="住所は10文字以上30文字以内で入力してください"
+               title="住所は10文字以上30文字以内で入力してください。また、＜＞などの記号は使わないでください。"
                placeholder="例：東京都港区芝公園４丁目２−８ザ・タワー101号室">
     </div>
 
