@@ -1,0 +1,213 @@
+/* ========================================
+   サイドバー対応：メイン領域
+======================================== */
+body {
+    margin: 0;
+    margin-left: 240px;
+    background: #0b0b0b;
+    color: #fff;
+}
+
+h1, p, form {
+    color: #fff;
+}
+
+/* ========================================
+   フォーム全体
+======================================== */
+#reserveForm {
+    max-width: 900px;
+    padding: 20px;
+    background: #111;
+    border-radius: 12px;
+}
+
+/* ========================================
+   メニュー一覧
+======================================== */
+.menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/* ---------- メニューカード ---------- */
+.menu-card {
+    width: 160px;
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.menu-card img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.check-mark {
+    color: #FFD700;
+    font-size: 18px;
+    display: none;
+}
+
+#totalPriceBox {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 12px;
+    color: #FFD700;
+}
+
+/* ========================================
+   モーダル
+======================================== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8) !important;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000 !important;
+}
+
+/* ---------- モーダル本体 ---------- */
+.modal > .modal-content {
+    background: #1e1e1e !important;
+    color: #fff !important;
+
+    width: 340px !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    position: relative;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+}
+
+/* 閉じる */
+.close {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* ---------- 中身 ---------- */
+#modalMenuName {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFD700 !important;
+    margin-bottom: 8px;
+}
+
+#modalMenuImg {
+    width: 200px !important;
+    height: 140px !important;
+    object-fit: cover !important;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+#modalMenuPrice {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+/* ===== 説明文（最低3行・ここだけスクロール） ===== */
+#modalMenuInfo {
+    width: 100% !important;
+    min-height: calc(1.6em * 3) !important;
+    max-height: 160px !important;
+
+    overflow-y: auto !important;
+
+    white-space: normal !important;
+    word-break: break-word !important;
+
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #ddd !important;
+
+    padding: 0 10px !important;
+    margin-bottom: 8px !important;
+}
+
+/* ---------- 個数 ---------- */
+.modal-content label {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;   /* ★ 詰めた */
+}
+
+#modalQty {
+    width: 80px;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    background: #2a2a2a;
+    color: #fff;
+    text-align: center;
+}
+
+/* ---------- 決定ボタン ---------- */
+.modal-content button {
+    width: 20%;
+    padding: 10px;
+    background: #FFD700;
+    color: #111;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+
+    margin-top: 4px;   /* ★ 余白最小 */
+}
+
+/* 送信ボタン */
+form button {
+    margin-top: 25px;
+    background-color: #FFD700 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background: linear-gradient(145deg, #222, #111) !important;
+    border:1px solid #666 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: 0.3s !important;
+    font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif !important;
+}
+
+form button:hover {
+    background: linear-gradient(145deg, #333, #000) !important;
+    color: #FFD700 !important;
+    border-color: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
+
+}

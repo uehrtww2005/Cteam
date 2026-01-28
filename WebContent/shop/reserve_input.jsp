@@ -2,6 +2,9 @@
 <%@ page import="java.time.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../header.html"%>
+<%@ include file="../user_side.jsp" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/reserve_form.css">
+
 
 <h1>予約入力</h1>
 
@@ -130,11 +133,11 @@
         <p id="modalMenuPrice"></p>
         <p id="modalMenuInfo"></p>
 
-        <label>個数:</label>
+        <label>個数:
         <select id="modalQty"></select>
 
-        <br><br>
-        <button onclick="applyQuantity()">決定</button>
+
+        <button onclick="applyQuantity()">決定</button></label>
     </div>
 </div>
 

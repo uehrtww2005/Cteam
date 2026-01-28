@@ -50,7 +50,7 @@
     </form>
 
     <div class="form-links">
-        <a href="javascript:history.back();" class="back-link">コース一覧へ戻る</a>
+        <a href="<%=request.getContextPath()%>/Adpay/MenuRegist.action?store_id=${store.storeId}" class="sidebar-link">コース一覧へ戻る</a>
     </div>
   </div>
 </div>
