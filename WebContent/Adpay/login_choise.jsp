@@ -24,7 +24,7 @@
 
 	<!-- フォーム外のリンク -->
 	<div class="form-links">
-	    <a href="javascript:history.back();">ホームに戻る</a>
+	    <a href="<%=request.getContextPath()%>/Adpay/login.jsp">>ホームに戻る</a>
 	</div>
 
 </main>

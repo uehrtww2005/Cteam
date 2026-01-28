@@ -33,7 +33,7 @@
 
 <div class="form-links">
     <a href="<%=request.getContextPath()%>/user/register_user.jsp">新規登録はこちら</a>
-    <a href="javascript:history.back();">ホームに戻る</a>
+    <a href="<%=request.getContextPath()%>/Adpay/login_choise.jsp">ログイン選択に戻る</a>
 </div>
 
 <%@ include file="../footer.html" %>

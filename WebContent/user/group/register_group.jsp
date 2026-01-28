@@ -67,7 +67,7 @@
     </form>
 
     <div class="form-links">
-        <a href="javascript:history.back();">団体ログインに戻る</a>
+        <a href="<%=request.getContextPath()%>/user/group/login_group.jsp">団体ログインに戻る</a>
     </div>
 
 </div>

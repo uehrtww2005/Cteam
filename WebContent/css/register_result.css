@@ -1,0 +1,65 @@
+/* ===============================
+   新規登録完了画面 共通CSS
+   =============================== */
+
+.resultcontainer {
+    max-width: 600px;
+    margin: 160px auto 120px; /* 固定ヘッダー考慮 */
+    padding: 40px;
+    background-color: #1e1e1e;
+    border-radius: 14px;
+    text-align: center;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* ===== タイトル ===== */
+.resultcontainer h1 {
+    font-size: 32px;
+    margin-bottom: 32px;
+}
+
+/* ===== メッセージ ===== */
+.resultcontainer .result-message {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+/* ===== ログインリンク ===== */
+.resultcontainer .result-link {
+    display: inline-block;
+    padding: 14px 42px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #333;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.resultcontainer .result-link:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+}
+
+/* ===== 成功アイコン ===== */
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+    background: #1f8f3a;        /* 深めのグリーン */
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 48px;
+    font-weight: bold;
+
+    box-shadow: 0 0 12px rgba(0, 255, 120, 0.4);
+}
