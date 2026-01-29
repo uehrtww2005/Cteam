@@ -11,21 +11,25 @@
 
     <h1>団体新規登録</h1>
 
-    <%
-        String msg = (String) request.getAttribute("msg");
-        if (msg != null && !msg.isEmpty()) {
-    %>
-        <p class="error-msg"><%= msg %></p>
-    <% } %>
+    <!-- ▼ エラーメッセージ表示（JS / Action 共通） -->
+	<%
+	    String msg = (String) request.getAttribute("msg");
+	    if (msg != null && !msg.isEmpty()) {
+	%>
+	    <p class="error-msg"><%= msg %></p>
+	<% } %>
 
-    <form action="<%=request.getContextPath()%>/Adpay/GroupRegister.action" method="post" onsubmit="return validatePasswords();">
+    <form action="<%=request.getContextPath()%>/Adpay/GroupRegister.action"
+          method="post"
+          onsubmit="return validatePasswords();">
 
         <div class="input-group">
             <p>代表者名</p>
             <input type="text" name="leader_name" maxlength="20" required
                    pattern="^[^<>]+$"
                    title="< や > は使用できません"
-                   placeholder="代表者名を入力してください">
+                   placeholder="代表者名を入力してください"
+                   value="<%= request.getParameter("leader_name") != null ? request.getParameter("leader_name") : "" %>">
         </div>
 
         <div class="input-group">
@@ -33,7 +37,8 @@
             <input type="email" name="leader_address" maxlength="30" required
                    pattern="^[^<>]+$"
                    title="< や > は使用できません"
-                   placeholder="example@mail.com">
+                   placeholder="example@mail.com"
+                   value="<%= request.getParameter("leader_address") != null ? request.getParameter("leader_address") : "" %>">
         </div>
 
         <div class="input-group">
@@ -41,7 +46,8 @@
             <input type="text" name="leader_tel" maxlength="13" required
                    pattern="^0\d{1,2}-\d{1,4}-\d{1,4}$"
                    title="例：090-1234-5678 の形式で入力してください"
-                   placeholder="例：090-1234-5678">
+                   placeholder="例：090-1234-5678"
+                   value="<%= request.getParameter("leader_tel") != null ? request.getParameter("leader_tel") : "" %>">
         </div>
 
         <div class="input-group">
@@ -66,7 +72,8 @@
 
     </form>
 
-    <div class="form-links">
+
+<div class="form-links">
         <a href="<%=request.getContextPath()%>/user/group/login_group.jsp">団体ログインに戻る</a>
     </div>
 
@@ -76,10 +83,14 @@
 function validatePasswords() {
     const pw = document.querySelector('input[name="password"]').value;
     const pwc = document.querySelector('input[name="password_confirm"]').value;
+    const errorMsg = document.getElementById("errorMsg");
+
     if (pw !== pwc) {
-        alert("パスワードが一致しません。");
+        errorMsg.textContent = "パスワードと確認用パスワードが一致しません";
         return false;
     }
+
+    errorMsg.textContent = "";
     return true;
 }
 </script>

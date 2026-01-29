@@ -17,13 +17,17 @@
     <p class="error-msg"><%= msg %></p>
 <% } %>
 
-<form action="<%=request.getContextPath()%>/Adpay/StoreRegister.action" method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath()%>/Adpay/StoreRegister.action"
+      method="post"
+      enctype="multipart/form-data">
+
     <div class="input-group">
         <p>店舗名</p>
         <input type="text" name="store_name" maxlength="10" required
                pattern="^[^<>]+$"
                title="店舗名に < や > は使用できません"
-               placeholder="店舗名を入力してください">
+               placeholder="店舗名を入力してください"
+               value="<%= request.getParameter("store_name") != null ? request.getParameter("store_name") : "" %>">
     </div>
 
     <div class="input-group">
@@ -31,7 +35,8 @@
         <input type="text" name="store_address" maxlength="30" required
                pattern="^[^<>]{10,30}$"
                title="住所は10文字以上30文字以内で入力してください。また、＜＞などの記号は使わないでください。"
-               placeholder="例：東京都港区芝公園４丁目２−８ザ・タワー101号室">
+               placeholder="例：東京都港区芝公園４丁目２−８ザ・タワー101号室"
+               value="<%= request.getParameter("store_address") != null ? request.getParameter("store_address") : "" %>">
     </div>
 
     <div class="input-group">
@@ -39,9 +44,11 @@
         <input type="text" name="store_tel" maxlength="13" required
                pattern="^0\d{1,3}-\d{1,4}-\d{1,4}$"
                title="例：090-1234-5678 の形式で入力してください"
-               placeholder="例：090-1234-5678">
+               placeholder="例：090-1234-5678"
+               value="<%= request.getParameter("store_tel") != null ? request.getParameter("store_tel") : "" %>">
     </div>
 
+    <!-- ▼ パスワードは保持しない -->
     <div class="input-group">
         <p>パスワード</p>
         <input type="password" name="password" maxlength="15" required
@@ -58,6 +65,7 @@
                placeholder="もう一度パスワードを入力してください">
     </div>
 
+    <!-- ▼ ファイルは仕様上保持不可 -->
     <div class="input-group">
         <p>店舗外観写真</p>
         <input type="file" name="store_image" accept="image/*" required>
@@ -68,9 +76,7 @@
     </div>
 </form>
 
-<!-- フォーム外のリンク -->
 <div class="form-links">
     <a href="<%=request.getContextPath()%>/shop/register_store.jsp">ログイン画面に戻る</a>
 </div>
-
 <%@ include file="../footer.html" %>
