@@ -21,8 +21,11 @@ public class Reserve {
     // 表示用
     private String displayDateTime;
 
-    // ★ 追加：店側一覧で使う「予約者名」
+    // 店側一覧で使う予約者名
     private String reserveName;
+
+    // ★ 追加：席名（seat テーブルから取得）
+    private String seatName;
 
     // =====================
     // getter / setter
@@ -132,12 +135,20 @@ public class Reserve {
         this.displayDateTime = displayDateTime;
     }
 
-    // ★ 追加分
     public String getReserveName() {
         return reserveName;
     }
 
     public void setReserveName(String reserveName) {
         this.reserveName = reserveName;
+    }
+
+    // ★ 追加分（席名）
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
     }
 }

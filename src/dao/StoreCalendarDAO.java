@@ -117,4 +117,16 @@ public class StoreCalendarDAO extends DAO {
 
         return sc;
     }
+
+    public void deleteAllPastCalendars() throws Exception {
+
+        String sql = "DELETE FROM store_calendar WHERE date < CURRENT_DATE";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.executeUpdate();
+        }
+    }
+
 }

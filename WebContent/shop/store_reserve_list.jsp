@@ -16,6 +16,7 @@
             <th>予約日時</th>
             <th>予約者名</th>
             <th>電話番号</th>
+            <th>席</th>
             <th>人数</th>
             <th>合計金額</th>
             <th>先払い金額</th>
@@ -29,13 +30,32 @@
 
                 <td>${r.customerName}</td>
                 <td>${r.customerTel}</td>
+                <td>${r.seatName}</td>
                 <td>${r.numPeople} 名</td>
                 <td>${r.totalPay} 円</td>
-                <td>${r.advancePay} 円</td>
 
-                <!-- 表示時に計算 -->
+                <!-- 先払いが null の場合は 0 円表示 -->
                 <td>
-                    ${r.totalPay - r.advancePay} 円
+                    <c:choose>
+                        <c:when test="${r.advancePay != null}">
+                            ${r.advancePay} 円
+                        </c:when>
+                        <c:otherwise>
+                            0 円
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+
+                <!-- 残り金額（NULL安全） -->
+                <td>
+                    <c:choose>
+                        <c:when test="${r.advancePay != null}">
+                            ${r.totalPay - r.advancePay} 円
+                        </c:when>
+                        <c:otherwise>
+                            ${r.totalPay} 円
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>

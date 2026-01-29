@@ -1,19 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.html" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/register_result.css">
 
-<h1>ユーザー登録結果</h1>
+<div class="resultcontainer">
 
-<%
-    // RegisterAction から送られる msg（リクエスト属性）を取得
-    String msg = (String) request.getAttribute("msg");
-    if (msg == null || msg.isEmpty()) {
-        msg = "処理が完了しました。";
-    }
-%>
+	<div class="success-icon">✓</div>
 
-<p style="font-weight:bold; font-size:1.2em;"><%= msg %></p>
+    <h1>ユーザー登録結果</h1>
 
-<!-- ログインページへのリンク -->
-<p><a href="<%=request.getContextPath()%>/user/login_user.jsp">ログインページへ</a></p>
+    <%
+        // RegisterAction から送られる msg（リクエスト属性）を取得
+        String msg = (String) request.getAttribute("msg");
+        if (msg == null || msg.isEmpty()) {
+            msg = "処理が完了しました。";
+        }
+    %>
+
+    <p class="result-message"><%= msg %></p>
+
+    <!-- ログインページへのリンク -->
+    <p>
+        <a class="result-link"
+           href="<%=request.getContextPath()%>/user/login_user.jsp">
+            ログインページへ
+        </a>
+    </p>
+
+</div>
 
 <%@ include file="../footer.html" %>

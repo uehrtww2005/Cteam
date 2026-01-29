@@ -21,6 +21,7 @@
                 <th>予約日時</th>
                 <th>予約者名</th>
                 <th>電話番号</th>
+                <th>席</th>
                 <th>人数</th>
                 <th>合計金額</th>
                 <th>先払い</th>
@@ -32,6 +33,7 @@
                     <td>${r.displayDateTime}</td>
                     <td>${r.customerName}</td>
                     <td>${r.customerTel}</td>
+                    <td>${r.seatName}</td>
                     <td>${r.numPeople}</td>
                     <td>${r.totalPay}</td>
                     <td>${r.advancePay}</td>

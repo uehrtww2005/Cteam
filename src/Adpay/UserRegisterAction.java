@@ -15,6 +15,7 @@ import dao.UserDAO;
 public class UserRegisterAction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
 
         String userName = request.getParameter("user_name");
@@ -24,19 +25,48 @@ public class UserRegisterAction extends HttpServlet {
         String genderStr = request.getParameter("gender");
         String passwordConfirm = request.getParameter("password_confirm");
 
-     // 1. パスワードと確認用が一致するかチェック
+        // 1. パスワード確認
         if (!password.equals(passwordConfirm)) {
             request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
             request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
             return;
         }
 
+        UserDAO dao = new UserDAO();
+
+        // 2. 重複チェック（電話番号・メール・パスワード）
+        try {
+            if (dao.isUserTelExists(tel)) {
+                request.setAttribute("msg", "この電話番号は既に登録されています。");
+                request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
+                return;
+            }
+
+            if (dao.isEmailExists(email)) {
+                request.setAttribute("msg", "このメールアドレスは既に登録されています。");
+                request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
+                return;
+            }
+
+            if (dao.isPasswordExists(password)) {
+                request.setAttribute("msg", "このパスワードは既に使用されています。");
+                request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msg", "データベースチェック中にエラーが発生しました。");
+            request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
+            return;
+        }
 
         int gender = 0;
         try {
             gender = Integer.parseInt(genderStr);
         } catch (Exception e) {}
 
+        // 3. Userオブジェクト作成
         User user = new User();
         user.setUserName(userName);
         user.setPassword(password);
@@ -44,7 +74,7 @@ public class UserRegisterAction extends HttpServlet {
         user.setUserTel(tel);
         user.setGender(gender);
 
-        UserDAO dao = new UserDAO();
+        // 4. 登録
         boolean success = false;
         try {
             success = dao.save(user);
@@ -52,12 +82,9 @@ public class UserRegisterAction extends HttpServlet {
             e.printStackTrace();
         }
 
-        // JSP に渡すメッセージ
+        // 5. 結果表示
         String msg = success ? "登録成功" : "登録失敗";
-
-        // JSP に値を渡して内部転送（URLに出ない）
         request.setAttribute("msg", msg);
         request.getRequestDispatcher("/user/registerResult_user.jsp").forward(request, response);
     }
-
 }

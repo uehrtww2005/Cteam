@@ -147,56 +147,64 @@ public abstract class ReserveDAO extends DAO {
         return result;
     }
 
-	 // =====================
-	 // 店舗＋日付で予約取得（完成版）
-	 // =====================
-	 public List<Reserve> findByStoreAndDate(int storeId, LocalDate date) throws Exception {
+ // =====================
+ // 店舗＋日付で予約取得（席名対応版）
+ // =====================
+ public List<Reserve> findByStoreAndDate(int storeId, LocalDate date) throws Exception {
 
-	     List<Reserve> list = new ArrayList<>();
-	     Connection con = getConnection();
+     List<Reserve> list = new ArrayList<>();
+     Connection con = getConnection();
 
-	     String sql =
-	         "SELECT * FROM reserve WHERE store_id = ? AND DATE(reserved_at) = ? ORDER BY reserved_at";
+     // ★ seat_name を取るため JOIN 追加
+     String sql =
+         "SELECT r.*, s.seat_name " +
+         "FROM reserve r " +
+         "LEFT JOIN seats s ON r.seat_id = s.seat_id " +
+         "WHERE r.store_id = ? " +
+         "AND DATE(r.reserved_at) = ? " +
+         "ORDER BY r.reserved_at";
 
-	     PreparedStatement ps = con.prepareStatement(sql);
-	     ps.setInt(1, storeId);
-	     ps.setDate(2, java.sql.Date.valueOf(date));
+     PreparedStatement ps = con.prepareStatement(sql);
+     ps.setInt(1, storeId);
+     ps.setDate(2, java.sql.Date.valueOf(date));
 
-	     ResultSet rs = ps.executeQuery();
+     ResultSet rs = ps.executeQuery();
 
-	     DateTimeFormatter fmt =
-	         DateTimeFormatter.ofPattern("M/d（E）HH:mm", Locale.JAPAN);
+     DateTimeFormatter fmt =
+         DateTimeFormatter.ofPattern("M/d（E）HH:mm", Locale.JAPAN);
 
-	     while (rs.next()) {
-	         Reserve r = new Reserve();
-	         r.setReservationId(rs.getInt("reservation_id"));
-	         r.setStoreId(rs.getInt("store_id"));
-	         r.setSeatId(rs.getInt("seat_id"));
+     while (rs.next()) {
+         Reserve r = new Reserve();
+         r.setReservationId(rs.getInt("reservation_id"));
+         r.setStoreId(rs.getInt("store_id"));
+         r.setSeatId(rs.getInt("seat_id"));
 
-	         // ★★★ これが足りなかった ★★★
-	         r.setCustomerName(rs.getString("customer_name"));
-	         r.setCustomerTel(rs.getString("customer_tel"));
+         // ★ 追加（これだけ）
+         r.setSeatName(rs.getString("seat_name"));
 
-	         r.setUserId(rs.getInt("user_id"));
-	         r.setGroupId(rs.getInt("group_id"));
-	         r.setNumPeople(rs.getInt("num_people"));
-	         r.setAdvancePay(rs.getInt("advance_pay"));
-	         r.setTotalPay(rs.getInt("total_pay"));
+         r.setCustomerName(rs.getString("customer_name"));
+         r.setCustomerTel(rs.getString("customer_tel"));
+         r.setUserId(rs.getInt("user_id"));
+         r.setGroupId(rs.getInt("group_id"));
+         r.setNumPeople(rs.getInt("num_people"));
+         r.setAdvancePay(rs.getInt("advance_pay"));
+         r.setTotalPay(rs.getInt("total_pay"));
 
-	         LocalDateTime ldt =
-	             rs.getTimestamp("reserved_at").toLocalDateTime();
-	         r.setReservedAt(ldt);
-	         r.setDisplayDateTime(ldt.format(fmt));
+         LocalDateTime ldt =
+             rs.getTimestamp("reserved_at").toLocalDateTime();
+         r.setReservedAt(ldt);
+         r.setDisplayDateTime(ldt.format(fmt));
 
-	         list.add(r);
-	     }
+         list.add(r);
+     }
 
-	     rs.close();
-	     ps.close();
-	     con.close();
+     rs.close();
+     ps.close();
+     con.close();
 
-	     return list;
-	 }
+     return list;
+ }
+
 
 
     // =====================
@@ -252,8 +260,13 @@ public abstract class ReserveDAO extends DAO {
         List<Reserve> list = new ArrayList<>();
         Connection con = getConnection();
 
+        // ★ ここだけ変更（JOIN追加）
         String sql =
-            "SELECT * FROM reserve WHERE store_id = ? ORDER BY reserved_at DESC";
+            "SELECT r.*, s.seat_name " +
+            "FROM reserve r " +
+            "LEFT JOIN seats s ON r.seat_id = s.seat_id " +
+            "WHERE r.store_id = ? " +
+            "ORDER BY r.reserved_at DESC";
 
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, storeId);
@@ -267,6 +280,10 @@ public abstract class ReserveDAO extends DAO {
             r.setReservationId(rs.getInt("reservation_id"));
             r.setStoreId(rs.getInt("store_id"));
             r.setSeatId(rs.getInt("seat_id"));
+
+            // ★ 追加（これだけ）
+            r.setSeatName(rs.getString("seat_name"));
+
             r.setCustomerName(rs.getString("customer_name"));
             r.setCustomerTel(rs.getString("customer_tel"));
             r.setNumPeople(rs.getInt("num_people"));
@@ -287,6 +304,7 @@ public abstract class ReserveDAO extends DAO {
 
         return list;
     }
+
 
     // ユーザー＋日付
     public List<Reserve> findByUserIdAndDate(int userId, LocalDate date) throws Exception {

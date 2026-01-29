@@ -197,6 +197,43 @@ public class GroupDAO extends DAO{
         }
     }
 
+    public boolean isLeaderTelExists(String leaderTel) throws Exception {
+        String sql = "SELECT COUNT(*) FROM groups WHERE leader_tel = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, leaderTel);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    public boolean isLeaderAddressExists(String leaderAddress) throws Exception {
+        String sql = "SELECT COUNT(*) FROM groups WHERE leader_address = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, leaderAddress);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPasswordExists(String password) throws Exception {
+        String sql = "SELECT COUNT(*) FROM groups WHERE password = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+
 
 
 }

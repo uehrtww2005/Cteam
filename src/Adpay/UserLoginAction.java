@@ -11,6 +11,7 @@ import bean.User;
 import dao.StoreDAO;
 import dao.UserDAO;
 import tool.Action;
+import util.AutoDeleteUtil;
 
 public class UserLoginAction extends Action {
 
@@ -28,6 +29,10 @@ public class UserLoginAction extends Action {
             User user = dao.login(address, password);
 
             if (user != null) {
+
+                // ★ 自動削除（ログイン時）
+                AutoDeleteUtil.execute();
+
                 // ★ユーザー利用停止チェック
                 if (user.getStatus() == 1) {
                     request.setAttribute("msg", "このアカウントは現在利用停止されています。管理者にお問い合わせください。");
@@ -44,7 +49,7 @@ public class UserLoginAction extends Action {
 
                 // ★ユーザー用：利用中店舗のみ取得
                 StoreDAO sdao = new StoreDAO();
-                List<Store> stores = sdao.findAllActive(); // ← ここを変更
+                List<Store> stores = sdao.findAllActive();
                 session.setAttribute("stores", stores);
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);
@@ -56,13 +61,17 @@ public class UserLoginAction extends Action {
         } else {
             // ▼ GETアクセス
             if (sessionUser != null) {
+
+                // ★ 自動削除（セッション継続時）
+                AutoDeleteUtil.execute();
+
                 request.setAttribute("user", sessionUser);
                 setRankMessage(sessionUser, request);
 
                 // ★ユーザー用：利用中店舗のみ取得（セッション切れ対策）
                 if (session.getAttribute("stores") == null) {
                     StoreDAO sdao = new StoreDAO();
-                    session.setAttribute("stores", sdao.findAllActive()); // ← ここも変更
+                    session.setAttribute("stores", sdao.findAllActive());
                 }
 
                 request.getRequestDispatcher("/user/users_main.jsp").forward(request, response);

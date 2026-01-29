@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.StoreCalendar;
 import bean.StoreDetail;
 import bean.Tag;
+import dao.StoreCalendarDAO;
 import dao.StoreDetailDAO;
 import dao.TagDAO;
 import tool.Action;
@@ -25,6 +26,13 @@ public class StoreDetailEditAction extends Action {
             storeId = Integer.parseInt(req.getParameter("store_id"));
         } catch (Exception e) {}
 
+        // ===============================
+        // ★ 自動削除（ここが唯一の場所）
+        // ===============================
+        StoreCalendarDAO calDao = new StoreCalendarDAO();
+        calDao.deletePastCalendarsByStoreId(storeId);
+
+        // 店舗詳細取得
         StoreDetailDAO dao = new StoreDetailDAO();
         StoreDetail detail = dao.getStoreDetailFullWithTags(storeId);
 
@@ -41,7 +49,9 @@ public class StoreDetailEditAction extends Action {
         List<Tag> tagList = tagDao.findAll();
         req.setAttribute("allTags", tagList);
 
+        // ===============================
         // カレンダー表示用（12ヶ月）
+        // ===============================
         Calendar base = Calendar.getInstance();
         List<Integer> years = new ArrayList<>();
         List<Integer> months = new ArrayList<>();
@@ -68,17 +78,17 @@ public class StoreDetailEditAction extends Action {
         req.setAttribute("startDays", startDays);
         req.setAttribute("lastDays", lastDays);
 
-        // ===== ★ここが一番重要 =====
+        // ===============================
+        // 表示用データ整形
+        // ===============================
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         for (StoreCalendar c : detail.getCalendars()) {
 
-            // 日付（ゼロ埋め保証）
             if (c.getDate() != null) {
                 c.setDateStr(df.format(c.getDate()));
             }
 
-            // 時間
             String openStr = "";
             String closeStr = "";
 
@@ -92,9 +102,9 @@ public class StoreDetailEditAction extends Action {
             c.setOpenTimeStr(openStr);
             c.setCloseTimeStr(closeStr);
         }
-        // ===== ここまで =====
 
         req.setAttribute("detail", detail);
-        req.getRequestDispatcher("/shop/store_detail_edit.jsp").forward(req, res);
+        req.getRequestDispatcher("/shop/store_detail_edit.jsp")
+           .forward(req, res);
     }
 }

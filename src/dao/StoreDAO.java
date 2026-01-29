@@ -291,4 +291,45 @@ public class StoreDAO extends DAO {
             ps.executeUpdate();
         }
     }
+
+ // 電話番号重複チェック
+    public boolean isStoreTelExists(String storeTel) throws Exception {
+        String sql = "SELECT COUNT(*) FROM stores WHERE store_tel = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, storeTel);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    // 住所重複チェック
+    public boolean isStoreAddressExists(String storeAddress) throws Exception {
+        String sql = "SELECT COUNT(*) FROM stores WHERE store_address = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, storeAddress);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    // パスワード重複チェック（必要なら、DBに同じパスワードを登録できないように）
+    public boolean isPasswordExists(String password) throws Exception {
+        String sql = "SELECT COUNT(*) FROM stores WHERE password = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+
 }

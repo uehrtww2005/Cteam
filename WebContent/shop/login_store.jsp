@@ -39,7 +39,7 @@
 <!-- フォーム外のリンク -->
 <div class="form-links">
     <a href="<%=request.getContextPath()%>/shop/register_store.jsp">新規登録はこちら</a>
-    <a href="javascript:history.back();">ホームに戻る</a>
+    <a href="<%=request.getContextPath()%>/Adpay/login.jsp">ホームに戻る</a>
 </div>
 
 <%@ include file="../footer.html" %>

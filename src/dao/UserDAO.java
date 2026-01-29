@@ -162,4 +162,41 @@ public class UserDAO extends DAO {
         con.close();
     }
 
+    public boolean isUserTelExists(String tel) throws Exception {
+        String sql = "SELECT COUNT(*) FROM users WHERE user_tel = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, tel);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEmailExists(String email) throws Exception {
+        String sql = "SELECT COUNT(*) FROM users WHERE address = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPasswordExists(String password) throws Exception {
+        String sql = "SELECT COUNT(*) FROM users WHERE password = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+
 }

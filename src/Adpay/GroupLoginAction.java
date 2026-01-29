@@ -11,6 +11,7 @@ import bean.Store;
 import dao.GroupDAO;
 import dao.StoreDAO;
 import tool.Action;
+import util.AutoDeleteUtil;
 
 public class GroupLoginAction extends Action {
 
@@ -34,6 +35,9 @@ public class GroupLoginAction extends Action {
 
             if (group != null) {
 
+                // ★ 自動削除（ログイン時）
+                AutoDeleteUtil.execute();
+
                 // ★ 団体利用停止チェック
                 if (group.getStatus() == 1){
                     request.setAttribute("msg", "この団体アカウントは現在利用停止されています。管理者にお問い合わせください。");
@@ -48,7 +52,7 @@ public class GroupLoginAction extends Action {
                 setRankMessage(group, request);
 
                 // ▼ ★ ユーザー用：利用中店舗のみ取得
-                List<Store> stores = storeDao.findAllActive(); // ← 変更
+                List<Store> stores = storeDao.findAllActive();
                 request.setAttribute("stores", stores);
                 session.setAttribute("stores", stores);
 
@@ -63,13 +67,17 @@ public class GroupLoginAction extends Action {
 
             // ====== GET（ホーム押下など） ======
             if (sessionGroup != null) {
+
+                // ★ 自動削除（セッション継続時）
+                AutoDeleteUtil.execute();
+
                 request.setAttribute("group", sessionGroup);
 
                 setRankMessage(sessionGroup, request);
 
                 // ▼ ★ ユーザー用：利用中店舗のみ取得（セッション切れ対策）
                 if (session.getAttribute("stores") == null) {
-                    List<Store> stores = storeDao.findAllActive(); // ← 変更
+                    List<Store> stores = storeDao.findAllActive();
                     request.setAttribute("stores", stores);
                     session.setAttribute("stores", stores);
                 }

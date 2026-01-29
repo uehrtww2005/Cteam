@@ -38,7 +38,7 @@
     </form>
 
     <div class="form-links">
-        <a href="javascript:history.back();">ホームに戻る</a>
+        <a href="<%=request.getContextPath()%>/user/users_main.jsp">topへ</a>
     </div>
 
 </div>

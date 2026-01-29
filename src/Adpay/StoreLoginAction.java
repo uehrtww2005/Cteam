@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import bean.Store;
 import dao.StoreDAO;
 import tool.Action;
+import util.AutoDeleteUtil;
 
 public class StoreLoginAction extends Action {
 
@@ -21,6 +22,10 @@ public class StoreLoginAction extends Action {
         // すでにログイン済みなら予約一覧Actionへ
         Store sessionStore = (Store) session.getAttribute("store");
         if (sessionStore != null) {
+
+            // ★ 自動削除（ログイン済みでのアクセス時）
+            AutoDeleteUtil.execute();
+
             response.sendRedirect(
                 request.getContextPath() + "/Adpay/StoreHomeReserveList.action"
             );
@@ -31,6 +36,9 @@ public class StoreLoginAction extends Action {
         Store store = dao.login(storetel, password);
 
         if (store != null) {
+
+            // ★ 自動削除（ログイン成功時）
+            AutoDeleteUtil.execute();
 
             // 利用停止チェック
             if (store.getStatus() == 1) {
