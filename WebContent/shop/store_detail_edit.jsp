@@ -347,7 +347,7 @@ function addSeat() {
     div.innerHTML = `
 <input type="text" name="seatName" placeholder="席名">
 <input type="text" name="seatType" placeholder="タイプ">
-<input type="number" name="minPeople" placeholder="最低人数">`;
+<input type="number" name="minPeople" placeholder="最高人数">`;
 
     document.getElementById("seatList").appendChild(div);
 

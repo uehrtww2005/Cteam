@@ -11,78 +11,78 @@
 <p>予約日：${date}</p>
 
 <form id="reserveForm" action="ReserveConfirm.action" method="post">
-    <input type="hidden" name="store_id" value="${storeId}">
-    <input type="hidden" name="date" value="${date}">
+<input type="hidden" name="store_id" value="${storeId}">
+<input type="hidden" name="date" value="${date}">
 
     <!-- 席選択 -->
-    <label>席：</label>
-    <select name="seat_id" required>
-        <c:forEach var="s" items="${seats}">
-            <c:choose>
-                <c:when test="${reservedSeatIds.contains(s.seatId)}">
-                    <option value="${s.seatId}" disabled>
+<label>席：</label>
+<select name="seat_id" required>
+<c:forEach var="s" items="${seats}">
+<c:choose>
+<c:when test="${reservedSeatIds.contains(s.seatId)}">
+<option value="${s.seatId}" disabled>
                         ${s.seatName}（${s.seatType}） - 予約済
-                    </option>
-                </c:when>
-                <c:otherwise>
-                    <option value="${s.seatId}">
+</option>
+</c:when>
+<c:otherwise>
+<option value="${s.seatId}">
                         ${s.seatName}（${s.seatType}）
-                    </option>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </select>
+</option>
+</c:otherwise>
+</c:choose>
+</c:forEach>
+</select>
 
     <br><br>
 
     <!-- 時間 -->
-    <label>時間：</label>
-    <select name="time" required>
-        <%
+<label>時間：</label>
+<select name="time" required>
+<%
             LocalTime open = (LocalTime) request.getAttribute("openTime");
             LocalTime close = (LocalTime) request.getAttribute("closeTime");
             if (open != null && close != null) {
                 LocalTime t = open;
                 while (!t.isAfter(close.minusMinutes(30))) {
         %>
-        <option value="<%=t%>"><%=t%></option>
-        <%
+<option value="<%=t%>"><%=t%></option>
+<%
                     t = t.plusMinutes(30);
                 }
             }
         %>
-    </select>
+</select>
 
     <br><br>
 
     <!-- 人数 -->
-    <label>人数：</label>
-    <select id="numPeople" name="num_people" onchange="updateQuantityLimit()">
-        <c:forEach var="i" begin="1" end="8">
-            <option value="${i}">${i}人</option>
-        </c:forEach>
-    </select>
+<label>人数：</label>
+<select id="numPeople" name="num_people" onchange="updateQuantityLimit()">
+<c:forEach var="i" begin="1" end="8">
+<option value="${i}">${i}人</option>
+</c:forEach>
+</select>
 
     <br><br>
 
     <!-- 名前・電話番号 -->
-    <label>予約者名：</label>
-    <input type="text" name="customerName" value="${customerName}" required>
+<label>予約者名：</label>
+<input type="text" name="customerName" value="${customerName}" required>
 
     <br><br>
 
     <label>電話番号：</label>
-    <span>${customerTel}</span>
-    <input type="hidden" name="customerTel" value="${customerTel}">
+<span>${customerTel}</span>
+<input type="hidden" name="customerTel" value="${customerTel}">
 
     <br><br>
 
     <!-- ===== メニュー一覧 ===== -->
-    <h3>コース一覧</h3>
+<h3>コース一覧</h3>
 
     <div class="menu-list">
-        <c:forEach var="menu" items="${menus}">
-            <div class="menu-card"
+<c:forEach var="menu" items="${menus}">
+<div class="menu-card"
                  data-id="${menu.menuId}"
                  data-name="${menu.menuName}"
                  data-price="${menu.price}"
@@ -91,32 +91,32 @@
                  onclick="openModalFromCard(this)">
 
                 <div class="menu-title">
-                    <span class="check-mark" id="check-${menu.menuId}">✔</span>
-                    <strong>${menu.menuName}</strong>
-                </div>
+<span class="check-mark" id="check-${menu.menuId}">✔</span>
+<strong>${menu.menuName}</strong>
+</div>
 
                 <c:if test="${not empty menu.imagePath}">
-                    <img class="menu-img"
+<img class="menu-img"
                          src="${pageContext.request.contextPath}/${menu.imagePath}?t=${System.currentTimeMillis()}"
                          width="120">
-                </c:if>
+</c:if>
 
                 <div>${menu.price}円</div>
-                <div>個数: <span id="qty-${menu.menuId}">0</span></div>
+<div>個数: <span id="qty-${menu.menuId}">0</span></div>
 
                 <input type="hidden"
                        name="menu_${menu.menuId}"
                        id="input-${menu.menuId}"
                        value="0">
-            </div>
-        </c:forEach>
-    </div>
+</div>
+</c:forEach>
+</div>
 
     <br>
 
     <div id="totalPriceBox">
         合計金額：<span id="totalPrice">0</span>円
-    </div>
+</div>
 
     <br>
 
@@ -125,20 +125,20 @@
 
 <!-- ===== モーダル ===== -->
 <div id="menuModal" class="modal" onclick="closeModal()">
-    <div class="modal-content" onclick="event.stopPropagation();">
-        <span class="close" onclick="closeModal()">×</span>
+<div class="modal-content" onclick="event.stopPropagation();">
+<span class="close" onclick="closeModal()">×</span>
 
         <h3 id="modalMenuName"></h3>
-        <img id="modalMenuImg" style="max-width:200px; margin-bottom:10px;">
-        <p id="modalMenuPrice"></p>
-        <p id="modalMenuInfo"></p>
+<img id="modalMenuImg" style="max-width:200px; margin-bottom:10px;">
+<p id="modalMenuPrice"></p>
+<p id="modalMenuInfo"></p>
 
         <label>個数:
-        <select id="modalQty"></select>
+<select id="modalQty"></select>
 
 
         <button onclick="applyQuantity()">決定</button></label>
-    </div>
+</div>
 </div>
 
 <script>

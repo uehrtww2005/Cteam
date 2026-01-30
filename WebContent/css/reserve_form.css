@@ -31,6 +31,7 @@ h1, p, form {
     gap: 16px;
 }
 
+
 /* ---------- メニューカード ---------- */
 .menu-card {
     width: 160px;
@@ -53,6 +54,29 @@ h1, p, form {
     object-fit: cover;
     border-radius: 6px;
     margin-bottom: 6px;
+}
+
+.menu-title {
+    display: flex;
+    align-items: flex-start;   /* 上揃え */
+    gap: 6px;
+}
+
+.menu-title strong {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;     /* 2行まで */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    line-height: 1.3;
+    max-height: calc(1.3em * 2);
+
+    text-align: center;
+    word-break: break-word;
+
+    flex: 1;                  /* ★ 横幅を固定（重要） */
 }
 
 .check-mark {
@@ -114,6 +138,14 @@ h1, p, form {
     font-weight: bold;
     color: #FFD700 !important;
     margin-bottom: 8px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;        /* 2行まで */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+    max-height: calc(1.3em * 2);
 }
 
 #modalMenuImg {
@@ -135,7 +167,7 @@ h1, p, form {
 #modalMenuInfo {
     width: 100% !important;
     min-height: calc(1.6em * 3) !important;
-    max-height: 160px !important;
+    max-height: 100px !important;
 
     overflow-y: auto !important;
 

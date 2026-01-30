@@ -55,6 +55,10 @@
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+
+    /* 既存CSSに負けない保険 */
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .inquiry-main button:hover {

@@ -3,6 +3,9 @@
 ======================================== */
 
 /* メインコンテンツ全体 */
+
+
+
 .reserve-main {
     margin-left: 220px; /* サイドバー幅 */
     padding: 30px;
@@ -11,7 +14,7 @@
 
 /* 見出し */
 .reserve-main h1 {
-    font-size: 28px;
+    font-size: 30px;
     color: #fff;
     margin-bottom: 20px;
     border-bottom: 2px solid #FFD700;

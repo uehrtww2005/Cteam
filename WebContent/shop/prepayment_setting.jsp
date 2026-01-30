@@ -23,6 +23,15 @@
   align-items: center;             /* ★ 見た目の中央 */
 }
 
+h2 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #FFD700;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
 /* タイトル */
 .main-content h2 {
   margin-top: 40px;
