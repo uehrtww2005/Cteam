@@ -43,7 +43,7 @@ public class GroupRegisterAction extends HttpServlet {
             }
 
             if (dao.isLeaderAddressExists(leaderAddress)) {
-                request.setAttribute("msg", "この住所は既に登録されています。");
+                request.setAttribute("msg", "このメールアドレスは既に登録されています。");
                 request.getRequestDispatcher("/user/group/register_group.jsp").forward(request, response);
                 return;
             }
