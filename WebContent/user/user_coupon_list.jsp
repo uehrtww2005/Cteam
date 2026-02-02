@@ -19,24 +19,23 @@
         <p>利用可能なクーポンはありません。</p>
     </c:if>
 
-    <c:if test="${not empty userCouponList}">
-        <table border="1" width="100%">
+<c:if test="${not empty userCouponList}">
+    <table class="coupon-table" border="1" width="100%">
+        <tr>
+            <th>店舗</th>
+            <th>クーポン名</th>
+            <th>ランク</th>
+            <th>説明</th>
+            <th>状態</th>
+        </tr>
+
+        <c:forEach var="c" items="${userCouponList}">
             <tr>
-                <th>店舗</th>
-                <th>クーポン名</th>
-                <th>ランク</th>
-                <th>説明</th>
-                <th>状態</th>
-            </tr>
-
-            <c:forEach var="c" items="${userCouponList}">
-                <tr>
-                    <td>${c.storeName}</td>
-                    <td>${c.couponName}</td>
-                    <td>${c.couponRank}</td>
-                    <td>${c.couponIntroduct}</td>
-
-                    <td>
+                <td>${c.storeName}</td>
+                <td>${c.couponName}</td>
+                <td>${c.couponRank}</td>
+                <td>${c.couponIntroduct}</td>
+                <td>
                         <c:if test="${c.used}">
                             <span style="color:gray;">使用済み</span>
                         </c:if>

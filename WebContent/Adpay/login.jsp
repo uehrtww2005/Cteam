@@ -52,11 +52,10 @@
 
 <!-- メインコンテンツ -->
 <main id="main-content">
-    <h1>
-        次世代の広告決済プラットフォーム<br>
-        <span class="highlight">「AdPay」</span><br>
-        広告と決済を、もっとシームレスに。
-    </h1>
+	<img
+	  src="<%=request.getContextPath()%>/images/adpay.png"
+	  alt="サービス画像"
+	  class="service-image">
     <form action="<%=request.getContextPath()%>/shop/login_store.jsp" method="post">
         <button type="submit">店舗ログインの方はこちら</button>
     </form>

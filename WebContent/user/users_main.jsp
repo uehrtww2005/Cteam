@@ -8,6 +8,15 @@
 
 <div class="store-main">
 
+
+    <!-- ★ 検索フォーム（共通） -->
+	<form action="<%=request.getContextPath()%>/Adpay/UserStoreSearch.action"
+	      method="post"
+	      class="search-form search-form-main">
+	    <input type="text" name="keyword" placeholder="店舗名で検索">
+	    <button type="submit">検索</button>
+	</form>
+
     <!-- ★ ログインユーザー表示（ユーザー or グループ） -->
     <c:choose>
         <c:when test="${not empty sessionScope.user}">
@@ -31,11 +40,7 @@
         <p class="rank-msg">${sessionScope.rankMsg}</p>
     </c:if>
 
-    <!-- ★ 検索フォーム（共通） -->
-    <form action="<%=request.getContextPath()%>/Adpay/UserStoreSearch.action" method="post" class="search-form">
-        <input type="text" name="keyword" placeholder="検索">
-        <button type="submit">検索</button>
-    </form>
+
 
     <!-- ★ 店舗一覧（共通） -->
     <c:choose>

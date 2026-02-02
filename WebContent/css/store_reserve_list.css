@@ -3,11 +3,8 @@
 ======================================== */
 
 /* メインコンテンツ */
-
-
-
 .reserve-main {
-    margin-left: 220px; /* サイドバー幅 */
+    margin-left: 220px;
     padding: 30px;
     box-sizing: border-box;
 }
@@ -52,6 +49,7 @@
     text-align: center;
     color: #fff;
     border-bottom: 1px solid #333;
+    vertical-align: middle; /* ← ズレ防止 */
 }
 
 /* 行ホバー */
@@ -59,25 +57,76 @@
     background-color: rgba(255, 215, 0, 0.08);
 }
 
-/* 金額系を少し目立たせる */
-.reserve-main td:last-child {
-    font-weight: bold;
-    color: #FFD700;
-}
-
 /* ========================================
-   戻るリンク
+   金額列（削除列は除外）
 ======================================== */
-.reserve-main a {
-    display: inline-block;
-    margin-top: 25px;
-    color: #FFD700;
-    text-decoration: none;
+.reserve-main td:last-child:not(.delete-cell) {
     font-weight: bold;
-    transition: 0.3s;
+    color: #FFD700;
 }
 
-.reserve-main a:hover {
-    color: #fff;
-    text-decoration: underline;
+/* ===============================
+   削除列（完全中央固定）
+=============================== */
+.reserve-main td.delete-cell {
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
 }
+
+/* form のズレ要因を完全排除 */
+.reserve-main td.delete-cell form {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* ===============================
+   削除ボタン（絶対ズレない版）
+=============================== */
+.delete-btn {
+    display: block;
+    margin: 0 auto;
+
+    width: fit-content;
+    height: 32px;
+    line-height: 32px;     /* ← 高さと完全一致 */
+
+    padding: 0 16px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    color: #ffd6d6;        /* 通常時：やや明るい赤 */
+    background-color: #3a0000;
+
+    border: 1px solid #800;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    box-shadow: none;
+    outline: none;
+}
+
+/* ===============================
+   hover / active / focus
+   黒くならない対策
+=============================== */
+.delete-btn:hover {
+    background-color: #520000;
+    color: #ffe5e5;
+}
+
+.delete-btn:active {
+    background-color: #4a0000; /* 黒にしない */
+    color: #ffcccc;
+}
+
+.delete-btn:focus,
+.delete-btn:focus-visible {
+    background-color: #520000;
+    color: #ffe5e5;
+    outline: none;
+}
+

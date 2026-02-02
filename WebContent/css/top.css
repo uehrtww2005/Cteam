@@ -84,3 +84,16 @@ main { padding-bottom:120px; }
     h1 { font-size:40px; margin-top:40px; }
     form button { width:85%; font-size:16px; padding:15px 0; }
 }
+
+.service-image {
+    width: 150px;     /* 好きなサイズに */
+    height: auto;     /* 縦横比を維持（超重要） */
+}
+
+#footer {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    display: none;
+    transition: opacity 1s ease;
+}

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../header.html"%>
-
+<%@ include file="../user_side.jsp" %>
+<div class="main-content">
 <h1>予約確認</h1>
 
 <p>予約日：${date}</p>
@@ -66,8 +67,62 @@
 </form>
 
 <br>
-<a href="${pageContext.request.contextPath}/Adpay/ReserveInput.action?store_id=${storeId}&date=${date}">
+<a class="back-btn"
+   href="${pageContext.request.contextPath}/Adpay/ReserveInput.action?store_id=${storeId}&date=${date}">
     戻る
 </a>
-
+</div>
 <%@ include file="../footer.html"%>
+
+<style>
+
+
+.main-content  {
+    max-width: 900px;
+
+    position: relative;
+    left: calc((100vw - 300px - 900px) / 2 + 220px);
+}
+
+form button {
+    margin-top: 25px;
+    background-color: #FFD700 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0;
+    width: 20%;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background: linear-gradient(145deg, #222, #111) !important;
+    border:1px solid #666 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: 0.3s !important;
+}
+
+form button:hover {
+    background: linear-gradient(145deg, #333, #000) !important;
+    color: #FFD700 !important;
+    border-color: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
+}
+
+.back-btn {
+    color: #ffffff;          /* 白文字 */
+    text-decoration: underline;  /* リンク感 */
+    font-weight: normal;
+}
+
+/* ホバー時（ちょい反応するだけ） */
+.back-btn:hover {
+    opacity: 0.8;
+}
+
+/* 訪問済みでも色変えない */
+.back-btn:visited {
+    color: #ffffff;
+}
+
+</style>

@@ -38,10 +38,10 @@
                         <td>${r.customerName}</td>
                         <td>${r.customerTel}</td>
                         <td>${r.seatName}</td>
-                        <td>${r.numPeople}</td>
-                        <td>${r.totalPay}</td>
-                        <td>${r.advancePay}</td>
-                        <td>${r.totalPay - r.advancePay}</td>
+                        <td>${r.numPeople}人</td>
+                        <td>${r.totalPay}円</td>
+                        <td>${r.advancePay}円</td>
+                        <td>${r.totalPay - r.advancePay}円</td>
                     </tr>
                 </c:forEach>
 

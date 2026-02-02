@@ -45,7 +45,6 @@
                 <th>水</th><th>木</th><th>金</th><th>土</th>
             </tr>
 
-            <%-- 表示開始日（その月の週の先頭・日曜） --%>
             <c:set var="date" value="${firstDay.minusDays(firstDay.dayOfWeek.value % 7)}"/>
 
             <c:forEach var="week" begin="1" end="6">
@@ -76,50 +75,48 @@
 </div>
 
 <style>
-/* =========================
-   全体ラップ
-========================= */
 .store-detail-wrap {
     display: flex;
     gap: 5px;
     justify-content: flex-start;
     margin: 20px 0;
-    width: calc(100% - 220px); /* サイドバー分を引く */
-    margin-left: 220px;        /* 左側にサイドバー幅を確保 */
+    width: calc(100% - 220px);
+    margin-left: 220px;
 }
 
-/* =========================
-   左：店舗情報
-========================= */
+/* 左 */
 .store-left {
-    width: 420px;
+    width: 520px;   /* ★画像に合わせた */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;   /* 左寄せ */
+    align-items: flex-start;
 }
 
 .store-left h1{
-	font-size: 100px
-	margin-top: -4px;
-	margin-bottom: -4px;
+    font-size: 50px;   /* ★ ; 修正 */
+    margin-top: -4px;
+    margin-bottom: -4px;
 }
 
-.store-left p,
-.store-left h2 {
+.store-left p{
+    width: 100%;
+    white-space: pre-line;  /* ★ 改行反映 */
+    word-break: break-word;
+    text-align: left;
+}
+
+.store-left h2{
     text-align: left;
     margin-bottom: 4px;
-
-
 }
 
-/* 画像固定サイズ + 左スペース */
 .store-main-image {
-    width: 500px;       /* 横幅固定 */
-    height: 300px;      /* 高さ固定 */
+    width: 500px;
+    height: 300px;
     border-radius: 6px;
     display: block;
-    margin-left: 20px;  /* 左スペース */
-    object-fit: cover;  /* 縦横比を維持して切り抜き */
+    margin-left: 20px;
+    object-fit: cover;
 }
 
 .no-image {
@@ -129,12 +126,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 20px;  /* 左スペース */
+    margin-left: 20px;
 }
 
-/* =========================
-   右：カレンダー
-========================= */
+/* 右 */
 .store-right {
     width: 400px;
     margin-left: auto;
@@ -144,13 +139,11 @@
 .store-right h1 {
     text-align: right;
     margin-bottom: 4px;
-    padding-right: 0;
     margin-right: 85px;
 }
 
 .calendar-nav {
     text-align: right;
-    padding-right: 0;
     margin-bottom: 5px;
     margin-right: 100px;
 }
@@ -165,15 +158,15 @@
 .calendar-table th,
 .calendar-table td {
     border: 1px solid #ddd;
-    width: 14.28%;       /* 7列なので幅固定 */
-    height: 60px;        /* マス目の高さ固定 */
-    font-size: 13px;     /* 文字サイズは自由に変えられる */
+    width: 14.28%;
+    height: 60px;
+    font-size: 13px;
     vertical-align: top;
     text-align: center;
-    padding: 2px;        /* 文字が少し余白に収まる */
-    overflow: hidden;    /* はみ出した文字を隠す */
-    text-overflow: ellipsis; /* 長い文字は「…」で省略 */
-    white-space: nowrap;      /* 改行せず1行で表示 */
+    padding: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .calendar-day {
@@ -194,9 +187,9 @@
     font-size: 13px;
 }
 
-/* 日曜・土曜 */
 .calendar-table th:nth-child(1),
 .calendar-table td:nth-child(1) { color: #d9534f; }
+
 .calendar-table th:nth-child(7),
 .calendar-table td:nth-child(7) { color: #0275d8; }
 
@@ -207,9 +200,6 @@
     text-decoration: none;
     color: inherit;
 }
-
-
-
 </style>
 
 <%@ include file="../footer.html" %>

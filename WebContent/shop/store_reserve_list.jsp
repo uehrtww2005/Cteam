@@ -57,7 +57,7 @@
                 </td>
 
                 <!-- 削除ボタン（★ここだけ修正） -->
-                <td>
+                <td class="delete-cell">
                     <form action="${pageContext.request.contextPath}/Adpay/StoreReserveDelete.action"
                           method="post"
                           onsubmit="return confirm('この予約を削除しますか？');">
@@ -69,10 +69,6 @@
             </tr>
         </c:forEach>
     </table>
-
-    <a href="${pageContext.request.contextPath}/shop/store_home.jsp">
-        店舗トップへ戻る
-    </a>
 </div>
 
 <%@ include file="../footer.html" %>

@@ -1,4 +1,10 @@
 /* メインコンテンツをサイドバー分右にずらす */
+
+
+body {
+  padding-top: 45px;
+}
+
 .store-main {
     margin-left: 240px; /* サイドバー幅 */
     padding: 30px;
@@ -92,4 +98,64 @@
 
 .search-form button:hover {
     background-color: #242424;
+}
+
+.coupon-table {
+    font-size: 10px; /* 好きなサイズに */
+}
+
+/* 検索フォームを上に追従させる */
+.search-form-main {
+    position: sticky;
+    top: 85px;
+    z-index: 1000;
+
+    margin: 8px 0 24px;
+    padding: 8px 0;
+
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    margin-left: -240px;
+    padding-left: 240px;
+    width: 100vw;
+}
+
+.search-form-main input[type="text"] {
+    width: 790px;
+    padding: 14px 18px;
+    font-size: 16px;
+
+    border-radius: 10px;
+    border: 1px solid #444;
+
+    background-color: #111;
+    color: #fff;
+}
+
+.search-form-main input::placeholder {
+    color: #777;
+}
+
+.search-form-main button {
+    padding: 14px 26px;
+    font-size: 15px;
+    font-weight: bold;
+
+    border-radius: 10px;
+    border: 1px solid #666;
+
+    background: linear-gradient(145deg, #222, #111);
+    color: #ffffff;
+
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.search-form-main button:hover {
+    background: linear-gradient(145deg, #333, #000);
+    box-shadow: 0 0 12px rgba(255,215,0,0.25);
+    transform: translateY(-1px);
 }
