@@ -2,7 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../header.html" %>
 
-<h2>店舗一覧</h2>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin_list.css">
+
+<h1>店舗一覧</h1>
 
 <table border="1">
     <tr>

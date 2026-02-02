@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+/* ===== 全体 ===== */
+body {
+
+    background-color: #1b1b1b;
+    color: #e0e0e0;
+}
+
+/* ===== 見出し ===== */
+h1 {
+    margin: 20px 0 30px;
+    font-size: 28px;
+    text-align: center;
+    color: #d4af37; /* ゴールド */
+    letter-spacing: 1px;
+}
+
+h2 {
+    margin: 40px 0 15px;
+    font-size: 20px;
+    padding-left: 12px;
+    border-left: 5px solid #d4af37;
+    color: #f1f1f1;
+}
+
+/* ===== テーブル ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #2a2a2a;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* ヘッダー */
+table th {
+    background-color: #111;
+    color: #d4af37;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+/* セル */
+table td {
+    padding: 11px;
+    text-align: center;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+/* 行ホバー */
+table tr:hover {
+    background-color: #333;
+}
+
+/* ===== 利用状況 ===== */
+span {
+    font-weight: bold;
+}
+
+/* ===== ボタン共通 ===== */
+input[type="submit"] {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* 利用停止（赤） */
+input[value="利用停止"] {
+    background-color: #b03a2e;
+    color: #fff;
+}
+
+input[value="利用停止"]:hover {
+    background-color: #922b21;
+}
+
+/* 利用再開（緑） */
+input[value="利用再開"] {
+    background-color: #1e8449;
+    color: #fff;
+}
+
+input[value="利用再開"]:hover {
+    background-color: #186a3b;
+}
+
+/* ===== 管理トップリンク ===== */
+p {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+p a {
+    color: #d4af37;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

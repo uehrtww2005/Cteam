@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../header.html" %>
 
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin_list.css">
+
 <h1>利用者・団体一覧</h1>
 
 <h2>利用者一覧</h2>
