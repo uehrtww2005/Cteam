@@ -231,8 +231,17 @@ textarea[name="storeIntroduct"]::placeholder {
 <form id="storeForm" action="StoreDetailUpdate.action" method="post">
 <input type="hidden" name="store_id" value="${detail.storeId}">
 
-    <h3>店舗紹介文</h3><br>
-<textarea name="storeIntroduct" rows="4" cols="50">${detail.storeIntroduct}</textarea>
+<h3>店舗紹介文</h3><br>
+
+<textarea
+    name="storeIntroduct"
+    rows="4"
+    cols="50"
+    pattern="[^<>]*"
+    title="＜ ＞ は使用できません"
+    oninput="this.value = this.value.replace(/[<>]/g, '')"
+>${detail.storeIntroduct}</textarea>
+
 <br>
 <h3>タグ選択</h3><br>
 <select name="tag" class="tag-select">

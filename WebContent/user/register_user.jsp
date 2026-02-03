@@ -52,25 +52,26 @@
       </div>
 
       <div class="input-group gender-group">
-          <p>性別</p>
-          <div class="gender-options">
-              <label>
-                  <input type="radio" name="gender" value="1"
-                      <%= "1".equals(request.getParameter("gender")) ? "checked" : "" %>>
-                  男性
-              </label>
-              <label>
-                  <input type="radio" name="gender" value="2"
-                      <%= "2".equals(request.getParameter("gender")) ? "checked" : "" %>>
-                  女性
-              </label>
-              <label>
-                  <input type="radio" name="gender" value="0"
-                      <%= "0".equals(request.getParameter("gender")) ? "checked" : "" %>>
-                  回答したくない
-              </label>
-          </div>
-      </div>
+		    <p>性別</p>
+		    <div class="gender-options">
+		        <label>
+		            <input type="radio" name="gender" value="1" required
+		                <%= "1".equals(request.getParameter("gender")) ? "checked" : "" %>>
+		            男性
+		        </label>
+		        <label>
+		            <input type="radio" name="gender" value="2"
+		                <%= "2".equals(request.getParameter("gender")) ? "checked" : "" %>>
+		            女性
+		        </label>
+		        <label>
+		            <input type="radio" name="gender" value="0"
+		                <%= "0".equals(request.getParameter("gender")) ? "checked" : "" %>>
+		            回答したくない
+		        </label>
+		    </div>
+		</div>
+
 
       <div class="input-group">
           <p>パスワード</p>

@@ -44,6 +44,15 @@ public class StoreDetailEditAction extends Action {
             detail.setSeats(new ArrayList<>());
         }
 
+        // ===============================
+        // ★ 店舗紹介文 ＜ ＞ 自動削除（ここを追加）
+        // ===============================
+        String intro = req.getParameter("storeIntroduct");
+        if (intro != null) {
+            intro = intro.replace("<", "").replace(">", "");
+            detail.setStoreIntroduct(intro);
+        }
+
         // タグ一覧
         TagDAO tagDao = new TagDAO();
         List<Tag> tagList = tagDao.findAll();

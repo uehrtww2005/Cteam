@@ -13,6 +13,7 @@ import dao.UserDAO;
 
 @WebServlet("/Adpay/UserRegister.action")
 public class UserRegisterAction extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -20,21 +21,37 @@ public class UserRegisterAction extends HttpServlet {
 
         String userName = request.getParameter("user_name");
         String password = request.getParameter("password");
+        String passwordConfirm = request.getParameter("password_confirm");
         String email = request.getParameter("address");
         String tel = request.getParameter("user_tel");
         String genderStr = request.getParameter("gender");
-        String passwordConfirm = request.getParameter("password_confirm");
 
-        // 1. パスワード確認
-        if (!password.equals(passwordConfirm)) {
+        // ① パスワード確認
+        if (password == null || !password.equals(passwordConfirm)) {
             request.setAttribute("msg", "パスワードと確認用パスワードが一致しません");
+            request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
+            return;
+        }
+
+        // ② 性別未選択チェック（★重要）
+        if (genderStr == null) {
+            request.setAttribute("msg", "性別を選んで下さい");
+            request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
+            return;
+        }
+
+        int gender;
+        try {
+            gender = Integer.parseInt(genderStr); // 1 / 2 / 0
+        } catch (NumberFormatException e) {
+            request.setAttribute("msg", "性別を選んで下さい");
             request.getRequestDispatcher("/user/register_user.jsp").forward(request, response);
             return;
         }
 
         UserDAO dao = new UserDAO();
 
-        // 2. 重複チェック（電話番号・メール・パスワード）
+        // ③ 重複チェック
         try {
             if (dao.isUserTelExists(tel)) {
                 request.setAttribute("msg", "この電話番号は既に登録されています。");
@@ -61,12 +78,7 @@ public class UserRegisterAction extends HttpServlet {
             return;
         }
 
-        int gender = 0;
-        try {
-            gender = Integer.parseInt(genderStr);
-        } catch (Exception e) {}
-
-        // 3. Userオブジェクト作成
+        // ④ Userオブジェクト作成
         User user = new User();
         user.setUserName(userName);
         user.setPassword(password);
@@ -74,17 +86,17 @@ public class UserRegisterAction extends HttpServlet {
         user.setUserTel(tel);
         user.setGender(gender);
 
-        // 4. 登録
-        boolean success = false;
+        // ⑤ 登録処理
+        boolean success;
         try {
             success = dao.save(user);
         } catch (Exception e) {
             e.printStackTrace();
+            success = false;
         }
 
-        // 5. 結果表示
-        String msg = success ? "登録成功" : "登録失敗";
-        request.setAttribute("msg", msg);
+        // ⑥ 結果表示
+        request.setAttribute("msg", success ? "登録成功" : "登録失敗");
         request.getRequestDispatcher("/user/registerResult_user.jsp").forward(request, response);
     }
 }
