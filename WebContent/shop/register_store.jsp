@@ -77,6 +77,6 @@
 </form>
 
 <div class="form-links">
-    <a href="<%=request.getContextPath()%>/shop/register_store.jsp">ログイン画面に戻る</a>
+    <a href="<%=request.getContextPath()%>/shop/login_store.jsp">ログイン画面に戻る</a>
 </div>
 <%@ include file="../footer.html" %>

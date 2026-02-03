@@ -34,7 +34,7 @@
     </form>
 
     <div class="form-links">
-        <a href="javascript:history.back();">ホームに戻る</a>
+        <a href="<%=request.getContextPath()%>/Adpay/StoreLogin.action">店舗トップへ戻る</a>
     </div>
 
 </div>
