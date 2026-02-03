@@ -301,3 +301,20 @@ p a:hover {
 .form-links a:hover {
     color: #f1c40f;
 }
+
+/* コース詳細（textarea）を黒背景にする */
+textarea[name="info"] {
+  background-color: #222;
+  color: #ffffff;
+  border: 1px solid #555;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* フォーカス時 */
+textarea[name="info"]:focus {
+  outline: none;
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
+}

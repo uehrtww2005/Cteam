@@ -221,6 +221,8 @@ textarea[name="storeIntroduct"]::placeholder {
   color: #aaa;
 }
 
+
+
 </style>
 </head>
 
