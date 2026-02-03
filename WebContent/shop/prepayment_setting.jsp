@@ -129,6 +129,18 @@ form button:hover {
   margin-top: 20px;
   text-align: center;
 }
+
+.back-link a {
+  color: #fff;            /* ← これが重要 */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.back-link a:hover {
+  color: #ddd;            /* 控えめホバー */
+  text-decoration: underline;
+}
+
 </style>
 </head>
 

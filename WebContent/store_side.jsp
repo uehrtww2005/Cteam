@@ -14,12 +14,4 @@
 	   class="sidebar-link">
 	  予約者一覧
 	</a>
-
-
-
-
-    <!-- プラン内容 -->
-    <div class="sidebar-plan">
-        <span class="plan-text">プラン内容<br>FreePlan</span>
-    </div>
 </div>
