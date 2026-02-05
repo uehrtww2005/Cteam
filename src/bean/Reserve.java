@@ -24,8 +24,12 @@ public class Reserve {
     // 店側一覧で使う予約者名
     private String reserveName;
 
-    // ★ 追加：席名（seat テーブルから取得）
+    // 席名（seat テーブル）
     private String seatName;
+
+    // ユーザー側表示用
+    private String storeName;
+    private String storeTel;   // ★ 追加：店の電話番号
 
     // =====================
     // getter / setter
@@ -143,12 +147,28 @@ public class Reserve {
         this.reserveName = reserveName;
     }
 
-    // ★ 追加分（席名）
     public String getSeatName() {
         return seatName;
     }
 
     public void setSeatName(String seatName) {
         this.seatName = seatName;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    // ★ 追加分
+    public String getStoreTel() {
+        return storeTel;
+    }
+
+    public void setStoreTel(String storeTel) {
+        this.storeTel = storeTel;
     }
 }

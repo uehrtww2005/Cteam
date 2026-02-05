@@ -19,7 +19,7 @@
     <a href="<%=request.getContextPath()%>/Adpay/UserEdit.action" class="sidebar-link">ユーザー情報</a>
     <a href="<%=request.getContextPath()%>/Adpay/UserInquiry.action" class="sidebar-link">お問い合わせ</a>
 
-    <a href="<%=request.getContextPath()%>/Adpay/#"
+    <a href="<%=request.getContextPath()%>/Adpay/UserReserveList.action"
 	   class="sidebar-link">
 	  予約店舗一覧
 	</a>

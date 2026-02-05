@@ -362,4 +362,58 @@ public abstract class ReserveDAO extends DAO {
         return list;
     }
 
+
+    // =====================
+    // ユーザー予約一覧（ユーザー側）
+    // =====================
+    public List<Reserve> findByUserId(int userId) throws Exception {
+
+        List<Reserve> list = new ArrayList<>();
+        Connection con = getConnection();
+
+        // ★ 店名・店電話番号を取得
+        String sql =
+            "SELECT r.*, st.store_name, st.store_tel " +
+            "FROM reserve r " +
+            "JOIN stores st ON r.store_id = st.store_id " +
+            "WHERE r.user_id = ? " +
+            "ORDER BY r.reserved_at DESC";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, userId);
+
+        ResultSet rs = ps.executeQuery();
+
+        DateTimeFormatter fmt =
+            DateTimeFormatter.ofPattern("M/d（E）HH:mm", Locale.JAPAN);
+
+        while (rs.next()) {
+            Reserve r = new Reserve();
+            r.setReservationId(rs.getInt("reservation_id"));
+            r.setStoreId(rs.getInt("store_id"));
+
+            r.setCustomerName(rs.getString("customer_name"));
+            r.setNumPeople(rs.getInt("num_people"));
+            r.setAdvancePay(rs.getInt("advance_pay"));
+            r.setTotalPay(rs.getInt("total_pay"));
+
+            LocalDateTime ldt =
+                rs.getTimestamp("reserved_at").toLocalDateTime();
+            r.setReservedAt(ldt);
+            r.setDisplayDateTime(ldt.format(fmt));
+
+            // ★ 追加表示項目
+            r.setStoreName(rs.getString("store_name"));
+            r.setStoreTel(rs.getString("store_tel"));
+
+            list.add(r);
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return list;
+    }
+
 }
