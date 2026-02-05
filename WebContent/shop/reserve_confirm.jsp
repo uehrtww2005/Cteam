@@ -63,7 +63,7 @@
         <input type="hidden" name="menu_${menu.menuId}" value="${menuCounts[menu.menuId]}">
     </c:forEach>
 
-    <button type="submit">予約を確定する</button>
+    <button type="submit">先払い額支払い画面へ</button>
 </form>
 
 <br>

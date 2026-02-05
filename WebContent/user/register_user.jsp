@@ -34,13 +34,14 @@
       </div>
 
       <div class="input-group">
-          <p>メールアドレス</p>
-          <input type="email" name="address" maxlength="30" required
-                 pattern="^[^<>]+$"
-                 title="メールアドレスに < や > は使用できません"
-                 placeholder="example@mail.com"
-                 value="<%= request.getParameter("address") != null ? request.getParameter("address") : "" %>">
-      </div>
+    <p>メールアドレス</p>
+    <input type="email" name="address" maxlength="30" required
+           pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+           title="メールアドレスは英数字のみで入力してください（日本語不可）"
+           placeholder="example@mail.com"
+           value="<%= request.getParameter("address") != null ? request.getParameter("address") : "" %>">
+    </div>
+
 
       <div class="input-group">
           <p>電話番号</p>

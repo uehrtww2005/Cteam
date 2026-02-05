@@ -49,7 +49,7 @@
 </style>
 
 <div class="payment-complete">
-    <h1>お支払い完了</h1>
+    <h1>お支払い・予約完了</h1>
 
     <p>予約者：${customerName}</p>
     <p>予約日：${date}</p>

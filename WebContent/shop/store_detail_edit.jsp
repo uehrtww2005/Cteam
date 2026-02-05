@@ -239,10 +239,13 @@ textarea[name="storeIntroduct"]::placeholder {
     name="storeIntroduct"
     rows="4"
     cols="50"
+    required
     pattern="[^<>]*"
-    title="＜ ＞ は使用できません"
+    title="店の詳細は必須です。＜ ＞ は使用できません"
+    placeholder="店の詳細と電話番号を入力してください。"
     oninput="this.value = this.value.replace(/[<>]/g, '')"
 >${detail.storeIntroduct}</textarea>
+
 
 <br>
 <h3>タグ選択</h3><br>
