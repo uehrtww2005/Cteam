@@ -168,7 +168,7 @@ form button:hover {
             selected
           </c:if>
         >
-          ${i}割
+          ${i}0%
         </option>
       </c:forEach>
     </select>

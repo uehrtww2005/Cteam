@@ -45,7 +45,7 @@ public class StorePrepaymentAction extends Action {
 
                 request.setAttribute(
                     "msg",
-                    "先払い率を「" + rate + "割」に設定しました。"
+                    "先払い率を「" + rate + "0%」に設定しました。"
                 );
             }
         }
